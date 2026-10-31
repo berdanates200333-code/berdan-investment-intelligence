@@ -1,0 +1,166 @@
+QUELLE: https://ir.amd.com/news-events/press-releases/detail/1302/amd-and-meta-advance-strategic-partnership-to-power-metas-superintelligence-infrastructure
+ABGERUFEN: 2026-10-31T16:24:37+00:00
+
+AMD and Meta Advance Strategic Partnership to Power Meta’s Superintelligence Infrastructure :: Advanced Micro Devices, Inc. (AMD) 
+
+ Skip to main content 
+ Skip to section navigation 
+ Skip to footer 
+
+ Investor Relations
+
+ IR Overview 
+
+ News & Events 
+
+ Press Releases 
+
+ IR Calendar 
+
+ Financial Analyst Day 
+
+ Annual Meeting of Stockholders 
+
+ Stock Data 
+
+ Stock Data 
+
+ Price History 
+
+ Stock Split History 
+
+ Analyst Coverage 
+
+ Transfer Agent 
+
+ Financial Information 
+
+ Financial Results 
+
+ SEC Filings 
+
+ Governance 
+
+ Board of Directors 
+
+ Leadership 
+
+ Board Committees 
+
+ Governance Documents 
+
+ Corporate Responsibility 
+
+ Contacts & FAQ 
+
+ Contacts 
+
+ Email Alerts 
+
+ FAQ 
+
+ Press Release
+
+ News & Events 
+
+ News & Events
+
+ Press Releases 
+
+ IR Calendar 
+
+ Financial Analyst Day 
+
+ Annual Meeting of Stockholders 
+
+ AMD and Meta Advance Strategic Partnership to Power Meta’s Superintelligence Infrastructure
+
+ October 27, 2026 9:20 am EDT 
+
+ Download as PDF
+
+ News Highlights 
+
+ AMD and Meta collaborate across CPUs, GPUs, networking, systems and software to power Meta services and AI infrastructure 
+ AMD Helios rackscale solutions will power Meta’s leading frontier models and services 
+ AMD technology is the compute engine of choice for Muse and AMD technologies provide Day-0 support for leading Meta models
+
+ SANTA CLARA, Calif., Oct. 27, 2026 (GLOBE NEWSWIRE) -- AMD (NASDAQ: AMD) today highlighted its deep strategic partnership with Meta, announcing AMD Helios™ rackscale solutions are running at Meta, AMD EPYC™ processors power Meta’s Muse AI agent, and AMD technologies provide Day-0 support for Meta models including Muse Spark Open and Muse Glimmer.
+ This builds on years of co-design and collaboration between the two companies across AMD EPYC™ processors, AMD Instinct™ GPUs, AMD Pensando™ networking and AMD ROCm™ AI infrastructure.
+ “Meta is a strategic partner for AMD, and we have built this partnership through years of deep technical collaboration – from EPYC processors powering Meta’s infrastructure to Instinct GPUs and open software supporting its AI workloads,” said Lisa Su, Chair and CEO, AMD. “With Helios now running at Meta, we are taking that partnership to a new scale in the superintelligence era. Together, we are building and deploying infrastructure at gigawatt scale and shaping future generations of silicon, software and systems to enable Meta’s most ambitious superintelligence models and services.”
+ “AMD has been a key partner in building out the compute that's running our frontier models,” said Mark Zuckerberg, founder and CEO, Meta, “We're making big investments in the computing power that will enable us to bring personal superintelligence to everyone, and AMD plays an important role in that.”
+ AMD Powering Meta Infrastructure, Today 
+AMD technology powers Meta’s infrastructure across compute, networking, systems and software.
+
+ Initial AMD Helios rackscale solutions are installed and being tested by Meta on the path to a broader deployment in the near future. 
+ AMD EPYC processors support the dedicated computing environments behind Meta’s Muse personal AI agent. Meta has deployed millions of EPYC processors across multiple generations and is a lead customer for 6th Gen EPYC™ CPUs. The companies are also collaborating on future generations, including “Verano.” 
+ AMD Instinct GPUs are currently used in production in Meta’s infrastructure for training, ranking and recommendation engines. Meta was also an early definition customer for the AMD Instinct™ MI450 architecture, and it will deploy a custom AMD Instinct GPU that is optimized for its workloads. The collaboration is also informing future AMD platforms, including AMD Instinct™ MI500 series GPUs and next-generation rack-scale systems. 
+ AMD and Meta have worked together to advance ROCm through PyTorch to ensure that developers can leverage AMD GPUs right out of the box. As well, AMD delivered Day-0 support for Meta's Muse Spark Open models on AMD Instinct GPUs and for Muse Glimmer on AMD Ryzen™ AI PCs and AMD Radeon™ GPUs. 
+ AMD and Meta have expanded their software collaboration to large-scale AI training, optimizing recommendation models on AMD Instinct MI350X GPUs and contributing improvements to PyTorch, Triton and ROCm for other developers to use.
+
+ As Meta grows its AI capabilities, the companies are working together across silicon, software and systems to address the demands of operating AI infrastructure for billions of people. The companies have aligned product roadmaps and engineering decisions around current and future Meta workloads, evolving years of collaboration into building and deploying integrated AI systems at gigawatt scale.
+ In addition, AMD will invest $1 billion in Meta’s equity offering.
+ Supporting Resources 
+
+ Learn more about AMD Instinct GPUs 
+
+ Learn more about AMD EPYC CPUs 
+
+ Learn more about AMD Helios 
+
+ Follow AMD on LinkedIn 
+
+ Follow AMD on X 
+
+ About AMD 
+AMD (NASDAQ: AMD) drives innovation in high-performance and AI computing to solve the world’s most important challenges. Today, AMD technology powers billions of experiences across cloud and AI infrastructure, embedded systems, AI PCs and gaming. With a broad portfolio of AI-optimized CPUs, GPUs, networking and software, AMD delivers full-stack AI solutions that provide the performance and scalability needed for a new era of intelligent computing. Learn more at www.amd.com.
+ Cautionary Statement 
+This press release contains forward-looking statements concerning Advanced Micro Devices, Inc. (AMD) such as the collaboration, expectations and anticipated benefits of the strategic partnership with Meta including the expected broader deployment of AMD Helios rack-scale systems in the near future; the companies collaborating on future generations of AMD EPYC™ processors including “Verano”; the collaboration informing future AMD platforms including AMD Instinct MI500™ series GPUs and next-generation rack-scale systems; and the companies aligning product roadmaps and engineering decisions around current and future Meta workloads, which are made pursuant to the Safe Harbor provisions of the Private Securities Litigation Reform Act of 1995. Forward-looking statements are commonly identified by words such as "would," "may," "expects," "believes," "plans," "intends," "projects" and other terms with similar meaning. Investors are cautioned that the forward-looking statements in this press release are based on current beliefs, assumptions and expectations, speak only as of the date of this press release and involve risks and uncertainties that could cause actual results to differ materially from current expectations. Such statements are subject to certain known and unknown risks and uncertainties, many of which are difficult to predict and are generally beyond AMD's control, that could cause actual results and other future events to differ materially from those expressed in, or implied or projected by, the forward-looking information and statements. Material factors that could cause actual results to differ materially from current expectations include, without limitation, the following: impact of government actions and regulations such as export regulations, national-security-based regulations, import tariffs, trade protection measures, and licensing requirements; competitive markets in which AMD’s products are sold; the cyclical nature of the semiconductor industry; market conditions of the industries in which AMD products are sold; AMD’s ability to introduce products on a timely basis with expected features and performance levels; loss of a significant customer; economic and market uncertainty; quarterly and seasonal sales patterns; AMD's ability to adequately protect its technology or other intellectual property; unfavorable currency exchange rate fluctuations; ability of third party manufacturers to manufacture AMD's products on a timely basis in sufficient quantities and using competitive technologies; availability of essential equipment, materials, components (such as memory supply), substrates or manufacturing processes; ability to achieve expected manufacturing yields for AMD’s products; AMD's ability to generate revenue from its semi-custom SoC products; potential security vulnerabilities; potential security incidents including IT outages, data loss, data breaches and cyberattacks; uncertainties involving the ordering and shipment of AMD’s products; AMD’s reliance on third-party intellectual property to design and introduce new products; AMD's reliance on third-party companies for design, manufacture and supply of motherboards, software, memory and other computer platform components; AMD's reliance on Microsoft and other software vendors' support to design and develop software to run on AMD’s products; AMD’s reliance on third-party distributors and add-in-board partners; impact of modification or interruption of AMD’s internal business processes and information systems; compatibility of AMD’s products with some or all industry-standard software and hardware; costs related to defective products; failure to maintain an efficient supply chain as customer demand changes; AMD's ability to rely on third party supply-chain logistics functions; AMD’s ability to effectively control sales of its products on the gray market; impact of climate change on AMD’s business; AMD’s ability to realize its deferred tax assets; potential tax liabilities; current and future claims and litigation; impact of environmental laws, conflict minerals related provisions and other laws or regulations; evolving expectations from governments, investors, customers and other stakeholders regarding corporate responsibility matters; issues related to the responsible use of AI; restrictions imposed by agreements governing AMD’s notes, the guarantees of Xilinx’s notes and the revolving credit agreement; AMD’s ability to satisfy financial obligations under guarantees, leases and other commercial commitments; impact of acquisitions, joint ventures and/or investments on AMD’s business and AMD’s ability to integrate acquired businesses; impact of any impairment of the combined company’s assets; political, legal and economic risks and natural disasters; future impairments of technology license purchases; AMD’s ability to attract and retain key employees; and AMD’s stock price volatility. Investors are urged to review in detail the risks and uncertainties in AMD’s Securities and Exchange Commission filings, including but not limited to AMD’s most recent reports on Forms 10-K and 10-Q.
+ AMD, the AMD Arrow logo, AMD Instinct, AMD Pensando, AMD ROCm, EPYC and combinations thereof are trademarks of Advanced Micro Devices, Inc. Other names are for informational purposes only and may be trademarks of their respective owners. 
+
+ Contact:
+Aaron Grabein
+AMD Communications
+aaron.grabein@amd.com
+
+Liz Stine
+AMD Investor Relations
+liz.stine@amd.com 
+
+Source: Advanced Micro Devices, Inc.
+
+ Released October 27, 2026
+
+ Investor Relations
+
+ AMD 
+
+ AI 
+
+ Server 
+
+ Ryzen 
+
+ Radeon 
+
+ Embedded 
+
+ Gaming 
+
+ AMD 
+
+ Developers 
+
+ Gaming 
+
+ Terms and Conditions 
+ Privacy 
+ Trademarks 
+ Supply Chain Transparency 
+ Fair & Open Competition 
+ UK Tax Strategy 
+ Accessibility Statement 
+ Cookies Policy 
+ Cookies Settings 
+
+ © 2026 Advanced Micro Devices, Inc.

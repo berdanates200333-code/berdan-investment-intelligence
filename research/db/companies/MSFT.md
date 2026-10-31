@@ -1,7 +1,7 @@
 # Microsoft Corporation (MSFT)
-Stand 2026-10-31T16:16:07+00:00 · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)
+Stand 2026-10-31T16:24:37+00:00 · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)
 
-**SEC-Finanzdaten:** fehlt (SEC nicht erreichbar)
+**SEC-Finanzdaten:** nicht aktualisiert (SEC nicht erreichbar)
 
 ## Geschäftsmodell
 Software und Cloud-Dienste: Azure (Cloud-Infrastruktur/KI), Microsoft 365/Office, LinkedIn, Dynamics, Windows, Gaming (Xbox, Activision Blizzard), Suchmaschinenwerbung. Großer Abnehmer von KI-Rechenzentrumshardware; Partnerschaft mit OpenAI.

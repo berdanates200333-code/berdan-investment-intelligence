@@ -1,7 +1,7 @@
 # Advanced Micro Devices, Inc. (AMD)
-Stand 2026-10-31T16:16:07+00:00 · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)
+Stand 2026-10-31T16:24:37+00:00 · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)
 
-**SEC-Finanzdaten:** fehlt (SEC nicht erreichbar)
+**SEC-Finanzdaten:** nicht aktualisiert (SEC nicht erreichbar)
 
 ## Geschäftsmodell
 Entwickelt CPUs (EPYC, Ryzen), GPUs/KI-Beschleuniger (Instinct, Radeon), FPGAs/adaptive SoCs (ehemals Xilinx) und Semi-Custom-Chips (z. B. Spielkonsolen). Fertigung überwiegend extern (fabless).

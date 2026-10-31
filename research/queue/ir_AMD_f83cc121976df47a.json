@@ -1,0 +1,35 @@
+{
+  "ereignis_id": "ir:AMD:f83cc121976df47a",
+  "ticker": "AMD",
+  "titel": "AMD and Meta Advance Strategic Partnership to Power Meta’s Superintelligence Infrastructure",
+  "erstellt_utc": "2026-10-31T16:24:37+00:00",
+  "status": "offen",
+  "grund": "manuell angefordert",
+  "kontext": {
+    "ereignis": {
+      "art": "ir",
+      "erfasst_utc": "2026-10-31T16:16:07+00:00",
+      "erstellt_utc": "2026-10-31T16:16:10+00:00",
+      "hash": "916ce4e37d8f87a46f78805234902c95e068c29359ebf07de1007dfca4adfad3",
+      "id": "ir:AMD:f83cc121976df47a",
+      "prev_hash": "0564fee478f7eaaeea1e1c7cb3793d59c754e66670c60af2e7ca44a4014d5e65",
+      "quelle": {
+        "feed": "https://ir.amd.com/news-events/press-releases/rss",
+        "herausgeber": "Advanced Micro Devices, Inc. (offizieller Newsroom)",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1302/amd-and-meta-advance-strategic-partnership-to-power-metas-superintelligence-infrastructure"
+      },
+      "regel": "Regel: offizielle Mitteilung mit wesentlichem Schlüsselwort",
+      "seq": 135,
+      "ticker": "AMD",
+      "titel": "AMD and Meta Advance Strategic Partnership to Power Meta’s Superintelligence Infrastructure",
+      "typ": "ereignis",
+      "veroeffentlicht": "2026-10-27T13:20:00+00:00",
+      "wichtigkeit": "mittel",
+      "zuverlaessigkeit": "offiziell (Unternehmensmitteilung, Primärquelle)"
+    },
+    "profil": "research/db/companies/AMD.json",
+    "these": "research/theses/AMD.json",
+    "quelltext": "research/sources/AMD/angefordert_3e7fc3998b4a.txt"
+  },
+  "anleitung": ".claude/commands/research-analyse.md"
+}

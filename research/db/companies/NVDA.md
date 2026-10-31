@@ -1,7 +1,7 @@
 # NVIDIA Corporation (NVDA)
-Stand 2026-10-31T16:16:07+00:00 · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)
+Stand 2026-10-31T16:24:37+00:00 · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)
 
-**SEC-Finanzdaten:** fehlt (SEC nicht erreichbar)
+**SEC-Finanzdaten:** nicht aktualisiert (SEC nicht erreichbar)
 
 ## Geschäftsmodell
 Entwickelt GPUs, Beschleuniger-Systeme, Netzwerktechnik und Software (CUDA) vor allem für Rechenzentren/KI sowie für Gaming, professionelle Visualisierung und Automobil. Fertigung wird an Auftragsfertiger ausgelagert (fabless).
@@ -16,6 +16,7 @@ _Quelle: Kurzfassung (Claude); Abgleich mit 10-K Item 1 im Profil_
 ## Ereignisse (letzte 30 Tage, ohne Insider-Formulare)
 | Datum | Wichtigkeit | Ereignis | Zuverlässigkeit |
 |---|---|---|---|
+| 2026-10-31 | niedrig | [Enbridge vs. Enterprise Products: Which High-Yield Dividend Is Actually Safer?](https://www.fool.com/investing/2026/10/31/enbridge-vs-enterprise-products-which-high-yield-d/?.tsrc=rss) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
 | 2026-10-31 | niedrig | [3 Unstoppable S&P 500 Stocks to Buy in November](https://www.fool.com/investing/2026/10/31/3-unstoppable-sp-500-stocks-to-buy-in-november/?.tsrc=rss) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
 | 2026-10-31 | niedrig | [Is Walmart the Safest Stock to Own if the Tech Sell-Off Gets Worse?](https://www.fool.com/investing/2026/10/31/walmart-safest-stock-own-if-tech-sell-off/?.tsrc=rss) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
 | 2026-10-31 | niedrig | [Intel Has a Massive Warning for AMD Stock Investors. Is It Time to Book Profits Before Nov](https://www.fool.com/investing/2026/10/31/intel-has-a-massive-warning-for-amd-stock-investors-is-it-time-to-book-profits-before-nov-3/?.tsrc=rss) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
@@ -40,4 +41,3 @@ _Quelle: Kurzfassung (Claude); Abgleich mit 10-K Item 1 im Profil_
 | 2026-10-31 | niedrig | [Nvidia's $12.93 Billion Hugging Face Deal Draws Antitrust Scrutiny as AI Payback Doubts We](https://news.google.com/rss/articles/CBMi-wFBVV95cUxNVmctVnlITVlQWDR5cTNNa3Q0OWxxaGNlMk83WnVZVUJmMUxwdThJeG5KZjgtSUdhTnNDNXB2SVZyczhOVk9WRFFpcG12WGY3ZWNjLUwza0kxMnJESk5YNUdkcU96ekdaa09kSjJWQkV6Q05oWHhFcFVBRDlHeE5udjYtc3owMjlrakZoT1JUQk9oaTJrcHB5RjFwbHpGbUEyYXctanFQbnFNd1VpeUEtckYzZjBPc1plUEh4cENDRnItaVJIdWNsbnZYUXZlelZzRHkwVVM4LUR6NEthTldLeUpWNl9BNkJScjJSZ25iUE5YU0FFMHhIVzRIWQ?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
 | 2026-10-31 | niedrig | [Nvidia chips still reach China despite US expor...](https://news.google.com/rss/articles/CBMikwFBVV95cUxNNzBocmIxRzZFdkYyaVBmSGlOMVFfVzdXTVB2RXVHcXZmNWJmYjFhdlFhVjhtN0hBMWw1dnhNcC1fcHROOVA1aU92c3o1SXF5bjFOVjBPQzNaejJjX082U2xsQkVPRUNJV1dfWjdZUHdwcmNkelZPbU9DZkVLd3BkeXFUTGJ3dkRiMVVaUXRVSkl3YjA?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
 | 2026-10-31 | niedrig | [Meet the Brilliant AI Stock Obliterating Nvidia in 2026 With a Return of 44%](https://news.google.com/rss/articles/CBMi9AFBVV95cUxQbXdBRm9qNGlST01SY3ItcnprX1pDRlQ1YTZHMVVwOWpnekxzTEFTWW5weEx0cmhVQTE5TEt6c3lZQ2ZTem9EdDA1ZkIzZHlWenNnTzNTRXZLRVdKRGU2Vm44UnBPcG9kb0FwTWpFQUxtRUpEY1ZpWXNldUFQR19iTnc4aGhOaUlzOVU3UW4tN3RhZ19mOVd0Q3BLTF8wdzBrZEJza3cwVHpnVm84U2FRMkFIUmZBREYzY2dTeWNMSDJrQm5Pc3ZkYU9Cd1NpTkVyQk5hbk9BR01HZW9nbVZwWDI1SDFxU2VDSlBTUkRQRC1qbkl5?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
-| 2026-10-31 | niedrig | [Here's What $10,000 Invested Equally in SpaceX and Nvidia Could Be Worth in 2030](https://news.google.com/rss/articles/CBMikgFBVV95cUxQN0JxdzJ0dXJFQ0lzYzlrRk10NEM1YzFVcktpOXl1NU1rZm41RXctbW1OQkRucnFqT2Y3ZWJQc3owSGY3QVdNcEU3OU9NeFdZMzRuS01uSUgtYWpJbjZhUC01U0NGV0o3Z3pUbV9yT1BqTF9TcWltQnBsYW9UczJTcmVaMGpETEgxdXB4Xzl0aWFqQQ?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
