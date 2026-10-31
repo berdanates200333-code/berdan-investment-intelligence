@@ -181,11 +181,24 @@ def sandbox(tmp_path, monkeypatch):
     monkeypatch.setattr(rm.sec, "xbrl_instance_url", lambda *a: "https://sec.example/x_htm.xml")
     monkeypatch.setattr(rm.sec, "get_raw", lambda url: XBRL)
     monkeypatch.setattr(rm, "yahoo_quote", lambda s: {"kurs": 50.0, "vortag": 49.0, "datum": "2026-10-30", "waehrung": "USD", "quelle": "test"})
-    monkeypatch.setattr(rm.news, "search", lambda q, timespan="3d": [
-        {"titel": "Chipmaker beats forecast, raises outlook - Reuters", "url": "https://www.reuters.com/x1", "domain": "reuters.com",
-         "sprache": "English", "land": "US", "gesehen_utc": "2026-10-30T10:00:00+00:00"},
-        {"titel": "Chipmaker beats forecast, raises outlook", "url": "https://other.example/y", "domain": "other.example",
-         "sprache": "English", "land": "US", "gesehen_utc": "2026-10-30T11:00:00+00:00"}])
+    monkeypatch.setenv("SEC_USER_AGENT", "Test Kontakt test@example.org")
+    monkeypatch.setattr(rm.feeds, "google_news", lambda q: [
+        {"titel": "Chipmaker beats forecast, raises outlook", "url": "https://news.google.com/rss/articles/x1", "domain": "www.reuters.com",
+         "quelle_name": "Reuters", "veroeffentlicht": "2026-10-30T10:00:00+00:00", "vermittler": "Google News RSS"}])
+    monkeypatch.setattr(rm.feeds, "yahoo_news", lambda t: [
+        {"titel": "Chipmaker beats forecast, raises outlook - Yahoo", "url": "https://finance.yahoo.com/y", "domain": "finance.yahoo.com",
+         "quelle_name": None, "veroeffentlicht": "2026-10-30T11:00:00+00:00", "vermittler": "Yahoo Finance RSS"}])
+    monkeypatch.setattr(rm.feeds, "fetch", lambda url: [
+        {"titel": "Company Announces Financial Results for Third Quarter Fiscal 2027", "url": "https://ir.example/q3",
+         "veroeffentlicht": "2026-10-29T20:05:00+00:00"},
+        {"titel": "Company celebrates anniversary", "url": "https://ir.example/old", "veroeffentlicht": "2026-08-01T10:00:00+00:00"}])
+
+    class R:
+        text = "<html><body><p>Revenue was $57.0 billion.</p></body></html>"
+
+        def raise_for_status(self):
+            pass
+    monkeypatch.setattr(rm.requests, "get", lambda *a, **k: R())
     monkeypatch.setattr(rm.time, "sleep", lambda s: None)
     return tmp_path, rm
 
@@ -197,7 +210,10 @@ def test_monitor_end_to_end(sandbox):
     s = events.Store(tmp / "research" / "db" / "events.jsonl")
     ev = s.events("NVDA")
     kinds = {e["art"] for e in ev}
-    assert {"sec", "news"} <= kinds
+    assert {"sec", "news", "ir"} <= kinds
+    ir = {e["titel"]: e for e in ev if e["art"] == "ir"}
+    assert ir["Company Announces Financial Results for Third Quarter Fiscal 2027"]["wichtigkeit"] == "hoch"
+    assert ir["Company celebrates anniversary"]["analyse_status"] == "bestand"
     assert sum(e["art"] == "news" for e in ev) == 1                       # Titel-Dublette verworfen
     tenk = [e for e in ev if e.get("formular") == "10-K"][0]
     assert tenk["analyse_status"] == "bestand"                             # älter als 14 Tage beim Erstlauf
@@ -212,3 +228,15 @@ def test_monitor_end_to_end(sandbox):
     assert rm.main(datetime(2026, 10, 31, 18, 0, tzinfo=timezone.utc)) == 0
     assert not (tmp / "reports" / "research" / "alert.txt").exists()
     assert len(events.Store(tmp / "research" / "db" / "events.jsonl").entries) == n_before
+
+
+def test_monitor_without_sec_contact(sandbox, monkeypatch):
+    tmp, rm = sandbox
+    monkeypatch.delenv("SEC_USER_AGENT")
+    monkeypatch.setattr(rm.sec, "submissions", lambda cik: (_ for _ in ()).throw(AssertionError("SEC darf nicht aufgerufen werden")))
+    assert rm.main(datetime(2026, 10, 31, 12, 0, tzinfo=timezone.utc)) == 0
+    ops = json.loads((tmp / "research" / "db" / "ops.json").read_text())
+    assert "sec:alle|kontakt_fehlt" in ops["fehler"] and ops["quellenstatus"]["sec"].startswith("inaktiv")
+    prof = json.loads((tmp / "research" / "db" / "companies" / "MSFT.json").read_text())
+    assert prof["sec_daten_status"].startswith("fehlt")
+    assert ops.get("letzter_erfolg_utc")   # Newsroom + Nachrichten lieferten Daten

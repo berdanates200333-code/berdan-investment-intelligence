@@ -14,7 +14,9 @@ Ausgaben:
 """
 from __future__ import annotations
 
+import hashlib
 import json
+import os
 import re
 import sys
 import time
@@ -28,7 +30,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from bii.research import evidence, fundamentals, news, sec, segments, valuation  # noqa: E402
+from bii.research import evidence, feeds, fundamentals, news, sec, segments, valuation  # noqa: E402
 from bii.research.events import Store, classify_filing, event_id, news_importance  # noqa: E402
 
 DB = ROOT / "research" / "db"
@@ -210,33 +212,38 @@ class Run:
 
     # ------------------------------------------------------------------ Nachrichten
     def news(self, c: dict, ts: dict, seed: bool):
-        last = ts.get("news_letzter_lauf")
-        span = "3d" if not last else f"{max(1, min(72, int((self.now - datetime.fromisoformat(last)).total_seconds() // 3600) + 2))}h"
-        arts = news.search(c["gdelt"], timespan=span)
-        time.sleep(6)   # GDELT: höchstens eine Anfrage je 5 Sekunden
+        """Nachrichten-Metadaten aus Google News RSS und Yahoo Finance RSS (GDELT drosselt GitHub-Server)."""
+        arts, failed = [], 0
+        for name, fn in (("google", lambda: feeds.google_news(c["google_news"])), ("yahoo", lambda: feeds.yahoo_news(c["yahoo"]))):
+            try:
+                arts += fn()
+            except Exception as e:  # noqa: BLE001
+                failed += 1
+                self.err(f"news_{name}:{c['ticker']}", e)
+        if failed == 2:
+            raise RuntimeError("alle Nachrichtenquellen ausgefallen")
         added = dup = 0
+        cutoff = (self.now - timedelta(days=3)).isoformat()
         for a in arts:
-            if a.get("sprache") and a["sprache"].lower() not in ("english", "german"):
+            if not a["url"] or not a["titel"] or (a.get("veroeffentlicht") and a["veroeffentlicht"] < cutoff):
                 continue
             eid = event_id("news", c["ticker"], a["url"])
             if eid in self.store.ids:
                 continue
-            d = self.store.is_duplicate_news(c["ticker"], a["titel"], self.now)
-            if d:
+            if self.store.is_duplicate_news(c["ticker"], a["titel"], self.now):
                 dup += 1
                 continue
-            tier = news.domain_tier(a["domain"])
+            tier = news.domain_tier(a.get("domain") or "")
             imp, why = news_importance(a["titel"], tier)
             near = [e["id"] for e in self.store.events(c["ticker"], since=(self.now - timedelta(days=3)).isoformat())
-                    if e["art"] == "sec" and e["wichtigkeit"] == "hoch"]
-            ev = {"id": eid, "art": "news", "ticker": c["ticker"], "titel": a["titel"], "veroeffentlicht": a["gesehen_utc"],
-                  "quelle": {"url": a["url"], "herausgeber": a["domain"], "vermittler": "GDELT DOC API"},
+                    if e["art"] in ("sec", "ir") and e["wichtigkeit"] == "hoch"]
+            ev = {"id": eid, "art": "news", "ticker": c["ticker"], "titel": a["titel"], "veroeffentlicht": a.get("veroeffentlicht"),
+                  "quelle": {"url": a["url"], "herausgeber": a.get("quelle_name") or a.get("domain"), "vermittler": a["vermittler"]},
                   "zuverlaessigkeit": f"Sekundärquelle, Stufe {tier}", "wichtigkeit": imp, "regel": why}
             if near:
                 ev["zeitliche_naehe_zu"] = {"ereignisse": near, "hinweis": "nur zeitliche Nähe (≤3 Tage), kein inhaltlicher Nachweis"}
             if self.add(ev, ts, seed):
                 added += 1
-        # Nachrichtenaufkommen (Volumen-Spitze)
         hist = ts.setdefault("news_volumen", {})
         day = self.now.date().isoformat()
         hist[day] = hist.get(day, 0) + added
@@ -248,11 +255,42 @@ class Run:
             if hist[day] >= 15 and hist[day] > 3 * max(med, 1):
                 self.add({"id": event_id("volumen", c["ticker"], day), "art": "volumen", "ticker": c["ticker"],
                           "titel": f"Ungewöhnlich viele Nachrichten: {hist[day]} heute vs. Median {med}",
-                          "veroeffentlicht": day, "quelle": {"url": "GDELT DOC API", "herausgeber": "GDELT"},
+                          "veroeffentlicht": day, "quelle": {"url": "Google News RSS / Yahoo Finance RSS", "herausgeber": "Aggregatoren"},
                           "zuverlaessigkeit": "Zählung von Sekundärquellen", "wichtigkeit": "mittel",
                           "regel": "Regel: Tagesanzahl > 3× Median der letzten 14 Tage und ≥ 15"}, ts, seed)
         ts["news_letzter_lauf"] = self.iso
         return {"neu": added, "dubletten": dup, "abgerufen": len(arts)}
+
+    # ------------------------------------------------------------------ Offizielle Newsroom-/IR-Feeds
+    def ir(self, c: dict, ts: dict, seed: bool) -> int:
+        n = 0
+        cutoff = (self.now - timedelta(days=SEED_DAYS)).isoformat()
+        for url in c.get("ir_feeds", []):
+            for it in feeds.fetch(url):
+                if not it["url"] or not it["titel"]:
+                    continue
+                eid = event_id("ir", c["ticker"], hashlib.sha1(it["url"].encode()).hexdigest()[:16])
+                if eid in self.store.ids:
+                    continue
+                imp, why = feeds.ir_importance(it["titel"])
+                old = (it.get("veroeffentlicht") or self.iso) < cutoff
+                ev = {"id": eid, "art": "ir", "ticker": c["ticker"], "titel": it["titel"], "veroeffentlicht": it.get("veroeffentlicht"),
+                      "quelle": {"url": it["url"], "herausgeber": f"{c['name']} (offizieller Newsroom)", "feed": url},
+                      "zuverlaessigkeit": "offiziell (Unternehmensmitteilung, Primärquelle)", "wichtigkeit": imp, "regel": why}
+                if imp == "hoch" and not old:
+                    try:
+                        r = requests.get(it["url"], headers=feeds.UA, timeout=30)
+                        r.raise_for_status()
+                        txt = sec.html_to_text(r.text)[:60_000]
+                        p = ROOT / "research" / "sources" / c["ticker"] / f"ir_{eid.split(':')[-1]}.txt"
+                        p.parent.mkdir(parents=True, exist_ok=True)
+                        p.write_text(f"QUELLE: {it['url']}\nABGERUFEN: {self.iso}\n\n{txt}\n")
+                        ev["quelltext"] = str(p.relative_to(ROOT))
+                    except Exception as e:  # noqa: BLE001
+                        self.err(f"ir_text:{c['ticker']}", e)
+                if self.add(ev, ts, seed and old):
+                    n += 1
+        return n
 
     # ------------------------------------------------------------------ Analyse-Warteschlange
     def queue(self):
@@ -278,31 +316,58 @@ def main(now: datetime | None = None) -> int:
     now = now or datetime.now(timezone.utc)
     run = Run(now)
     cfg = yaml.safe_load((ROOT / "research" / "companies.yaml").read_text())["unternehmen"]
-    profiles, newsstats = {}, {}
+    profiles, newsstats, ok_tickers = {}, {}, []
+    sec_ok = bool(os.environ.get("SEC_USER_AGENT"))
+    if not sec_ok:
+        run.errors["sec:alle|kontakt_fehlt"] = ("SEC verlangt einen User-Agent mit echter Kontaktadresse: Repository-Variable "
+                                                 "SEC_USER_AGENT setzen (z. B. 'Vorname Nachname name@domain.de').")
     for c in cfg:
-        ts = run.state["unternehmen"].setdefault(c["ticker"], {})
+        t = c["ticker"]
+        ts = run.state["unternehmen"].setdefault(t, {})
         seed = not ts.get("initialisiert")
-        filings = []
+        old = load_json(DB / "companies" / f"{t}.json", None) or {}
+        filings, prof, got = [], None, 0
+        if sec_ok:
+            sec_seed = not ts.get("sec_initialisiert")
+            try:
+                filings = run.sec_filings(c, ts, sec_seed)
+                got += 1
+            except Exception as e:  # noqa: BLE001
+                run.err(f"sec:{t}", e)
+            try:
+                prof = run.company_profile(c, ts, filings, sec_seed)
+                prof["sec_daten_status"] = "aktuell"
+            except Exception as e:  # noqa: BLE001
+                run.err(f"profil:{t}", e)
+                traceback.print_exc()
+            if filings:
+                ts["sec_initialisiert"] = True
+        if prof is None:   # ohne SEC: Grundprofil; frühere SEC-Daten bleiben erhalten und werden als nicht aktualisiert markiert
+            prof = {**old, "ticker": t, "name": c["name"], "cik": c["cik"], "stand_utc": run.iso,
+                    "geschaeftsmodell": {"text": c.get("geschaeftsmodell"), "quelle": c.get("geschaeftsmodell_quelle")},
+                    "finanzen": old.get("finanzen") or {"ttm": {}, "kennzahlen": {}, "bilanz": {}, "quartale": {}},
+                    "sec_daten_status": "nicht aktualisiert (SEC nicht erreichbar)" if old.get("finanzen") else "fehlt (SEC nicht erreichbar)"}
         try:
-            filings = run.sec_filings(c, ts, seed)
-        except Exception as e:  # noqa: BLE001
-            run.err(f"sec:{c['ticker']}", e)
-        try:
-            prof = run.company_profile(c, ts, filings, seed)
             run.price_and_valuation(c, ts, prof, seed)
-            save_json(DB / "companies" / f"{c['ticker']}.json", prof)
-            profiles[c["ticker"]] = prof
         except Exception as e:  # noqa: BLE001
-            run.err(f"profil:{c['ticker']}", e)
-            traceback.print_exc()
+            run.err(f"bewertung:{t}", e)
         try:
-            newsstats[c["ticker"]] = run.news(c, ts, seed)
+            prof["ir_neu"] = run.ir(c, ts, seed)
+            got += 1
         except Exception as e:  # noqa: BLE001
-            run.err(f"news:{c['ticker']}", e)
-        if filings:
+            run.err(f"ir:{t}", e)
+        try:
+            newsstats[t] = run.news(c, ts, seed)
+            got += 1
+        except Exception as e:  # noqa: BLE001
+            run.err(f"news:{t}", e)
+        save_json(DB / "companies" / f"{t}.json", prof)
+        profiles[t] = prof
+        if got:
             ts["initialisiert"] = True
+            ok_tickers.append(t)
     run.queue()
-    # Fehlerzähler je Quelle/Unternehmen (aufeinanderfolgende Läufe)
+    # Fehlerzähler je Quelle/Unternehmen/Ursache (aufeinanderfolgende Läufe)
     for k in list(run.ops["fehler"]):
         if k not in run.errors:
             run.ops["fehler"].pop(k)
@@ -310,13 +375,15 @@ def main(now: datetime | None = None) -> int:
         prev = run.ops["fehler"].get(k, {"folge": 0})
         run.ops["fehler"][k] = {"folge": prev["folge"] + 1, "letzte_meldung": msg}
     run.ops["letzter_lauf_utc"] = run.iso
-    # "Erfolg" = mindestens ein Unternehmensprofil mit SEC-Daten geladen (nicht nur: Skript lief durch)
-    if profiles:
+    # "Erfolg" = für jedes Unternehmen lieferte mindestens eine Quelle Daten (nicht nur: Skript lief durch)
+    if len(ok_tickers) == len(cfg):
         run.ops["letzter_erfolg_utc"] = run.iso
+    run.ops["quellenstatus"] = {"sec": "aktiv" if sec_ok else "inaktiv (Kontaktangabe fehlt)",
+                                "unternehmen_mit_daten": ok_tickers}
     save_json(STATE, run.state)
     save_json(OPS, run.ops)
     from bii.research import report
-    report.write_all(run, cfg, profiles, newsstats)
+    report.write_all(run, cfg, profiles, newsstats)  # nutzt run.ops["quellenstatus"]
     return 0
 
 

@@ -10,7 +10,8 @@ unternehmen:
     boerse: NASDAQ
     waehrung: USD
     yahoo: NVDA
-    gdelt: '(Nvidia OR NVDA) sourcelang:english'
+    google_news: 'NVIDIA OR NVDA stock'
+    ir_feeds: ["https://nvidianews.nvidia.com/releases.xml"]
     geschaeftsmodell: >-
       Entwickelt GPUs, Beschleuniger-Systeme, Netzwerktechnik und Software (CUDA) vor allem für
       Rechenzentren/KI sowie für Gaming, professionelle Visualisierung und Automobil. Fertigung
@@ -34,7 +35,8 @@ unternehmen:
     boerse: NASDAQ
     waehrung: USD
     yahoo: AMD
-    gdelt: '("Advanced Micro Devices" OR AMD) (chip OR chips OR GPU OR processor OR stock OR shares) sourcelang:english'
+    google_news: '"Advanced Micro Devices" OR "AMD stock" OR "AMD shares"'
+    ir_feeds: ["https://ir.amd.com/news-events/press-releases/rss"]
     geschaeftsmodell: >-
       Entwickelt CPUs (EPYC, Ryzen), GPUs/KI-Beschleuniger (Instinct, Radeon), FPGAs/adaptive SoCs
       (ehemals Xilinx) und Semi-Custom-Chips (z. B. Spielkonsolen). Fertigung überwiegend extern (fabless).
@@ -54,7 +56,8 @@ unternehmen:
     boerse: NASDAQ
     waehrung: USD
     yahoo: MSFT
-    gdelt: '(Microsoft OR MSFT) (Azure OR cloud OR OpenAI OR earnings OR revenue OR stock OR shares OR AI) sourcelang:english'
+    google_news: 'Microsoft stock OR MSFT OR "Microsoft earnings" OR Azure'
+    ir_feeds: ["https://news.microsoft.com/feed/"]
     geschaeftsmodell: >-
       Software und Cloud-Dienste: Azure (Cloud-Infrastruktur/KI), Microsoft 365/Office, LinkedIn,
       Dynamics, Windows, Gaming (Xbox, Activision Blizzard), Suchmaschinenwerbung. Großer Abnehmer von

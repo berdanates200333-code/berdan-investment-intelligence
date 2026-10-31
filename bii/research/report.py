@@ -27,6 +27,7 @@ def company_md(p: dict, events: list[dict]) -> str:
     f = p.get("finanzen", {})
     t, k, b = f.get("ttm", {}), f.get("kennzahlen", {}), f.get("bilanz", {})
     L = [f"# {p['name']} ({p['ticker']})", f"Stand {p['stand_utc']} · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)", "",
+         f"**SEC-Finanzdaten:** {p.get('sec_daten_status', 'aktuell')}", "",
          "## Geschäftsmodell", p["geschaeftsmodell"]["text"] or "–", f"_Quelle: {p['geschaeftsmodell']['quelle']}_", ""]
     bel = p.get("belege") or {}
     if bel.get("item1_auszug"):
@@ -103,7 +104,9 @@ def write_all(run, cfg, profiles: dict, newsstats: dict) -> None:
     fresh = [e for e in run.new if e.get("analyse_status") != "bestand"]
     high = [e for e in fresh if e["wichtigkeit"] == "hoch"]
     mid = [e for e in fresh if e["wichtigkeit"] == "mittel"]
-    L = [f"# Research-Monitor – {run.now:%d.%m.%Y %H:%M} UTC", "Regelbasierte Erfassung (Python). Analysen durch Claude stehen in `research/analyses/`.", "",
+    qs = run.ops.get("quellenstatus", {})
+    L = [f"# Research-Monitor – {run.now:%d.%m.%Y %H:%M} UTC", "Regelbasierte Erfassung (Python). Analysen durch Claude stehen in `research/analyses/`.",
+         f"Quellen: offizielle Newsrooms ✓ · Google News/Yahoo RSS ✓ · SEC EDGAR: {qs.get('sec', 'aktiv')}", "",
          "## Überblick", "| Unternehmen | Kurs | Umsatz TTM | Op. Marge | FCF-Marge | Eingepreistes Wachstum | Neue Ereignisse (hoch/mittel/niedrig) |", "|---|---|---|---|---|---|---|"]
     for c in cfg:
         p = profiles.get(c["ticker"], {})
