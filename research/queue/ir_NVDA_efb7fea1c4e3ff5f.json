@@ -1,0 +1,35 @@
+{
+  "ereignis_id": "ir:NVDA:efb7fea1c4e3ff5f",
+  "ticker": "NVDA",
+  "titel": "NVIDIA Sets Conference Call for Third-Quarter Financial Results",
+  "erstellt_utc": "2026-10-31T16:16:07+00:00",
+  "status": "offen",
+  "kontext": {
+    "ereignis": {
+      "seq": 3,
+      "erstellt_utc": "2026-10-31T16:16:08+00:00",
+      "typ": "ereignis",
+      "id": "ir:NVDA:efb7fea1c4e3ff5f",
+      "art": "ir",
+      "ticker": "NVDA",
+      "titel": "NVIDIA Sets Conference Call for Third-Quarter Financial Results",
+      "veroeffentlicht": "2026-10-28T21:00:00+00:00",
+      "quelle": {
+        "url": "https://nvidianews.nvidia.com/news/nvidia-sets-conference-call-for-third-quarter-financial-results-6928873",
+        "herausgeber": "NVIDIA Corporation (offizieller Newsroom)",
+        "feed": "https://nvidianews.nvidia.com/releases.xml"
+      },
+      "zuverlaessigkeit": "offiziell (Unternehmensmitteilung, Primärquelle)",
+      "wichtigkeit": "hoch",
+      "regel": "Regel: offizielle Mitteilung zu Geschäftszahlen",
+      "quelltext": "research/sources/NVDA/ir_efb7fea1c4e3ff5f.txt",
+      "erfasst_utc": "2026-10-31T16:16:07+00:00",
+      "prev_hash": "eb8d6ed5a604efa4624e48ab5bef7a02605b7eababb2471bda26aebf67982828",
+      "hash": "e7eebeaa8e30796811ab432a16a3d5b20c3a93ca2d89f519b832c5753731e230"
+    },
+    "profil": "research/db/companies/NVDA.json",
+    "these": "research/theses/NVDA.json",
+    "quelltext": "research/sources/NVDA/ir_efb7fea1c4e3ff5f.txt"
+  },
+  "anleitung": ".claude/commands/research-analyse.md"
+}

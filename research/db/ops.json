@@ -1,38 +1,18 @@
 {
   "fehler": {
-    "sec:NVDA": {
+    "sec:alle|kontakt_fehlt": {
       "folge": 1,
-      "letzte_meldung": "HTTPError: 403 Client Error: Forbidden for url: https://data.sec.gov/submissions/CIK0001045810.json"
-    },
-    "profil:NVDA": {
-      "folge": 1,
-      "letzte_meldung": "HTTPError: 403 Client Error: Forbidden for url: https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json"
-    },
-    "news:NVDA": {
-      "folge": 1,
-      "letzte_meldung": "HTTPError: 429 Client Error: Too Many Requests for url: https://api.gdeltproject.org/api/v2/doc/doc?query=%28Nvidia+OR+NVDA%29+sourcelang%3Aenglish&mode=artlist&format=json&maxrecords=75&timespan=3d&sort=datedesc"
-    },
-    "sec:AMD": {
-      "folge": 1,
-      "letzte_meldung": "HTTPError: 403 Client Error: Forbidden for url: https://data.sec.gov/submissions/CIK0000002488.json"
-    },
-    "profil:AMD": {
-      "folge": 1,
-      "letzte_meldung": "HTTPError: 403 Client Error: Forbidden for url: https://data.sec.gov/api/xbrl/companyfacts/CIK0000002488.json"
-    },
-    "news:AMD": {
-      "folge": 1,
-      "letzte_meldung": "HTTPError: 429 Client Error: Too Many Requests for url: https://api.gdeltproject.org/api/v2/doc/doc?query=%28%22Advanced+Micro+Devices%22+OR+AMD%29+%28chip+OR+chips+OR+GPU+OR+processor+OR+stock+OR+shares%29+sourcelang%3Aenglish&mode=artlist&format=json&maxrecords=75&timespan=3d&sort=datedesc"
-    },
-    "sec:MSFT": {
-      "folge": 1,
-      "letzte_meldung": "HTTPError: 403 Client Error: Forbidden for url: https://data.sec.gov/submissions/CIK0000789019.json"
-    },
-    "profil:MSFT": {
-      "folge": 1,
-      "letzte_meldung": "HTTPError: 403 Client Error: Forbidden for url: https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json"
+      "letzte_meldung": "SEC verlangt einen User-Agent mit echter Kontaktadresse: Repository-Variable SEC_USER_AGENT setzen (z. B. 'Vorname Nachname name@domain.de')."
     }
   },
-  "letzter_lauf_utc": "2026-10-31T13:08:24+00:00",
-  "letzter_erfolg_utc": "2026-10-31T13:08:24+00:00"
+  "letzter_lauf_utc": "2026-10-31T16:16:07+00:00",
+  "letzter_erfolg_utc": "2026-10-31T16:16:07+00:00",
+  "quellenstatus": {
+    "sec": "inaktiv (Kontaktangabe fehlt)",
+    "unternehmen_mit_daten": [
+      "NVDA",
+      "AMD",
+      "MSFT"
+    ]
+  }
 }
