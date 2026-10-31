@@ -262,3 +262,41 @@ def test_manual_analysis_request(sandbox, monkeypatch):
     assert q["grund"] == "manuell angefordert" and q["kontext"]["quelltext"]
     ops = json.loads((tmp / "research" / "db" / "ops.json").read_text())
     assert "anforderung:gibt:es:nicht|unbekannt" in ops["fehler"]
+
+
+def test_ir_rules_material_expansion():
+    from bii.research import feeds
+    assert feeds.ir_importance("NVIDIA and Oracle Expand NVIDIA Vera Rubin to Multi-Gigawatt Scale")[0] == "mittel"
+    assert feeds.ir_importance("NVIDIA and Supply Chain Partners Expand Capacity to Accelerate AI Infrastructure Buildout")[0] == "mittel"
+    assert feeds.ir_importance("Slice Into GFN Thursday: New Game Launches on GeForce NOW")[0] == "niedrig"
+
+
+def test_idea_entry_condition_triggers_once(sandbox):
+    tmp, rm = sandbox
+    (tmp / "research" / "ideas").mkdir(parents=True)
+    (tmp / "research" / "ideas" / "index.jsonl").write_text(json.dumps(
+        {"id": "2026-10-31_NVDA_test", "ticker": "NVDA", "status": "beobachten", "einstieg": {"kurs_unter": 60.0, "kurs_ueber": None}}) + "\n")
+    rm.main(datetime(2026, 10, 31, 12, 0, tzinfo=timezone.utc))      # Testkurs 50 <= 60 -> erfüllt
+    s = events.Store(tmp / "research" / "db" / "events.jsonl")
+    hits = [e for e in s.events("NVDA") if e["art"] == "idee"]
+    assert len(hits) == 1 and hits[0]["wichtigkeit"] == "hoch"
+    rm.main(datetime(2026, 10, 31, 18, 0, tzinfo=timezone.utc))      # gleiche Lage -> keine zweite Meldung
+    assert len([e for e in events.Store(tmp / "research" / "db" / "events.jsonl").events("NVDA") if e["art"] == "idee"]) == 1
+
+
+def test_desk_prep_groups_and_skips(sandbox, monkeypatch):
+    tmp, rm = sandbox
+    import scripts.research_desk_prep as prep
+    monkeypatch.setattr(prep, "ROOT", tmp)
+    monkeypatch.setattr(prep, "heartbeat_check", lambda now: [])
+    rm.main(datetime(2026, 10, 31, 12, 0, tzinfo=timezone.utc))
+    qd = tmp / "research" / "queue"
+    for i, t in enumerate(["Microsoft plans to raise $25 billion in debt as it pursues AI buildout",
+                           "Microsoft expects to raise $25 billion in US bond sale, sources say"]):
+        (qd / f"m{i}.json").write_text(json.dumps({"ereignis_id": f"news:MSFT:x{i}", "ticker": "MSFT", "titel": t,
+            "kontext": {"ereignis": {"art": "news", "wichtigkeit": "niedrig", "veroeffentlicht": "2026-10-30", "quelle": {"url": "u"}}}}))
+    out = prep.main(datetime(2026, 10, 31, 19, 0, tzinfo=timezone.utc))
+    groups = [{a["ereignis_id"] for a in g["auftraege"]} for g in out["themengruppen"] if g["ticker"] == "MSFT"]
+    assert {"news:MSFT:x0", "news:MSFT:x1"} in groups          # zwei Meldungen, ein Thema
+    assert not any(len(g) > 2 for g in groups)                  # Geschäftszahlen-Mitteilung bleibt eigenes Thema
+    assert out["heartbeat"]["ok"]

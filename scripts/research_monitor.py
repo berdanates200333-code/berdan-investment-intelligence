@@ -186,6 +186,8 @@ class Run:
                           "quelle": {"url": f"https://finance.yahoo.com/quote/{c['yahoo']}", "herausgeber": "Yahoo Finance"},
                           "zuverlaessigkeit": "Marktdaten, inoffiziell, ohne Zweitquelle", "wichtigkeit": "mittel",
                           "regel": "Regel: Tagesbewegung ≥ 8 %"}, ts, seed)
+        if q:
+            self.check_ideas(c, ts, q, seed)
         thesis = load_json(ROOT / "research" / "theses" / f"{c['ticker']}.json", None)
         f = prof["finanzen"]
         k, t, b = f["kennzahlen"], f["ttm"], f["bilanz"]
@@ -209,6 +211,31 @@ class Run:
             ts["einstieg_erfuellt"] = ec["erfuellt"]
         except Exception as e:  # noqa: BLE001
             self.err(f"bewertung:{c['ticker']}", e)
+
+    # ------------------------------------------------------------------ Investmentideen (Kursbedingungen)
+    def check_ideas(self, c: dict, ts: dict, q: dict, seed: bool):
+        idx = ROOT / "research" / "ideas" / "index.jsonl"
+        if not idx.exists():
+            return
+        latest: dict[str, dict] = {}
+        for line in idx.read_text().splitlines():
+            if line.strip():
+                d = json.loads(line)
+                latest[d["id"]] = d
+        met = ts.setdefault("ideen_erfuellt", {})
+        for d in latest.values():
+            if d.get("ticker") != c["ticker"] or d.get("status") not in ("beobachten", "aktiv"):
+                continue
+            e = d.get("einstieg") or {}
+            hit = (e.get("kurs_unter") is not None and q["kurs"] <= e["kurs_unter"]) or \
+                  (e.get("kurs_ueber") is not None and q["kurs"] >= e["kurs_ueber"])
+            if hit and not met.get(d["id"]):
+                self.add({"id": event_id("idee", c["ticker"], f"{d['id']}:{q['datum']}"), "art": "idee", "ticker": c["ticker"],
+                          "titel": f"Einstiegsbedingung der Idee {d['id']} erfüllt (Kurs {q['kurs']:.2f})",
+                          "veroeffentlicht": q["datum"], "quelle": {"url": d.get("datei", ""), "herausgeber": "Research-Desk"},
+                          "zuverlaessigkeit": "Regel auf inoffiziellem Kurs (ohne Zweitquelle)", "wichtigkeit": "hoch",
+                          "regel": f"Regel: Einstiegsbedingung {e}"}, ts, seed)
+            met[d["id"]] = bool(hit)
 
     # ------------------------------------------------------------------ Nachrichten
     def news(self, c: dict, ts: dict, seed: bool):

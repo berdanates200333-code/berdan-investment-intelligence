@@ -20,7 +20,9 @@ EARNINGS = re.compile(r"(?i)(financial results|results for (the )?(first|second|
                       r"reports? (record )?(revenue|results)|earnings release|fiscal \d{4} (first|second|third|fourth) quarter)")
 MATERIAL = re.compile(r"(?i)(acquir|acquisition|merger|definitive agreement|agreement to|divest|appoints|names .* (chief|ceo|cfo)|"
                       r"chief executive|chief financial|resign|retire|guidance|outlook|dividend|repurchase|buyback|"
-                      r"strategic partnership|export|investigation|settlement|restructur|layoff)")
+                      r"strategic partnership|export|investigation|settlement|restructur|layoff|gigawatt|"
+                      r"expand(s|ed|ing)? .*(capacity|collaboration|partnership|scale)|capacity|general availability|"
+                      r"supply (chain|agreement)|multi-year|invest(s|ment)? \$|\$\d+(\.\d+)? ?(billion|bn))")
 
 
 def _date(s: str | None) -> str | None:
