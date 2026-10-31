@@ -126,7 +126,7 @@ def write_all(run, cfg, profiles: dict, newsstats: dict) -> None:
     seeded = sum(1 for e in run.new if e.get("analyse_status") == "bestand")
     if seeded:
         L.append(f"\n_{seeded} ältere Einträge wurden beim ersten Lauf als Bestand erfasst (keine Benachrichtigung)._")
-    L += ["", "## Nachrichtenabruf (GDELT)", *[f"- {t}: {s['abgerufen']} abgerufen, {s['neu']} neu, {s['dubletten']} Dubletten verworfen" for t, s in newsstats.items()]]
+    L += ["", "## Nachrichtenabruf (Google News RSS, Yahoo Finance RSS)", *[f"- {t}: {s['abgerufen']} abgerufen, {s['neu']} neu, {s['dubletten']} Dubletten verworfen" for t, s in newsstats.items()]]
     if run.errors:
         L += ["", "## Datenfehler (dieser Lauf)", *[f"- `{k}`: {v} (seit {run.ops['fehler'][k]['folge']} Läufen)" for k, v in run.errors.items()]]
     (REP / "latest.md").write_text("\n".join(L) + "\n")

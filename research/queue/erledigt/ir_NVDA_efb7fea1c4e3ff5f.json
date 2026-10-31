@@ -3,7 +3,7 @@
   "ticker": "NVDA",
   "titel": "NVIDIA Sets Conference Call for Third-Quarter Financial Results",
   "erstellt_utc": "2026-10-31T16:16:07+00:00",
-  "status": "offen",
+  "status": "verworfen",
   "kontext": {
     "ereignis": {
       "seq": 3,
@@ -31,5 +31,6 @@
     "these": "research/theses/NVDA.json",
     "quelltext": "research/sources/NVDA/ir_efb7fea1c4e3ff5f.txt"
   },
-  "anleitung": ".claude/commands/research-analyse.md"
+  "anleitung": ".claude/commands/research-analyse.md",
+  "analyse": "Regel-Fehlklassifikation: Terminankündigung (Conference Call), keine Geschäftszahlen; Regel am 31.10.2026 korrigiert (feeds.SCHEDULE)"
 }

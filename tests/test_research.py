@@ -240,3 +240,24 @@ def test_monitor_without_sec_contact(sandbox, monkeypatch):
     prof = json.loads((tmp / "research" / "db" / "companies" / "MSFT.json").read_text())
     assert prof["sec_daten_status"].startswith("fehlt")
     assert ops.get("letzter_erfolg_utc")   # Newsroom + Nachrichten lieferten Daten
+
+
+def test_ir_rules_earnings_vs_schedule():
+    from bii.research import feeds
+    assert feeds.ir_importance("NVIDIA Sets Conference Call for Third-Quarter Financial Results")[0] == "mittel"
+    assert feeds.ir_importance("NVIDIA Announces Financial Results for Third Quarter Fiscal 2027")[0] == "hoch"
+    assert feeds.ir_importance("AMD Reports Third Quarter 2026 Financial Results")[0] == "hoch"
+    assert feeds.ir_importance("AMD and Meta Advance Strategic Partnership")[0] == "mittel"
+
+
+def test_manual_analysis_request(sandbox, monkeypatch):
+    tmp, rm = sandbox
+    rm.main(datetime(2026, 10, 31, 12, 0, tzinfo=timezone.utc))
+    s = events.Store(tmp / "research" / "db" / "events.jsonl")
+    low = [e for e in s.events("AMD") if e["wichtigkeit"] == "niedrig" and e["art"] == "ir"][0]
+    monkeypatch.setenv("ANALYSE_ANFORDERN", low["id"] + ",gibt:es:nicht")
+    rm.main(datetime(2026, 10, 31, 18, 0, tzinfo=timezone.utc))
+    q = json.loads((tmp / "research" / "queue" / (low["id"].replace(":", "_") + ".json")).read_text())
+    assert q["grund"] == "manuell angefordert" and q["kontext"]["quelltext"]
+    ops = json.loads((tmp / "research" / "db" / "ops.json").read_text())
+    assert "anforderung:gibt:es:nicht|unbekannt" in ops["fehler"]

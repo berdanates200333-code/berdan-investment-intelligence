@@ -277,7 +277,7 @@ class Run:
                 ev = {"id": eid, "art": "ir", "ticker": c["ticker"], "titel": it["titel"], "veroeffentlicht": it.get("veroeffentlicht"),
                       "quelle": {"url": it["url"], "herausgeber": f"{c['name']} (offizieller Newsroom)", "feed": url},
                       "zuverlaessigkeit": "offiziell (Unternehmensmitteilung, Primärquelle)", "wichtigkeit": imp, "regel": why}
-                if imp == "hoch" and not old:
+                if imp in ("hoch", "mittel") and not old:
                     try:
                         r = requests.get(it["url"], headers=feeds.UA, timeout=30)
                         r.raise_for_status()
@@ -292,6 +292,40 @@ class Run:
                     n += 1
         return n
 
+    # ------------------------------------------------------------------ Manuell angeforderte Analysen
+    def request(self, ids: list[str]):
+        """Ereignisse unabhängig von ihrer Wichtigkeit zur KI-Analyse vormerken (Quelltext wird geladen)."""
+        byid = {e["id"]: e for e in self.store.events()}
+        for eid in ids:
+            e = byid.get(eid)
+            if not e:
+                self.errors[f"anforderung:{eid}|unbekannt"] = "Ereignis-ID nicht im Speicher"
+                continue
+            text_path = e.get("quelltext")
+            if not text_path and e["quelle"].get("url", "").startswith("http"):
+                try:
+                    r = requests.get(e["quelle"]["url"], headers=feeds.UA, timeout=30)
+                    r.raise_for_status()
+                    p = ROOT / "research" / "sources" / e["ticker"] / f"angefordert_{hashlib.sha1(eid.encode()).hexdigest()[:12]}.txt"
+                    p.parent.mkdir(parents=True, exist_ok=True)
+                    p.write_text(f"QUELLE: {e['quelle']['url']}\nABGERUFEN: {self.iso}\n\n{sec.html_to_text(r.text)[:60_000]}\n")
+                    text_path = str(p.relative_to(ROOT))
+                except Exception as ex:  # noqa: BLE001
+                    self.err(f"anforderung_text:{eid}", ex)
+            self._enqueue(e, text_path, "manuell angefordert")
+
+    def _enqueue(self, e: dict, text_path: str | None, reason: str):
+        qid = re.sub(r"[^A-Za-z0-9_-]", "_", e["id"])
+        p = ROOT / "research" / "queue" / f"{qid}.json"
+        if p.exists():
+            return
+        save_json(p, {"ereignis_id": e["id"], "ticker": e["ticker"], "titel": e["titel"], "erstellt_utc": self.iso,
+                      "status": "offen", "grund": reason, "kontext": {"ereignis": e, "profil": f"research/db/companies/{e['ticker']}.json",
+                      "these": f"research/theses/{e['ticker']}.json", "quelltext": text_path},
+                      "anleitung": ".claude/commands/research-analyse.md"})
+        self.store.set_status(e["id"], "zur_analyse_vorgemerkt", reason)
+        self.queued.append(e["id"])
+
     # ------------------------------------------------------------------ Analyse-Warteschlange
     def queue(self):
         cutoff = (self.now - timedelta(days=QUEUE_MAX_AGE_DAYS)).isoformat()
@@ -300,16 +334,7 @@ class Run:
                 continue
             if (e.get("veroeffentlicht") or e["erfasst_utc"]) < cutoff[:10]:
                 continue
-            qid = re.sub(r"[^A-Za-z0-9_-]", "_", e["id"])
-            p = ROOT / "research" / "queue" / f"{qid}.json"
-            if p.exists():
-                continue
-            save_json(p, {"ereignis_id": e["id"], "ticker": e["ticker"], "titel": e["titel"], "erstellt_utc": self.iso,
-                          "status": "offen", "kontext": {"ereignis": e, "profil": f"research/db/companies/{e['ticker']}.json",
-                          "these": f"research/theses/{e['ticker']}.json", "quelltext": e.get("quelltext")},
-                          "anleitung": ".claude/commands/research-analyse.md"})
-            self.store.set_status(e["id"], "zur_analyse_vorgemerkt")
-            self.queued.append(e["id"])
+            self._enqueue(e, e.get("quelltext"), "Regel: Wichtigkeit hoch")
 
 
 def main(now: datetime | None = None) -> int:
@@ -367,6 +392,9 @@ def main(now: datetime | None = None) -> int:
             ts["initialisiert"] = True
             ok_tickers.append(t)
     run.queue()
+    req = [x.strip() for x in os.environ.get("ANALYSE_ANFORDERN", "").split(",") if x.strip()]
+    if req:
+        run.request(req)
     # Fehlerzähler je Quelle/Unternehmen/Ursache (aufeinanderfolgende Läufe)
     for k in list(run.ops["fehler"]):
         if k not in run.errors:

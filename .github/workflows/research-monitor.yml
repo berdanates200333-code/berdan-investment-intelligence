@@ -4,7 +4,12 @@ name: Research-Monitor (Unternehmen, SEC, Nachrichten)
 # Frequenz: 3× täglich. SEC-Einreichungen und Nachrichten sind keine Echtzeitquelle für uns;
 # Quartalszahlen erscheinen meist ~22:05 Uhr MEZ (16:05 New York) und werden im 23:20-Uhr-Lauf erfasst.
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      analyse_anfordern:
+        description: "Optional: Ereignis-IDs (kommagetrennt), die unabhängig von der Wichtigkeit zur KI-Analyse vorgemerkt werden"
+        type: string
+        default: ""
   # ZEITPLAN-PLATZHALTER (wird nach erfolgreichem Probelauf aktiviert)
 
 permissions:
@@ -21,6 +26,7 @@ jobs:
     timeout-minutes: 20
     env:
       SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+      ANALYSE_ANFORDERN: ${{ inputs.analyse_anfordern }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

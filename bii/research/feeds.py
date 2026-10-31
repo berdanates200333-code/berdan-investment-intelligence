@@ -76,7 +76,13 @@ def yahoo_news(ticker: str) -> list[dict]:
     return items
 
 
+SCHEDULE = re.compile(r"(?i)(conference call|to host|will host|sets date|to report|will report|to announce|"
+                      r"webcast|to release|will release|to present|investor day)")
+
+
 def ir_importance(title: str) -> tuple[str, str]:
+    if SCHEDULE.search(title) and EARNINGS.search(title):
+        return "mittel", "Regel: Terminankündigung für Geschäftszahlen (enthält keine Zahlen)"
     if EARNINGS.search(title):
         return "hoch", "Regel: offizielle Mitteilung zu Geschäftszahlen"
     if MATERIAL.search(title):
