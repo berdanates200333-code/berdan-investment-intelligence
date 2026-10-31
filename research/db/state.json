@@ -1,0 +1,12 @@
+{
+  "unternehmen": {
+    "NVDA": {},
+    "AMD": {},
+    "MSFT": {
+      "news_volumen": {
+        "2026-10-31": 0
+      },
+      "news_letzter_lauf": "2026-10-31T13:08:24+00:00"
+    }
+  }
+}
