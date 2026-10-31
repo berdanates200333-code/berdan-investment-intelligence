@@ -182,6 +182,7 @@ def sandbox(tmp_path, monkeypatch):
     monkeypatch.setattr(rm.sec, "get_raw", lambda url: XBRL)
     monkeypatch.setattr(rm, "yahoo_quote", lambda s: {"kurs": 50.0, "vortag": 49.0, "datum": "2026-10-30", "waehrung": "USD", "quelle": "test"})
     monkeypatch.setenv("SEC_USER_AGENT", "Test Kontakt test@example.org")
+    monkeypatch.delenv("ANALYSE_ANFORDERN", raising=False)   # Workflow-Eingaben dürfen Tests nicht beeinflussen
     monkeypatch.setattr(rm.feeds, "google_news", lambda q: [
         {"titel": "Chipmaker beats forecast, raises outlook", "url": "https://news.google.com/rss/articles/x1", "domain": "www.reuters.com",
          "quelle_name": "Reuters", "veroeffentlicht": "2026-10-30T10:00:00+00:00", "vermittler": "Google News RSS"}])
