@@ -162,7 +162,11 @@ def write_all(run, cfg, profiles: dict, newsstats: dict) -> None:
     (REP / "latest.md").write_text("\n".join(L) + "\n")
     print("\n".join(L))
     reasons = [f"{e['ticker']}: {e['titel'][:70]}" for e in high]
-    persistent = [k for k, v in run.ops["fehler"].items() if v["folge"] == 2 or (v["folge"] > 2 and (v["folge"] - 2) % 5 == 0)]
+    # Konfigurationsfehler (z. B. fehlende SEC-Kontaktangabe) nur beim 2. Lauf und dann etwa wöchentlich (alle 21 Läufe)
+    def due(k, n):
+        every = 21 if "kontakt_fehlt" in k else 5
+        return n == 2 or (n > 2 and (n - 2) % every == 0)
+    persistent = [k for k, v in run.ops["fehler"].items() if due(k, v["folge"])]
     if persistent:
         reasons.append(f"Datenfehler seit ≥2 Läufen: {', '.join(persistent)[:100]}")
     flag, qflag = REP / "alert.txt", REP / "queue.txt"
