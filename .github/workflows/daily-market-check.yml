@@ -5,8 +5,15 @@ name: Täglicher Marktcheck (Forward-Test FT1)
 # (scripts/schedule_gate.py) berücksichtigen Sommer- und Winterzeit automatisch.
 # GitHub startet geplante Läufe teils mit Verzögerung (typisch Minuten, selten länger).
 on:
-  workflow_dispatch: {}
-  # ZEITPLAN-PLATZHALTER
+  workflow_dispatch:
+    inputs:
+      fehlertest:
+        description: "Nur zum Testen: absichtlichen Fehler auslösen (prüft die Fehlermeldung)"
+        type: boolean
+        default: false
+  # schedule:
+  #   - cron: "40 16 * * 1-5"   # = 18:40 Uhr Berlin während der Sommerzeit (MESZ)
+  #   - cron: "40 17 * * 1-5"   # = 18:40 Uhr Berlin während der Winterzeit (MEZ)
 
 permissions:
   contents: write   # Bericht + Journal ins Repo schreiben
@@ -29,6 +36,10 @@ jobs:
       - name: Zeitplan-Weiche (18:40 Uhr Berlin, Sommer-/Winterzeit)
         id: gate
         run: python scripts/schedule_gate.py "${{ github.event_name }}" "${{ github.event.schedule }}"
+
+      - name: Fehlertest (nur manuell)
+        if: github.event_name == 'workflow_dispatch' && inputs.fehlertest
+        run: echo "Absichtlicher Testfehler" && exit 1
 
       - name: Abhängigkeiten
         if: steps.gate.outputs.run == 'true'
@@ -73,6 +84,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh issue create --title "TECHNISCHER FEHLER Marktcheck $(TZ=Europe/Berlin date +%d.%m.%Y)" \
+          PREFIX="${{ inputs.fehlertest && 'TEST – ' || '' }}"
+          gh issue create --title "${PREFIX}TECHNISCHER FEHLER Marktcheck $(TZ=Europe/Berlin date +%d.%m.%Y)" \
             --body "Der Lauf ist fehlgeschlagen: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           Es wurden keine virtuellen Orders auf ungeprüfter Basis ausgeführt."
