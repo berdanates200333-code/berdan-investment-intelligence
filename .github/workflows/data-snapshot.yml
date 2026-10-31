@@ -1,0 +1,34 @@
+name: Daten-Schnappschuss (Forschung)
+
+# Nur manuell. Lädt öffentliche Forschungsdaten und speichert sie mit Prüfsumme im Repo.
+# Berührt weder FT1-Journal noch Portfolio-Zustand.
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-check   # nie gleichzeitig mit dem Marktcheck pushen
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q -r requirements.txt
+      - run: python scripts/fetch_snapshot.py
+      - name: Speichern
+        run: |
+          git config user.name "market-check-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/snapshots
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Daten-Schnappschuss $(date -u +%F)"
+          for i in 1 2 3; do git pull -q --rebase origin "${GITHUB_REF_NAME}" && git push -q && exit 0; sleep 5; done
+          exit 1
