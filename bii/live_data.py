@@ -65,6 +65,7 @@ class PriceSeries:
     secondary_name: str | None = None
     secondary_kind: str | None = None     # "unabhaengig" | "handelsplatz" | "proxy"
     tolerance: float = 0.015
+    issues: list[dict] = field(default_factory=list)   # [{"ursache", "quelle", "detail"}] für Zähler je Ursache
 
     @property
     def last_date(self):
@@ -98,6 +99,9 @@ class PriceSeries:
             dev = abs(self.close.loc[date] / self.secondary.loc[date] - 1)
         ok = bool(dev <= self.tolerance)
         return {**base, "ok": ok, "abweichung": round(float(dev), 5),
+                # Prüfstufe (Phase 2): nur „bestaetigt“ ist ein echter, unabhängiger Zweitkurs.
+                # „plausibilisiert“ (Proxy) prüft nur ein stabiles Kursverhältnis – KEIN identischer Zweitkurs.
+                "stufe": STUFE.get(self.secondary_kind, "unbekannt"), "zweitkurs": self.secondary_kind != "proxy",
                 "grund": None if ok else f"Abweichung {dev*100:.2f} % > Toleranz {self.tolerance*100:.1f} %"}
 
     def complete(self, now_utc: pd.Timestamp | None = None) -> pd.Series:
@@ -161,6 +165,9 @@ def ecb_eurusd() -> tuple[float, str]:
 
 
 TOLERANCE = {"unabhaengig": 0.015, "handelsplatz": 0.025, "proxy": 0.025}
+# Prüfstufen: bestaetigt = unabhängiger Anbieter, gleicher Kurs; eingeschraenkt = gleicher Anbieter, anderer
+# Handelsplatz; plausibilisiert = unabhängiger Vergleichswert (Proxy), nur Verhältnisprüfung.
+STUFE = {"unabhaengig": "bestaetigt", "handelsplatz": "eingeschraenkt", "proxy": "plausibilisiert"}
 
 
 def fetch(inst: Instrument) -> PriceSeries:
@@ -168,7 +175,7 @@ def fetch(inst: Instrument) -> PriceSeries:
     Reihenfolge der Zweitquellen: unabhängige Anbieter (Stooq, CoinGecko), gleiche ISIN an
     anderem Handelsplatz (eingeschränkt unabhängig), unabhängiger Proxy (Verhältnisprüfung)."""
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    primary, src, errors = None, None, []
+    primary, src, errors, causes = None, None, [], []
     candidates = [("Yahoo Finance", _yahoo, inst.yahoo, "unabhaengig"), ("Stooq", _stooq, inst.stooq, "unabhaengig"),
                   ("CoinGecko", _coingecko, inst.coingecko, "unabhaengig")]
     candidates += [(f"Yahoo {v} (anderer Handelsplatz)", _yahoo, v, "handelsplatz") for v in inst.alt_venues]
@@ -194,26 +201,54 @@ def fetch(inst: Instrument) -> PriceSeries:
             v = ps.verify(common[-1])
             if "abweichung" not in v:
                 raise ValueError(v["grund"])
-            return _finish(ps, {**v, "unabhaengig": kind != "handelsplatz"}, errors)
+            return _finish(ps, {**v, "unabhaengig": kind != "handelsplatz",
+                                "unabhaengiger_anbieter": kind != "handelsplatz"}, errors, causes)
         except Exception as e:  # noqa: BLE001 - Quellen dürfen ausfallen, wird protokolliert
             errors.append(f"{name}: {type(e).__name__}: {e}"[:200])
+            causes.append({"ursache": _cause(e), "quelle": name, "detail": str(e)[:120]})
     if primary is None:
         raise RuntimeError(f"{inst.key}: keine Datenquelle erreichbar ({'; '.join(errors)})")
-    return _finish(PriceSeries(inst, primary, src, now), {}, errors)
+    return _finish(PriceSeries(inst, primary, src, now), {}, errors, causes)
 
 
-def _finish(ps: PriceSeries, cc: dict, errors: list[str]) -> PriceSeries:
+def _cause(e: Exception) -> str:
+    """Stabile Fehlerkategorie einer Quelle (für getrennte Zähler je Ursache)."""
+    msg = str(e).lower()
+    if "währung" in msg:
+        return "falsche_waehrung"
+    if "zu wenige" in msg:
+        return "zu_wenige_daten"
+    if "unerwartete antwort" in msg or isinstance(e, (KeyError, ValueError)) and "datum" not in msg:
+        return "format"
+    if "datum" in msg or "kein kurs" in msg:
+        return "kein_gemeinsames_datum"
+    if isinstance(e, requests.Timeout):
+        return "zeitueberschreitung"
+    if isinstance(e, requests.RequestException):
+        return "verbindung"
+    return type(e).__name__
+
+
+def _finish(ps: PriceSeries, cc: dict, errors: list[str], causes: list[dict] | None = None) -> PriceSeries:
     ps.cross_check = cc
     ps.warnings.extend(errors)
+    ps.issues.extend(causes or [])
     if not cc:
         ps.warnings.append("Keine unabhängige Zweitquelle verfügbar – Kurs ungeprüft.")
+        ps.issues.append({"ursache": "zweitquelle_fehlt", "quelle": None, "detail": None})
     elif not cc["ok"]:
         ps.warnings.append(f"Quellenabweichung {cc['abweichung']*100:.2f} % > Toleranz – Datenprüfung erforderlich.")
+        ps.issues.append({"ursache": "abweichung_zweitquelle", "quelle": cc.get("quelle"), "detail": cc.get("grund")})
+    elif cc.get("stufe") == "plausibilisiert":
+        ps.issues.append({"ursache": "nur_proxy_plausibilisiert", "quelle": cc.get("quelle"),
+                          "detail": "kein unabhängiger Zweitkurs, nur Verhältnisprüfung"})
     age = (pd.Timestamp.now().normalize() - ps.last_date).days
     limit = 2 if ps.instrument.asset_class == "crypto" else 4
     if age > limit:
         ps.warnings.append(f"Letzter Kurs ist {age} Tage alt ({ps.last_date.date()}).")
+        ps.issues.append({"ursache": "veraltet", "quelle": ps.source, "detail": f"{age} Tage"})
     jumps = ps.close.pct_change().abs().tail(10)
     if (jumps > 0.35).any():
         ps.warnings.append(f"Unplausibler Tagessprung am {jumps.idxmax().date()} – Datenprüfung erforderlich.")
+        ps.issues.append({"ursache": "unplausibler_sprung", "quelle": ps.source, "detail": str(jumps.idxmax().date())})
     return ps

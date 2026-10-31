@@ -1,0 +1,38 @@
+[
+  {
+    "ticker": "NVDA",
+    "name": "NVIDIA Corporation",
+    "cik": "0001045810",
+    "geschaeftsjahr_ende": "letzter Sonntag im Januar",
+    "ir_feeds": [
+      {"name": "NVIDIA Newsroom (RSS)", "url": "https://nvidianews.nvidia.com/releases.xml"},
+      {"name": "NVIDIA Investor Relations (RSS)", "url": "https://investor.nvidia.com/rss/news-releases.xml"}
+    ],
+    "nachrichten_suche": "(nvidia OR \"jensen huang\") sourcelang:english",
+    "vergleich": ["AMD", "INTC", "AVGO"]
+  },
+  {
+    "ticker": "AMD",
+    "name": "Advanced Micro Devices, Inc.",
+    "cik": "0000002488",
+    "geschaeftsjahr_ende": "letzter Samstag im Dezember",
+    "ir_feeds": [
+      {"name": "AMD Investor Relations (RSS)", "url": "https://ir.amd.com/news-events/press-releases/rss"},
+      {"name": "AMD Newsroom (RSS)", "url": "https://www.amd.com/en/newsroom/press-releases.rss"}
+    ],
+    "nachrichten_suche": "(\"Advanced Micro Devices\" OR \"Lisa Su\") sourcelang:english",
+    "vergleich": ["NVDA", "INTC", "QCOM"]
+  },
+  {
+    "ticker": "MSFT",
+    "name": "Microsoft Corporation",
+    "cik": "0000789019",
+    "geschaeftsjahr_ende": "30. Juni",
+    "ir_feeds": [
+      {"name": "Microsoft News Center (RSS)", "url": "https://news.microsoft.com/feed/"},
+      {"name": "Microsoft Source (RSS)", "url": "https://news.microsoft.com/source/feed/"}
+    ],
+    "nachrichten_suche": "(microsoft OR \"satya nadella\") sourcelang:english",
+    "vergleich": ["AMZN", "GOOGL", "ORCL"]
+  }
+]

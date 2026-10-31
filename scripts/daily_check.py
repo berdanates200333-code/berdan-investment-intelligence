@@ -33,7 +33,11 @@ from bii.risk import RiskRules, drawdown_status  # noqa: E402
 BERLIN = ZoneInfo("Europe/Berlin")
 MOVE_ALERT = {"equity_etf": 0.04, "gold_etc": 0.04, "crypto": 0.12}
 OPS = ROOT / "journal" / "ops_status.json"
-KIND = {"unabhaengig": "✓", "proxy": "✓ Proxy", "handelsplatz": "≈"}
+KIND = {"unabhaengig": "✓", "proxy": "~ Proxy", "handelsplatz": "≈"}
+# Ursachen, die die Nutzung der Kurse beeinträchtigen (→ Benachrichtigungsregel 4)
+PROBLEM_CAUSES = {"abruf_fehlgeschlagen", "zweitquelle_fehlt", "abweichung_zweitquelle", "veraltet",
+                  "unplausibler_sprung", "order_blockiert", "signal_aufgeschoben", "bewertung_letzter_kurs"}
+INFO_CAUSES = {"nur_proxy_plausibilisiert"}   # Hinweis, kein Fehler
 
 
 def load_ops() -> dict:
@@ -41,8 +45,47 @@ def load_ops() -> dict:
         "datenproblem_folge": 0, "dd_warnung_aktiv": {}, "bewegung_gemeldet": {}, "letzter_wochenbericht": None}
 
 
+def update_counters(ops: dict, observed: list[tuple], now_utc) -> dict:
+    """ops['datenprobleme']['INSTRUMENT|ursache'] = {folge, gesamt, seit, zuletzt, quellen}.
+    Nicht mehr beobachtete Ursachen werden auf folge=0 gesetzt. Rückgabe: aktive Zähler {key: folge}."""
+    dp = ops.setdefault("datenprobleme", {})
+    seen = {}
+    for inst, cause, src in observed:
+        seen.setdefault(f"{inst}|{cause}", set()).add(src or "-")
+    stamp = now_utc.isoformat(timespec="seconds")
+    for k, srcs in seen.items():
+        e = dp.setdefault(k, {"folge": 0, "gesamt": 0, "seit": stamp})
+        if e["folge"] == 0:
+            e["seit"] = stamp
+        e["folge"] += 1
+        e["gesamt"] += 1
+        e["zuletzt"] = stamp
+        e["quellen"] = sorted(srcs)
+    for k, e in dp.items():
+        if k not in seen:
+            e["folge"] = 0
+    return {k: dp[k]["folge"] for k in seen}
+
+
+def stale_pending_orders(state: dict, now_utc) -> list[dict]:
+    """Prüfung (keine Regeländerung): offene Orders, deren Monatssignal älter ist als der letzte abgeschlossene Monat.
+    Nach Regelwerk v1.1 werden sie trotzdem ausgeführt; der Bericht weist darauf hin."""
+    last = str(forward.last_completed_month(now_utc))
+    out = []
+    for o in state.get("pending", []):
+        m = o["signal_id"].rsplit("-", 2)
+        month = f"{m[-2]}-{m[-1]}" if len(m) == 3 and m[-2].isdigit() else None
+        if month and month < last:
+            out.append({"key": o["signal_id"],
+                        "text": f"Offene Order {o['portfolio']} {o['aktion']} {o['asset']} beruht auf Monatssignal {month}; "
+                                f"seitdem ist {last} abgeschlossen (Ausführung nach v1.1 dennoch vorgesehen)"})
+    return out
+
+
 def dq_text(ps) -> str:
     cc = ps.cross_check
+    if cc.get("ok") and cc.get("art") == "proxy":
+        return f"~ {cc['quelle']}: Verhältnis Δ {cc['abweichung']*100:.2f} % (plausibilisiert, kein Zweitkurs)"
     if cc.get("ok"):
         return f"{KIND.get(cc.get('art'), '✓')} {cc['quelle']}: Δ {cc['abweichung']*100:.2f} %"
     if cc:
@@ -90,8 +133,9 @@ def main(now_utc: pd.Timestamp | None = None) -> int:
             ops["bewegung_gemeldet"][key] = bar
     for k in failures:
         lines.append(f"| {k} | – | – | – | – | – | ✗ nicht abrufbar |")
-    lines += ["", "Datenqualität: ✓ unabhängige Zweitquelle · ✓ Proxy = unabhängiger Vergleichswert (Verhältnisprüfung) · "
-              "≈ gleicher Anbieter, anderer Handelsplatz · ⚠ ungeprüft (keine Orders auf ungeprüfter Basis)", ""]
+    lines += ["", "Datenqualität: ✓ bestätigt durch unabhängigen Zweitkurs · ≈ gleicher Anbieter, anderer Handelsplatz "
+              "(eingeschränkt unabhängig) · ~ Proxy plausibilisiert (nur Verhältnisprüfung gegen ein anderes Instrument, "
+              "**kein Zweitkurs**; nach Regelwerk v1.1 für Ausführungen zulässig) · ⚠ ungeprüft (keine Orders auf ungeprüfter Basis)", ""]
 
     # Signale
     sigs = [e for e in result["events"] if e["typ"] == "signal" and e["aktion"] != "HALTEN"]
@@ -123,10 +167,25 @@ def main(now_utc: pd.Timestamp | None = None) -> int:
     problems += [f"Order blockiert {o['portfolio']} {o['asset']}: {o.get('blockiert_grund')}" for o in result["blocked"]]
     problems += [f"Signal aufgeschoben {d['portfolio']} {d['asset']} {d['monat']}: {d['grund']}" for d in result["deferred"]]
     problems += [f"Bewertung mit letztem bekannten Kurs: {a}" for a in result["stale_positions"]]
-    ops["datenproblem_folge"] = ops["datenproblem_folge"] + 1 if problems else 0
-    n = ops["datenproblem_folge"]
-    if problems and (n == 2 or (n > 2 and (n - 2) % 5 == 0)):
-        reasons.append(f"Datenproblem seit {n} Läufen")
+    # Zähler je Instrument und Ursache (statt eines gemeinsamen Zählers)
+    observed = [(k, "abruf_fehlgeschlagen", None) for k in failures]
+    observed += [(o["asset"], "order_blockiert", None) for o in result["blocked"]]
+    observed += [(d["asset"], "signal_aufgeschoben", None) for d in result["deferred"]]
+    observed += [(a, "bewertung_letzter_kurs", None) for a in result["stale_positions"]]
+    for key, ps in series.items():
+        observed += [(key, i["ursache"], i.get("quelle")) for i in ps.issues]
+    for k, n in update_counters(ops, observed, now_utc).items():
+        inst, cause = k.split("|", 1)
+        if cause in PROBLEM_CAUSES and (n == 2 or (n > 2 and (n - 2) % 5 == 0)):
+            reasons.append(f"Datenproblem {inst}/{cause} seit {n} Läufen")
+    # Gesamtzähler bleibt zur Kontinuität erhalten (früheres Feld)
+    ops["datenproblem_folge"] = ops.get("datenproblem_folge", 0) + 1 if problems else 0
+    stale_orders = stale_pending_orders(result["state"], now_utc)
+    for so in stale_orders:
+        problems.append(so["text"])
+        if so["key"] not in ops.setdefault("veraltete_order_gemeldet", []):
+            reasons.append(so["text"][:100])
+            ops["veraltete_order_gemeldet"].append(so["key"])
 
     # Portfolio
     rules = RiskRules()

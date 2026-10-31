@@ -1,0 +1,33 @@
+name: Heartbeat (Überwachung der Überwachung)
+
+# Prüft täglich, ob Marktcheck und Research-Monitor zuletzt erfolgreich gelaufen sind.
+# Grenze: Läuft auf derselben Plattform (GitHub Actions). Fällt GitHub Actions insgesamt aus oder
+# deaktiviert GitHub die Zeitpläne (öffentliche Repos nach 60 Tagen ohne Aktivität), fällt auch dieser
+# Heartbeat aus. Dafür ist der unabhängige Claude-Heartbeat vorgesehen (docs/PHASE2_RESEARCH_DESK.md).
+on:
+  schedule:
+    - cron: "35 6 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Frische der Läufe prüfen
+        id: hb
+        run: python scripts/heartbeat.py
+      - name: Ausfall melden (höchstens ein offenes Heartbeat-Issue)
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh issue list --state open --search "HEARTBEAT in:title" --json number --jq 'length' | grep -qv '^0$'; then exit 0; fi
+          gh issue create --title "HEARTBEAT: Überwachung ausgefallen oder veraltet $(date -u +%F)" \
+            --body "$(cat heartbeat.txt 2>/dev/null || echo 'siehe Workflow-Log') 
+          Lauf: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

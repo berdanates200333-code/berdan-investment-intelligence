@@ -11,6 +11,10 @@ on:
         description: "Nur zum Testen: absichtlichen Fehler auslösen (prüft die Fehlermeldung)"
         type: boolean
         default: false
+      produktiv:
+        description: "Ergebnisse ins Journal übernehmen? Standard: nein = Probelauf (keine virtuellen Orders/Signale gespeichert)"
+        type: boolean
+        default: false
   schedule:
     - cron: "40 16 * * 1-5"   # = 18:40 Uhr Berlin während der Sommerzeit (MESZ)
     - cron: "40 17 * * 1-5"   # = 18:40 Uhr Berlin während der Winterzeit (MEZ)
@@ -57,8 +61,10 @@ jobs:
         if: steps.gate.outputs.run == 'true'
         run: python -m pytest -q tests/test_journal_pins.py
 
+      # Manuelle Starts sind seit Phase 2 standardmäßig Probeläufe: Bericht nur im Log, nichts wird gespeichert.
+      # Grund: Ein produktiver Lauf setzt das Signaldatum und kann so Ausführungstage verschieben.
       - name: Ergebnisse speichern
-        if: steps.gate.outputs.run == 'true'
+        if: steps.gate.outputs.run == 'true' && (github.event_name == 'schedule' || inputs.produktiv)
         run: |
           git config user.name "market-check-bot"
           git config user.email "actions@users.noreply.github.com"
@@ -69,7 +75,7 @@ jobs:
           exit 1
 
       - name: Benachrichtigen (nur bei wichtigen Ereignissen)
-        if: steps.gate.outputs.run == 'true' && hashFiles('reports/alert.txt') != ''
+        if: steps.gate.outputs.run == 'true' && (github.event_name == 'schedule' || inputs.produktiv) && hashFiles('reports/alert.txt') != ''
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

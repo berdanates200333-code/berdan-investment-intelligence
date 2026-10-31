@@ -1,0 +1,75 @@
+name: Research-Monitor (Unternehmen und Meldungen)
+
+# Periodische Prüfung – KEIN Echtzeitmonitoring. Keine Orders, keine Broker-Verbindung, keine Zugangsschlüssel.
+# Datenquellen: SEC EDGAR (amtlich, frei), Unternehmens-Newsrooms (RSS), GDELT (frei), Kurse Yahoo/Stooq.
+# Zeitplan (UTC; Zeitplan gilt nur auf dem Standard-Branch des Repositorys):
+#   13:20 Mo–Fr   vor US-Börsenöffnung (Meldungen über Nacht)
+#   21:50 Mo–Fr   nach US-Börsenschluss (Quartalszahlen erscheinen meist 20:00–22:30 UTC)
+#   01:30 Di–Sa   spät eingereichte 8-K/Pressemitteilungen
+#   11:15 So      Wochenabschluss
+# Latenz einer Meldung bis zur Erfassung: typischerweise unter 8 Stunden, am Wochenende bis zu 1 Tag.
+on:
+  schedule:
+    - cron: "20 13 * * 1-5"
+    - cron: "50 21 * * 1-5"
+    - cron: "30 1 * * 2-6"
+    - cron: "15 11 * * 0"
+  workflow_dispatch: {}
+  push:   # echter Probelauf auf dem Entwicklungs-Branch
+    branches: [claude/phase2-research-desk]
+    paths: ["bii/research/**", "scripts/research_monitor.py", "research/desk/universe.json", "research/desk/theses/**",
+            ".github/workflows/research-monitor.yml"]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: research-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q -r requirements.txt
+      - name: Technische Tests (inkl. unveränderter FT1-Journal-Einträge)
+        run: python -m pytest -q tests
+      - name: Research-Monitor
+        run: python scripts/research_monitor.py
+      - name: FT1-Prüfung (nur lesend, bei manuellen Starts und Probeläufen)
+        if: github.event_name != 'schedule'
+        run: python scripts/ft1_audit.py
+      - name: Ergebnisse speichern
+        run: |
+          git config user.name "research-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add research/desk reports/ft1_audit.md 2>/dev/null || git add research/desk
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Research-Monitor $(date -u +%FT%H:%MZ)"
+          for i in 1 2 3; do git pull -q --rebase origin "${GITHUB_REF_NAME}" && git push -q && exit 0; sleep 5; done
+          exit 1
+      - name: Benachrichtigen (gebündelt, nur wichtige neue Ereignisse)
+        if: hashFiles('research/desk/alert.txt') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "Research: $(head -c 110 research/desk/alert.txt)" \
+            --body "$(cat research/desk/alert.txt)
+
+          Bericht: https://github.com/${{ github.repository }}/blob/${{ github.ref_name }}/research/desk/reports/latest.md
+          Analyseaufträge für Claude liegen in research/desk/queue/. Keine Anlageberatung."
+      - name: Technischen Fehler melden
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "TECHNISCHER FEHLER Research-Monitor $(date -u +%F)" \
+            --body "Lauf fehlgeschlagen: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

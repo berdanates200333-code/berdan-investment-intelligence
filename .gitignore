@@ -4,3 +4,5 @@ __pycache__/
 .env
 *.key
 reports/alert.txt
+research/desk/alert.txt
+heartbeat.txt
