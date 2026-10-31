@@ -11,9 +11,9 @@ on:
         description: "Nur zum Testen: absichtlichen Fehler auslösen (prüft die Fehlermeldung)"
         type: boolean
         default: false
-  # schedule:
-  #   - cron: "40 16 * * 1-5"   # = 18:40 Uhr Berlin während der Sommerzeit (MESZ)
-  #   - cron: "40 17 * * 1-5"   # = 18:40 Uhr Berlin während der Winterzeit (MEZ)
+  schedule:
+    - cron: "40 16 * * 1-5"   # = 18:40 Uhr Berlin während der Sommerzeit (MESZ)
+    - cron: "40 17 * * 1-5"   # = 18:40 Uhr Berlin während der Winterzeit (MEZ)
 
 permissions:
   contents: write   # Bericht + Journal ins Repo schreiben
