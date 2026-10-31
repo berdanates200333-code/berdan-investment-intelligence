@@ -8,6 +8,7 @@ im Journal mit der SHA-256-Prüfsumme des Dokuments eingetragen.
 |---|---|---|---|---|
 | FT1 v1.0 | 31.10.2026 | Erstfassung | Portfolios, 12M-Trendfilter, Kosten, Ausführung am ersten Schluss nach Signal | – |
 | FT1 v1.1 | 31.10.2026 | Betriebsregeln | Monatsabschluss je Handelskalender (Xetra vs. Bitcoin/UTC), Ausführung und Signale nur mit abgeschlossenen, datumsgenau gegengeprüften Kursen, Benachrichtigungsregeln, Zeitplan | keine. Einträge 1–4 bleiben unverändert. Bis dahin wurde nichts ausgeführt. |
+| FT1 v1.2 | 31.10.2026 | Betriebsregeln | Prüfstufen bestätigt/plausibel (Proxy ≠ Zweitkurs), T+1-Bestätigung für Xetra-Kurse, Datenfehler je Instrument und Ursache, Ursache „veraltet“ | keine. Einträge 1–5 bleiben unverändert. Bis dahin wurde nichts ausgeführt. |
 
 ## Begründung für die Einstufung als v1.1 statt FT2
 v1.0 sah vor, dass Änderungen als neue Version laufen. Die Strategie selbst ändert sich nicht:

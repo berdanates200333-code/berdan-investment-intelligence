@@ -37,6 +37,9 @@ class Instrument:
     asset_class: str = "equity_etf"
 
 
+# Prüfstufen (v1.2): nur ein unabhängiger Anbieter mit demselben Instrument "bestätigt" einen Kurs.
+STUFE = {"unabhaengig": "bestaetigt", "handelsplatz": "plausibel", "proxy": "plausibel"}
+
 # Beobachtungsuniversum Phase 1 (liquide, für deutsche Privatanleger handelbar)
 UNIVERSE = [
     Instrument("WORLD", "iShares Core MSCI World UCITS ETF (Acc)", "IE00B4L5Y983", "Xetra", "EUR",
@@ -97,22 +100,24 @@ class PriceSeries:
         else:
             dev = abs(self.close.loc[date] / self.secondary.loc[date] - 1)
         ok = bool(dev <= self.tolerance)
-        return {**base, "ok": ok, "abweichung": round(float(dev), 5),
-                "grund": None if ok else f"Abweichung {dev*100:.2f} % > Toleranz {self.tolerance*100:.1f} %"}
+        out = {**base, "ok": ok, "abweichung": round(float(dev), 5),
+               "stufe": STUFE.get(self.secondary_kind, "plausibel"),
+               "grund": None if ok else f"Abweichung {dev*100:.2f} % > Toleranz {self.tolerance*100:.1f} %"}
+        if self.secondary_kind == "proxy":
+            out["hinweis"] = "Proxy prüft die Kursbewegung (Verhältnis), nicht das Kursniveau"
+        return out
 
     def complete(self, now_utc: pd.Timestamp | None = None) -> pd.Series:
-        """Nur abgeschlossene Tagesbalken.
+        """Nur abgeschlossene, endgültige Tagesbalken (v1.2).
         Krypto: Tagesbalken = UTC-Kalendertag; der laufende UTC-Tag wird verworfen.
-        Xetra-Instrumente: der heutige Balken zählt erst nach 18:00 Uhr Berlin (Handelsschluss 17:30)."""
+        Xetra-Instrumente: ein Tagesschluss zählt erst ab dem FOLGETAG (Berlin), damit kein vorläufiger
+        Kurs kurz nach Handelsschluss als Signal- oder Ausführungskurs dient (T+1-Bestätigung)."""
         now_utc = now_utc or pd.Timestamp.now(tz="UTC")
         if self.instrument.asset_class == "crypto":
             cutoff = now_utc.tz_convert("UTC").normalize().tz_localize(None)
             return self.close[self.close.index < cutoff]
-        now_b = now_utc.tz_convert("Europe/Berlin")
-        today = now_b.normalize().tz_localize(None)
-        if now_b.hour < 18:
-            return self.close[self.close.index < today]
-        return self.close[self.close.index <= today]
+        today = now_utc.tz_convert("Europe/Berlin").normalize().tz_localize(None)
+        return self.close[self.close.index < today]
 
 
 def _yahoo(symbol: str, rng: str = "2y") -> pd.Series:
@@ -194,7 +199,7 @@ def fetch(inst: Instrument) -> PriceSeries:
             v = ps.verify(common[-1])
             if "abweichung" not in v:
                 raise ValueError(v["grund"])
-            return _finish(ps, {**v, "unabhaengig": kind != "handelsplatz"}, errors)
+            return _finish(ps, {**v, "unabhaengig": kind == "unabhaengig"}, errors)
         except Exception as e:  # noqa: BLE001 - Quellen dürfen ausfallen, wird protokolliert
             errors.append(f"{name}: {type(e).__name__}: {e}"[:200])
     if primary is None:

@@ -19,6 +19,7 @@ PINS = {
     3: ("FT1-TREND-GOLD-2026-09", "07f6043d1ba5fc5422b8af28e5ec76559919316833e13bad43027742eb1e9778"),
     4: ("FT1-TREND-BTC-2026-09", "e2abd93e7f91335e49a7d1d8ff4cd3d7b9eceb6d1d9f628cf82282eb18677df6"),
     5: (None, "a1287eca6f33187cec64b685eda8fd3827254cce72744f8e495aa351f5ddd752"),  # Regeländerung v1.1
+    6: (None, "efdf5bb69300dd2d78f9fad2c510834aeb418c1f6ed3578a95e01d76c3244360"),  # Regeländerung v1.2
 }
 
 

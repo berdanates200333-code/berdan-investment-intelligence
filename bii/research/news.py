@@ -55,7 +55,7 @@ def search(query: str, timespan: str = "3d", maxrecords: int = 75) -> list[dict]
     for attempt in range(3):
         r = requests.get(API, params=params, headers=UA, timeout=30)
         if r.status_code == 429:
-            time.sleep(6 * (attempt + 1))
+            time.sleep(15 * (attempt + 1))
             continue
         r.raise_for_status()
         try:

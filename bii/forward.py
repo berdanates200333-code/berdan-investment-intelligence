@@ -8,7 +8,7 @@ Strategie (unverändert seit v1.0, siehe docs/REGELWERK_FT1.md):
 - Ausführung: virtuell zum ersten Tagesschlusskurs NACH dem Datum der Signalerstellung.
 - Kosten: ETF/ETC 0,2 % je Seite, Krypto 0,5 % je Seite.
 
-Betriebsregeln v1.1 (docs/REGELWERK_FT1_v1.1.md) – Datenqualität und Monatsabschluss:
+Betriebsregeln v1.1/v1.2 (docs/REGELWERK_FT1_v1.1.md, _v1.2.md) – Datenqualität und Monatsabschluss:
 - Signale nur für vollständig abgeschlossene und datumsgenau gegengeprüfte Monatsschlüsse.
 - Ausführung nur zu abgeschlossenen, datumsgenau gegengeprüften Tagesschlusskursen.
 """
@@ -25,7 +25,7 @@ from . import journal
 ROOT = Path(__file__).resolve().parents[1]
 STATE = ROOT / "journal" / "portfolio_state.json"
 RULE = "FT1"
-RULE_VERSION = "1.1"
+RULE_VERSION = "1.2"
 SMA_MONTHS = 12
 COSTS = {"equity_etf": 0.002, "gold_etc": 0.002, "crypto": 0.005}
 PORTFOLIOS = {
@@ -177,7 +177,9 @@ def step(series: dict, now_utc: pd.Timestamp | None = None) -> dict:
                             "signal_id": o["signal_id"], "portfolio": o["portfolio"], "asset": o["asset"],
                             "aktion": o["aktion"], "kursdatum": str(d.date()), "kurs": round(px, 4),
                             "stueck": round(units, 6), "kosten_satz": cost_rate, "quelle": ps.source,
-                            "pruefung": check}, now=stamp)
+                            "pruefung": check, "pruefstufe": check.get("stufe"),
+                            "erkannt_tage_nach_kurs": int((now_utc.tz_convert("Europe/Berlin").tz_localize(None).normalize() - d).days)},
+                           now=stamp)
         events.append(e)
     state["pending"] = still
 

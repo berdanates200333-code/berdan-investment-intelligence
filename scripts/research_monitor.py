@@ -310,7 +310,9 @@ def main(now: datetime | None = None) -> int:
         prev = run.ops["fehler"].get(k, {"folge": 0})
         run.ops["fehler"][k] = {"folge": prev["folge"] + 1, "letzte_meldung": msg}
     run.ops["letzter_lauf_utc"] = run.iso
-    run.ops["letzter_erfolg_utc"] = run.iso if len(run.errors) < len(cfg) * 3 else run.ops.get("letzter_erfolg_utc")
+    # "Erfolg" = mindestens ein Unternehmensprofil mit SEC-Daten geladen (nicht nur: Skript lief durch)
+    if profiles:
+        run.ops["letzter_erfolg_utc"] = run.iso
     save_json(STATE, run.state)
     save_json(OPS, run.ops)
     from bii.research import report

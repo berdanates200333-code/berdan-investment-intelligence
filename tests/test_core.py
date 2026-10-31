@@ -91,7 +91,9 @@ def test_complete_bars_crypto_and_etf():
     assert btc.complete(utc("2026-11-02 17:40")).index[-1] == pd.Timestamp("2026-11-01")
     etf = make_ps("WORLD", pd.bdate_range("2026-10-26", "2026-11-02"), np.arange(6) + 100.0)
     assert etf.complete(utc("2026-11-02 15:00")).index[-1] == pd.Timestamp("2026-10-30")   # 16:00 Berlin
-    assert etf.complete(utc("2026-11-02 17:40")).index[-1] == pd.Timestamp("2026-11-02")   # 18:40 Berlin
+    # v1.2: Xetra-Schluss zählt erst ab dem Folgetag (T+1) – auch um 18:40 Uhr noch der 30.10.
+    assert etf.complete(utc("2026-11-02 17:40")).index[-1] == pd.Timestamp("2026-10-30")
+    assert etf.complete(utc("2026-11-03 06:00")).index[-1] == pd.Timestamp("2026-11-02")
 
 
 def test_october_close_etf_vs_btc():
@@ -140,23 +142,23 @@ def test_forward_signals_and_verified_execution(sandbox):
     assert acts == {("BENCH", "WORLD"): "KAUF", ("TREND", "WORLD"): "KAUF",
                     ("TREND", "GOLD"): "HALTEN", ("TREND", "BTC"): "KAUF"}
     assert all(e["daten"]["monat"] in ("start", "2026-10") for e in out["events"])
-    # Signale entstehen 2.11. -> Ausführung frühestens am Schluss 3.11. (ETF) bzw. UTC-Tag 3.11. (BTC)
+    # Signale entstehen 2.11. -> Ausführungskurs = Schluss 3.11. (ETF) bzw. UTC-Tag 3.11. (BTC);
+    # erkannt wird er erst, wenn er endgültig ist (ETF ab 4.11., BTC ab 4.11. 00:00 UTC)
     out2 = forward.step(_universe(), utc("2026-11-03 17:40"))
-    ex = {e["asset"]: e["kursdatum"] for e in out2["events"] if e["typ"] == "ausfuehrung"}
-    assert ex == {"WORLD": "2026-11-03"}                       # BTC-Tag 3.11. ist noch nicht abgeschlossen
+    assert not [e for e in out2["events"] if e["typ"] == "ausfuehrung"]
     out3 = forward.step(_universe("2026-11-04"), utc("2026-11-04 17:40"))
-    ex3 = {e["asset"]: e["kursdatum"] for e in out3["events"] if e["typ"] == "ausfuehrung"}
-    assert ex3 == {"BTC": "2026-11-03"}
+    ex3 = {e["asset"]: (e["kursdatum"], e["pruefstufe"]) for e in out3["events"] if e["typ"] == "ausfuehrung"}
+    assert ex3 == {"WORLD": ("2026-11-03", "bestaetigt"), "BTC": ("2026-11-03", "bestaetigt")}
     assert not out3["state"]["pending"] and journal.verify()[0]
 
 
 def test_no_execution_on_unverified_price(sandbox):
     forward.step(_universe(), utc("2026-11-02 17:40"))
-    out = forward.step(_universe(secondary_bad_on="2026-11-03"), utc("2026-11-03 17:40"))
+    out = forward.step(_universe(secondary_bad_on="2026-11-03"), utc("2026-11-04 17:40"))
     assert not [e for e in out["events"] if e["typ"] == "ausfuehrung"]
     assert out["blocked"] and "nicht bestätigt" in out["blocked"][0]["blockiert_grund"]
     # Fehlende Daten: keine Ausführung, Bewertung mit letztem bekannten Kurs
-    out2 = forward.step({}, utc("2026-11-03 18:00"))
+    out2 = forward.step({}, utc("2026-11-04 18:00"))
     assert not [e for e in out2["events"] if e["typ"] == "ausfuehrung"] and out2["blocked"]
 
 
