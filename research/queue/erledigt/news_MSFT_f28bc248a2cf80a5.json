@@ -3,7 +3,7 @@
   "ticker": "MSFT",
   "titel": "Microsoft expects to raise $25 billion in US bond sale, sources say",
   "erstellt_utc": "2026-10-31T17:14:55+00:00",
-  "status": "offen",
+  "status": "analysiert",
   "grund": "manuell angefordert",
   "kontext": {
     "ereignis": {
@@ -32,5 +32,6 @@
     "these": "research/theses/MSFT.json",
     "quelltext": "research/sources/MSFT/angefordert_3d4d177165af.txt"
   },
-  "anleitung": ".claude/commands/research-analyse.md"
+  "anleitung": ".claude/commands/research-analyse.md",
+  "analyse": "research/analyses/2026-10-31_MSFT_25mrd-anleihe.md"
 }
