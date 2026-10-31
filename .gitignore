@@ -4,3 +4,5 @@ __pycache__/
 .env
 *.key
 reports/alert.txt
+reports/research/alert.txt
+reports/research/queue.txt

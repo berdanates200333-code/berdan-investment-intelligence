@@ -1,0 +1,64 @@
+name: Research-Monitor (Unternehmen, SEC, Nachrichten)
+
+# Regelbasierte Erfassung (Python, keine KI, keine Schlüssel, keine Kosten).
+# Frequenz: 3× täglich. SEC-Einreichungen und Nachrichten sind keine Echtzeitquelle für uns;
+# Quartalszahlen erscheinen meist ~22:05 Uhr MEZ (16:05 New York) und werden im 23:20-Uhr-Lauf erfasst.
+on:
+  workflow_dispatch: {}
+  # ZEITPLAN-PLATZHALTER (wird nach erfolgreichem Probelauf aktiviert)
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: market-check   # nie gleichzeitig mit anderen schreibenden Workflows
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q -r requirements.txt
+      - name: Tests
+        run: python -m pytest -q tests
+      - name: Research-Monitor
+        run: python scripts/research_monitor.py
+      - name: Speichern
+        run: |
+          git config user.name "market-check-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add research reports
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Research-Monitor $(date -u +%F' '%H:%M)"
+          for i in 1 2 3; do git pull -q --rebase origin "${GITHUB_REF_NAME}" && git push -q && exit 0; sleep 5; done
+          exit 1
+      - name: Benachrichtigen (nur wichtige neue Ereignisse / anhaltende Datenfehler)
+        if: hashFiles('reports/research/alert.txt') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create research --color 1d76db --force >/dev/null
+          gh label create ki-analyse --color d93f0b --description "Startet die KI-Analyse (Claude-Aufgabe mit GitHub-Auslöser)" --force >/dev/null
+          LABELS="research"
+          [ -f reports/research/queue.txt ] && LABELS="research,ki-analyse"
+          BODY="$(cat reports/research/alert.txt)
+
+          Bericht: https://github.com/${{ github.repository }}/blob/${{ github.ref_name }}/reports/research/latest.md
+          Analyseaufträge: $(tr '\n' ' ' < reports/research/queue.txt 2>/dev/null || echo keine)
+          Regelbasierte Meldung (Python). Eine KI-Analyse folgt nur, wenn die Claude-Aufgabe eingerichtet ist oder manuell /research-analyse aufgerufen wird."
+          gh issue create --title "Research $(TZ=Europe/Berlin date +%d.%m.%Y): $(head -c 110 reports/research/alert.txt)" --label "$LABELS" --body "$BODY"
+      - name: Technischen Fehler melden
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "TECHNISCHER FEHLER Research-Monitor $(TZ=Europe/Berlin date +%d.%m.%Y)" \
+            --body "Lauf fehlgeschlagen: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

@@ -1,0 +1,30 @@
+name: Heartbeat (GitHub-intern)
+
+# Prüft täglich, ob Marktcheck und Research-Monitor rechtzeitig gelaufen sind.
+# Grenze: erkennt Ausfälle einzelner Workflows, NICHT einen Totalausfall von GitHub Actions.
+# Dafür ist der unabhängige Heartbeat (Claude-Aufgabe, Anthropic-Infrastruktur) vorgesehen.
+on:
+  workflow_dispatch: {}
+  # ZEITPLAN-PLATZHALTER
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Frische prüfen
+        id: hb
+        run: |
+          set +e
+          python scripts/heartbeat.py > hb.txt; echo "rc=$?" >> "$GITHUB_OUTPUT"; cat hb.txt
+      - name: Melden
+        if: steps.hb.outputs.rc != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "HEARTBEAT – Überwachung veraltet $(TZ=Europe/Berlin date +%d.%m.%Y)" --body "$(cat hb.txt)"

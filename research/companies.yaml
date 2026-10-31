@@ -1,0 +1,71 @@
+# Unternehmensuniversum der Research-Überwachung. Erweiterbar: neuen Block anlegen (CIK aus EDGAR).
+# Kuratierte Angaben (Geschäftsmodell, Management, Beziehungen) sind Hypothesen, bis die automatische
+# Prüfung sie in der jüngsten Pflichtveröffentlichung (10-K) findet ("pruefwort").
+# Nicht gefundene Angaben werden im Bericht als "unbestätigt" markiert, nie stillschweigend übernommen.
+
+unternehmen:
+  - ticker: NVDA
+    name: NVIDIA Corporation
+    cik: 1045810
+    boerse: NASDAQ
+    waehrung: USD
+    yahoo: NVDA
+    gdelt: '(Nvidia OR NVDA) sourcelang:english'
+    geschaeftsmodell: >-
+      Entwickelt GPUs, Beschleuniger-Systeme, Netzwerktechnik und Software (CUDA) vor allem für
+      Rechenzentren/KI sowie für Gaming, professionelle Visualisierung und Automobil. Fertigung
+      wird an Auftragsfertiger ausgelagert (fabless).
+    geschaeftsmodell_quelle: "Kurzfassung (Claude); Abgleich mit 10-K Item 1 im Profil"
+    management:
+      - {rolle: CEO, name: Jensen Huang, pruefwort: "Jensen"}
+      - {rolle: CFO, name: Colette Kress, pruefwort: "Colette"}
+    beziehungen:
+      - {art: lieferant, partner: TSMC, ticker: TSM, pruefwort: "Taiwan Semiconductor", beschreibung: "Auftragsfertigung von Chips"}
+      - {art: lieferant, partner: Samsung, ticker: null, pruefwort: "Samsung", beschreibung: "Fertigung/Speicher"}
+      - {art: lieferant, partner: SK hynix, ticker: null, pruefwort: "SK hynix", beschreibung: "HBM-Speicher"}
+      - {art: lieferant, partner: Micron, ticker: MU, pruefwort: "Micron", beschreibung: "Speicher"}
+      - {art: wettbewerber, partner: AMD, ticker: AMD, pruefwort: "AMD", beschreibung: "GPUs/CPUs"}
+      - {art: wettbewerber, partner: Intel, ticker: INTC, pruefwort: "Intel", beschreibung: "CPUs/Beschleuniger"}
+      - {art: wettbewerber, partner: Broadcom, ticker: AVGO, pruefwort: "Broadcom", beschreibung: "Netzwerk/Custom-ASICs"}
+
+  - ticker: AMD
+    name: Advanced Micro Devices, Inc.
+    cik: 2488
+    boerse: NASDAQ
+    waehrung: USD
+    yahoo: AMD
+    gdelt: '("Advanced Micro Devices" OR AMD) (chip OR chips OR GPU OR processor OR stock OR shares) sourcelang:english'
+    geschaeftsmodell: >-
+      Entwickelt CPUs (EPYC, Ryzen), GPUs/KI-Beschleuniger (Instinct, Radeon), FPGAs/adaptive SoCs
+      (ehemals Xilinx) und Semi-Custom-Chips (z. B. Spielkonsolen). Fertigung überwiegend extern (fabless).
+    geschaeftsmodell_quelle: "Kurzfassung (Claude); Abgleich mit 10-K Item 1 im Profil"
+    management:
+      - {rolle: CEO, name: Lisa Su, pruefwort: "Lisa T. Su"}
+      - {rolle: CFO, name: Jean Hu, pruefwort: "Jean Hu"}
+    beziehungen:
+      - {art: lieferant, partner: TSMC, ticker: TSM, pruefwort: "TSMC", beschreibung: "Auftragsfertigung"}
+      - {art: lieferant, partner: GlobalFoundries, ticker: GFS, pruefwort: "GLOBALFOUNDRIES", beschreibung: "Auftragsfertigung"}
+      - {art: wettbewerber, partner: NVIDIA, ticker: NVDA, pruefwort: "NVIDIA", beschreibung: "GPUs/KI-Beschleuniger"}
+      - {art: wettbewerber, partner: Intel, ticker: INTC, pruefwort: "Intel", beschreibung: "CPUs"}
+
+  - ticker: MSFT
+    name: Microsoft Corporation
+    cik: 789019
+    boerse: NASDAQ
+    waehrung: USD
+    yahoo: MSFT
+    gdelt: '(Microsoft OR MSFT) (Azure OR cloud OR OpenAI OR earnings OR revenue OR stock OR shares OR AI) sourcelang:english'
+    geschaeftsmodell: >-
+      Software und Cloud-Dienste: Azure (Cloud-Infrastruktur/KI), Microsoft 365/Office, LinkedIn,
+      Dynamics, Windows, Gaming (Xbox, Activision Blizzard), Suchmaschinenwerbung. Großer Abnehmer von
+      KI-Rechenzentrumshardware; Partnerschaft mit OpenAI.
+    geschaeftsmodell_quelle: "Kurzfassung (Claude); Abgleich mit 10-K Item 1 im Profil"
+    management:
+      - {rolle: CEO, name: Satya Nadella, pruefwort: "Satya Nadella"}
+      - {rolle: CFO, name: Amy Hood, pruefwort: "Amy E. Hood"}
+    beziehungen:
+      - {art: partner, partner: OpenAI, ticker: null, pruefwort: "OpenAI", beschreibung: "Strategische KI-Partnerschaft/Beteiligung"}
+      - {art: lieferant, partner: NVIDIA, ticker: NVDA, pruefwort: "NVIDIA", beschreibung: "KI-Beschleuniger"}
+      - {art: lieferant, partner: AMD, ticker: AMD, pruefwort: "AMD", beschreibung: "KI-Beschleuniger/CPUs"}
+      - {art: wettbewerber, partner: Amazon (AWS), ticker: AMZN, pruefwort: "Amazon", beschreibung: "Cloud"}
+      - {art: wettbewerber, partner: Alphabet (Google), ticker: GOOGL, pruefwort: "Google", beschreibung: "Cloud/Suche/KI"}
