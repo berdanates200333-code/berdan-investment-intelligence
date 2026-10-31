@@ -1,0 +1,42 @@
+{
+  "ereignis_id": "news:NVDA:13d8d62294d9305c",
+  "ticker": "NVDA",
+  "titel": "Nvidia Stock Declines as Competition Probe—and Spy Report—Presents New AI Concern",
+  "erstellt_utc": "2026-10-31T17:14:55+00:00",
+  "status": "offen",
+  "grund": "manuell angefordert",
+  "kontext": {
+    "ereignis": {
+      "analyse_status": "bestand",
+      "art": "news",
+      "erfasst_utc": "2026-10-31T16:16:07+00:00",
+      "erstellt_utc": "2026-10-31T16:16:09+00:00",
+      "hash": "efe4a21bef46049d058c69b3d9fc53f87f46e65331628d031f5fd60d8d9a3460",
+      "id": "news:NVDA:13d8d62294d9305c",
+      "prev_hash": "f17612b38c0a1a5856d9754f7d1e044423881ff8eda7f055d7ce7bc6c6bfae33",
+      "quelle": {
+        "herausgeber": "Barron's",
+        "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOQUhtWFVGeXRmbWVsY083ckRJRUYwOHhEYTZ5cURrdlktQXNyVWk2QllyVVZpRGY3cWg0X3JTNU4xWVBjUTZ4M1pRWWJLR1V3c0FYcGsxQWwzd29jYjRETGpHYnhqMFZpMlk4RG81OFU2NUtUZ3JVaEwxY1NYZkVuYUxabUpWRjNyeVJmbg?oc=5",
+        "vermittler": "Google News RSS"
+      },
+      "regel": "Regel: Schlüsselwörter ['probe'] in etabliertem Medium",
+      "seq": 33,
+      "ticker": "NVDA",
+      "titel": "Nvidia Stock Declines as Competition Probe—and Spy Report—Presents New AI Concern",
+      "typ": "ereignis",
+      "veroeffentlicht": "2026-10-29T17:19:00+00:00",
+      "wichtigkeit": "mittel",
+      "zeitliche_naehe_zu": {
+        "ereignisse": [
+          "ir:NVDA:efb7fea1c4e3ff5f"
+        ],
+        "hinweis": "nur zeitliche Nähe (≤3 Tage), kein inhaltlicher Nachweis"
+      },
+      "zuverlaessigkeit": "Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium)"
+    },
+    "profil": "research/db/companies/NVDA.json",
+    "these": "research/theses/NVDA.json",
+    "quelltext": "research/sources/NVDA/angefordert_932736301aae.txt"
+  },
+  "anleitung": ".claude/commands/research-analyse.md"
+}

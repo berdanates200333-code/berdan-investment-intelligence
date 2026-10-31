@@ -1,0 +1,36 @@
+{
+  "ereignis_id": "news:MSFT:6e272da23f666563",
+  "ticker": "MSFT",
+  "titel": "Microsoft plans to raise $25 billion in debt as it pursues AI buildout",
+  "erstellt_utc": "2026-10-31T17:14:55+00:00",
+  "status": "offen",
+  "grund": "manuell angefordert",
+  "kontext": {
+    "ereignis": {
+      "analyse_status": "bestand",
+      "art": "news",
+      "erfasst_utc": "2026-10-31T16:16:07+00:00",
+      "erstellt_utc": "2026-10-31T16:16:12+00:00",
+      "hash": "01a7069c5d1c0686dc344e829192c64f7d24280757213d68d51accb965299389",
+      "id": "news:MSFT:6e272da23f666563",
+      "prev_hash": "62163b32b0e88bdde8ceb38b90744149df9d70847e282b80c5665f1cdec79381",
+      "quelle": {
+        "herausgeber": "CNBC",
+        "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE5hSGRFRkVaWUNYZDQ0MC14QVh6c2ZLUjdjbkpNWDV1X0RfZGRFSm1ON3ltUXByMFM0a0tlWkFPY1BDUzhpS1piMFJnR0dUMXBEUlJ5X29hT3dRQWE5UFBrU2tpV2NfY0pqOHJySE80MHBlVnlKbFoxbnRnZ9IBgAFBVV95cUxQUXFfSW5CQVJfdHFVSkpaTVpNUnFuZHcwUkx4MEN2SFE1Q0VjRE10bG83Z0NEeXdJOW5wZ1drdDVOSnlFY3RkbnAzb3AzY0ppYm9qMGtqNFVSU1VjeHY1clB2X3ZKUkJjSG8tX1lHQWVqTGo4al9SeXo3d3NEV1ZQZQ?oc=5",
+        "vermittler": "Google News RSS"
+      },
+      "regel": "Regel: Nachricht ohne Schlüsselwort",
+      "seq": 265,
+      "ticker": "MSFT",
+      "titel": "Microsoft plans to raise $25 billion in debt as it pursues AI buildout",
+      "typ": "ereignis",
+      "veroeffentlicht": "2026-10-30T00:38:00+00:00",
+      "wichtigkeit": "niedrig",
+      "zuverlaessigkeit": "Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium)"
+    },
+    "profil": "research/db/companies/MSFT.json",
+    "these": "research/theses/MSFT.json",
+    "quelltext": "research/sources/MSFT/angefordert_1c744a9750f5.txt"
+  },
+  "anleitung": ".claude/commands/research-analyse.md"
+}

@@ -1,5 +1,5 @@
 # Advanced Micro Devices, Inc. (AMD)
-Stand 2026-10-31T16:28:31+00:00 · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)
+Stand 2026-10-31T17:14:55+00:00 · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)
 
 **SEC-Finanzdaten:** nicht aktualisiert (SEC nicht erreichbar)
 

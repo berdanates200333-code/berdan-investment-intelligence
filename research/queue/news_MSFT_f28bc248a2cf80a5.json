@@ -1,0 +1,36 @@
+{
+  "ereignis_id": "news:MSFT:f28bc248a2cf80a5",
+  "ticker": "MSFT",
+  "titel": "Microsoft expects to raise $25 billion in US bond sale, sources say",
+  "erstellt_utc": "2026-10-31T17:14:55+00:00",
+  "status": "offen",
+  "grund": "manuell angefordert",
+  "kontext": {
+    "ereignis": {
+      "analyse_status": "bestand",
+      "art": "news",
+      "erfasst_utc": "2026-10-31T16:16:07+00:00",
+      "erstellt_utc": "2026-10-31T16:16:12+00:00",
+      "hash": "c89d402ee3b06de4be2c8e3778a376cf1e410eacf6d42a88afe6fc08c7ac300b",
+      "id": "news:MSFT:f28bc248a2cf80a5",
+      "prev_hash": "17c5262b16d5637cf6daf09d5cc27eeb4230db70d51081de49b7b4c96bf0c1b2",
+      "quelle": {
+        "herausgeber": "Reuters",
+        "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNakliRm9KY3R6ekRkaEl2SzZaUWtUdzczRlRyYmJNd2V2MDBLdkVVZjZQSmtVd3pzYk5JREM4M29hVHREdHBLWGljQ19rTWV5LVJMcmM0UW1OME9EY2MtTGcyRUpCcjVaYmcyVk1ZMEY5aWdvRmRpdy0tMGRfSWF2anVwQlBEOFNtaklfNDdsQURObDVXOERYejh6U3hTYzh0RGpJUDk4cU1KOE01N1FDdl9R?oc=5",
+        "vermittler": "Google News RSS"
+      },
+      "regel": "Regel: Nachricht ohne Schlüsselwort",
+      "seq": 250,
+      "ticker": "MSFT",
+      "titel": "Microsoft expects to raise $25 billion in US bond sale, sources say",
+      "typ": "ereignis",
+      "veroeffentlicht": "2026-10-29T18:01:00+00:00",
+      "wichtigkeit": "niedrig",
+      "zuverlaessigkeit": "Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium)"
+    },
+    "profil": "research/db/companies/MSFT.json",
+    "these": "research/theses/MSFT.json",
+    "quelltext": "research/sources/MSFT/angefordert_3d4d177165af.txt"
+  },
+  "anleitung": ".claude/commands/research-analyse.md"
+}
