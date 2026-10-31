@@ -6,6 +6,7 @@ Persönliches, regelbasiertes Research-, Backtest- und Forward-Test-System. **Nu
 - Phase-1-Bericht: [`docs/PHASE1_BERICHT.md`](docs/PHASE1_BERICHT.md)
 - Vorab festgelegtes Regelwerk: [`docs/REGELWERK_FT1.md`](docs/REGELWERK_FT1.md) (v1.0) · [`v1.1`](docs/REGELWERK_FT1_v1.1.md) · [Änderungen](docs/REGELWERK_AENDERUNGEN.md)
 - Backtest-Ergebnisse: [`research/backtest_phase1.md`](research/backtest_phase1.md) · Szenarien: [`research/szenarien.md`](research/szenarien.md)
+- Momentum-Forschung: [Plan](docs/research/MOMENTUM_PLAN.md) · [Ergebnis](research/momentum_m1_m3.md) · [Fazit](docs/research/MOMENTUM_FAZIT.md)
 - Journal (append-only, Hash-Kette): [`journal/journal.jsonl`](journal/journal.jsonl)
 
 ## Aufbau

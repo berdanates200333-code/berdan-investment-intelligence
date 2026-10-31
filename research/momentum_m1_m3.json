@@ -1,0 +1,587 @@
+{
+  "erstellt": "2026-10-31T11:42:49+00:00",
+  "daten": {
+    "ff_10ind_monthly.csv": {
+      "quelle": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/10_Industry_Portfolios_CSV.zip",
+      "zeilen": 1203,
+      "von": "1926-07-01",
+      "bis": "2026-09-01",
+      "sha256": "6db5095978e0f84bf6e64e8fd79b17a9a0ef5f16732c911351ac5b3be65cb81f",
+      "hinweis": "Average Value Weighted Returns -- Monthly, Prozent"
+    },
+    "ff_factors_monthly.csv": {
+      "quelle": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_CSV.zip",
+      "zeilen": 1203,
+      "von": "1926-07-01",
+      "bis": "2026-09-01",
+      "sha256": "f5ea2fa174b3fbf9c4764a2d5bc61169f61bd5bb27912f663908d15c1623fc70",
+      "hinweis": "Monatlich, Prozent; RF = 1-Monats-T-Bill"
+    },
+    "etf_monthly.csv": {
+      "quelle": "Yahoo Finance chart API (inoffiziell), adjclose, interval=1mo",
+      "zeilen": 404,
+      "von": "1993-02-01",
+      "bis": "2026-09-01",
+      "sha256": "da74c5afe64c413a8736ac0a3fab186067140433cc4d7f7820a69577e821fe61",
+      "hinweis": "USD, Monatsanfang-Stempel = Monatsschluss dieses Monats; Fehler: {}"
+    }
+  },
+  "plan": "docs/research/MOMENTUM_PLAN.md",
+  "anzahl_varianten": 36,
+  "in_sample_beste_variante": "M2 L12 S0 N5",
+  "in_sample_beste_je_familie": {
+    "M1": "M1 L12 S0 N3",
+    "M2": "M2 L12 S0 N5",
+    "M3": "M3 L12 S0 N2"
+  },
+  "out_of_sample": {
+    "Markt (nur halten)": {
+      "start": "1970-01-01",
+      "ende": "2026-09-01",
+      "jahre": 56.8,
+      "gesamtrendite": 394.60605066392696,
+      "cagr": 0.11113479478894739,
+      "volatilitaet": 0.15782907992695208,
+      "sharpe": 0.47543764113232356,
+      "sortino": 0.6670414173378642,
+      "max_drawdown": -0.5031170717166413,
+      "calmar": 0.22089251396251408,
+      "laengste_unterwasserphase_monate": 72,
+      "schlechtester_monat": -0.22590000000000002,
+      "schlechtestes_12m_fenster": -0.4256738570312244,
+      "umschichtungen_pro_jahr": 0.0,
+      "kosten_gesamt_pct_pa": 0.0,
+      "anzahl_trades": 0
+    },
+    "10 Branchen gleichgewichtet": {
+      "start": "1970-01-01",
+      "ende": "2026-09-01",
+      "jahre": 56.8,
+      "gesamtrendite": 486.88370993205046,
+      "cagr": 0.11524738256333689,
+      "volatilitaet": 0.14982395568076928,
+      "sharpe": 0.5172249449199144,
+      "sortino": 0.7249560822407459,
+      "max_drawdown": -0.48061963671950925,
+      "calmar": 0.2397891674796374,
+      "laengste_unterwasserphase_monate": 44,
+      "schlechtester_monat": -0.21058,
+      "schlechtestes_12m_fenster": -0.4095450969622254,
+      "umschichtungen_pro_jahr": 0.0,
+      "kosten_gesamt_pct_pa": 0.0,
+      "anzahl_trades": 0
+    },
+    "M1 L12 S0 N3 (IS-beste M1)": {
+      "start": "1970-01-01",
+      "ende": "2026-09-01",
+      "jahre": 56.8,
+      "gesamtrendite": 1046.0117622508328,
+      "cagr": 0.13035537940175934,
+      "volatilitaet": 0.16334619636907527,
+      "sharpe": 0.5704126884867159,
+      "sortino": 0.8057728351255072,
+      "max_drawdown": -0.43628637266143144,
+      "calmar": 0.2987839812794662,
+      "laengste_unterwasserphase_monate": 58,
+      "schlechtester_monat": -0.24869999999999995,
+      "schlechtestes_12m_fenster": -0.38599807800113395,
+      "umschichtungen_pro_jahr": 6.373239436619719,
+      "kosten_gesamt_pct_pa": 0.009366197183098593,
+      "anzahl_trades": 399,
+      "gewinnquote": 0.6115288220551378,
+      "durchschn_gewinn": 0.14587805002844015,
+      "durchschn_verlust": -0.05577490831900361,
+      "profit_factor": 4.117268716832971,
+      "durchschn_haltedauer_monate": 5.080200501253133,
+      "max_verlustserie": 8
+    },
+    "M2 L12 S0 N5 (IS-beste M2)": {
+      "start": "1970-01-01",
+      "ende": "2026-09-01",
+      "jahre": 56.8,
+      "gesamtrendite": 597.9067463885709,
+      "cagr": 0.1192838832072931,
+      "volatilitaet": 0.12918319062721398,
+      "sharpe": 0.6057197549678972,
+      "sortino": 0.7807456621590361,
+      "max_drawdown": -0.32125317400754627,
+      "calmar": 0.3713080301098943,
+      "laengste_unterwasserphase_monate": 55,
+      "schlechtester_monat": -0.22888000000000003,
+      "schlechtestes_12m_fenster": -0.2790669363484184,
+      "umschichtungen_pro_jahr": 7.200704225352113,
+      "kosten_gesamt_pct_pa": 0.007661971830985916,
+      "anzahl_trades": 435,
+      "gewinnquote": 0.6068965517241379,
+      "durchschn_gewinn": 0.17592361938006146,
+      "durchschn_verlust": -0.04958894503321869,
+      "profit_factor": 5.477054958652081,
+      "durchschn_haltedauer_monate": 6.466666666666667,
+      "max_verlustserie": 6
+    },
+    "M3 L12 S0 N2 (IS-beste M3)": {
+      "start": "1970-01-01",
+      "ende": "2026-09-01",
+      "jahre": 56.8,
+      "gesamtrendite": 808.3388677213792,
+      "cagr": 0.1252385139450245,
+      "volatilitaet": 0.16123396591910016,
+      "sharpe": 0.5475502629813457,
+      "sortino": 0.7407608087001086,
+      "max_drawdown": -0.3940930059437706,
+      "calmar": 0.3177892326333079,
+      "laengste_unterwasserphase_monate": 63,
+      "schlechtester_monat": -0.27154999999999996,
+      "schlechtestes_12m_fenster": -0.3037484326384856,
+      "umschichtungen_pro_jahr": 2.904929577464789,
+      "kosten_gesamt_pct_pa": 0.006373239436619719,
+      "anzahl_trades": 150,
+      "gewinnquote": 0.5933333333333334,
+      "durchschn_gewinn": 0.2183954864040379,
+      "durchschn_verlust": -0.05360217415374827,
+      "profit_factor": 5.944583404460375,
+      "durchschn_haltedauer_monate": 8.086666666666666,
+      "max_verlustserie": 6
+    }
+  },
+  "out_of_sample_alle_varianten": {
+    "M1 L6 S0 N2": {
+      "cagr": 0.1260223604382189,
+      "sharpe": 0.5196859638831908,
+      "max_dd": -0.4085182575898407,
+      "wechsel_pa": 6.725352112676057
+    },
+    "M1 L6 S0 N3": {
+      "cagr": 0.11584486203191124,
+      "sharpe": 0.49145879661281905,
+      "max_dd": -0.4322203275098341,
+      "wechsel_pa": 8.345070422535212
+    },
+    "M1 L6 S0 N5": {
+      "cagr": 0.12148291215017037,
+      "sharpe": 0.5501935093579252,
+      "max_dd": -0.45549434321438576,
+      "wechsel_pa": 8.6443661971831
+    },
+    "M1 L6 S1 N2": {
+      "cagr": 0.09988065586992811,
+      "sharpe": 0.38352889053589523,
+      "max_dd": -0.4421050985597479,
+      "wechsel_pa": 6.725352112676057
+    },
+    "M1 L6 S1 N3": {
+      "cagr": 0.10568460673193836,
+      "sharpe": 0.4358280808535005,
+      "max_dd": -0.4420028624313571,
+      "wechsel_pa": 8.345070422535212
+    },
+    "M1 L6 S1 N5": {
+      "cagr": 0.10652396322225988,
+      "sharpe": 0.46299655456619215,
+      "max_dd": -0.46038098986146914,
+      "wechsel_pa": 8.6443661971831
+    },
+    "M1 L12 S0 N2": {
+      "cagr": 0.12929521504834773,
+      "sharpe": 0.5253297019491916,
+      "max_dd": -0.4749433323760728,
+      "wechsel_pa": 5.387323943661972
+    },
+    "M1 L12 S0 N3": {
+      "cagr": 0.13035537940175934,
+      "sharpe": 0.5704126884867159,
+      "max_dd": -0.43628637266143144,
+      "wechsel_pa": 6.373239436619719
+    },
+    "M1 L12 S0 N5": {
+      "cagr": 0.12821149778548246,
+      "sharpe": 0.5914854452731845,
+      "max_dd": -0.40878835175682937,
+      "wechsel_pa": 6.919014084507043
+    },
+    "M1 L12 S1 N2": {
+      "cagr": 0.13462977423149924,
+      "sharpe": 0.5524159138394716,
+      "max_dd": -0.48184221118713777,
+      "wechsel_pa": 5.369718309859155
+    },
+    "M1 L12 S1 N3": {
+      "cagr": 0.12676092549204454,
+      "sharpe": 0.5497590711379384,
+      "max_dd": -0.400167249203658,
+      "wechsel_pa": 6.355633802816902
+    },
+    "M1 L12 S1 N5": {
+      "cagr": 0.12062748364133746,
+      "sharpe": 0.5417749779244799,
+      "max_dd": -0.4121804316842037,
+      "wechsel_pa": 6.901408450704226
+    },
+    "M2 L6 S0 N2": {
+      "cagr": 0.11658061588214919,
+      "sharpe": 0.5032739976593908,
+      "max_dd": -0.278455529439691,
+      "wechsel_pa": 6.93661971830986
+    },
+    "M2 L6 S0 N3": {
+      "cagr": 0.10200480810058998,
+      "sharpe": 0.45505295945210095,
+      "max_dd": -0.2693136580969855,
+      "wechsel_pa": 8.52112676056338
+    },
+    "M2 L6 S0 N5": {
+      "cagr": 0.10262757856010762,
+      "sharpe": 0.5112651646708668,
+      "max_dd": -0.25220515700727986,
+      "wechsel_pa": 8.890845070422536
+    },
+    "M2 L6 S1 N2": {
+      "cagr": 0.09324226485733367,
+      "sharpe": 0.3597942733785495,
+      "max_dd": -0.3471257475591447,
+      "wechsel_pa": 6.93661971830986
+    },
+    "M2 L6 S1 N3": {
+      "cagr": 0.0947625032732975,
+      "sharpe": 0.3967224332628988,
+      "max_dd": -0.3419459898206505,
+      "wechsel_pa": 8.503521126760564
+    },
+    "M2 L6 S1 N5": {
+      "cagr": 0.09132415508171055,
+      "sharpe": 0.4120029038434769,
+      "max_dd": -0.30213819482464,
+      "wechsel_pa": 8.873239436619718
+    },
+    "M2 L12 S0 N2": {
+      "cagr": 0.12742074330305853,
+      "sharpe": 0.5402073118346609,
+      "max_dd": -0.37092671984487746,
+      "wechsel_pa": 5.352112676056338
+    },
+    "M2 L12 S0 N3": {
+      "cagr": 0.12820793330844915,
+      "sharpe": 0.6012686274329068,
+      "max_dd": -0.33737537578044186,
+      "wechsel_pa": 6.338028169014085
+    },
+    "M2 L12 S0 N5": {
+      "cagr": 0.1192838832072931,
+      "sharpe": 0.6057197549678972,
+      "max_dd": -0.32125317400754627,
+      "wechsel_pa": 7.200704225352113
+    },
+    "M2 L12 S1 N2": {
+      "cagr": 0.12431471062577804,
+      "sharpe": 0.5215716576502943,
+      "max_dd": -0.47576472260307656,
+      "wechsel_pa": 5.352112676056338
+    },
+    "M2 L12 S1 N3": {
+      "cagr": 0.11817517030665514,
+      "sharpe": 0.5346671692560252,
+      "max_dd": -0.3632932084010061,
+      "wechsel_pa": 6.338028169014085
+    },
+    "M2 L12 S1 N5": {
+      "cagr": 0.1093174501059011,
+      "sharpe": 0.5235207750041571,
+      "max_dd": -0.32117398399072006,
+      "wechsel_pa": 7.200704225352113
+    },
+    "M3 L6 S0 N2": {
+      "cagr": 0.11233395432043092,
+      "sharpe": 0.49895622718475896,
+      "max_dd": -0.27317330125643047,
+      "wechsel_pa": 4.647887323943662
+    },
+    "M3 L6 S0 N3": {
+      "cagr": 0.11177983605354691,
+      "sharpe": 0.5364619129310548,
+      "max_dd": -0.27054611427357655,
+      "wechsel_pa": 5.792253521126761
+    },
+    "M3 L6 S0 N5": {
+      "cagr": 0.10196005689970233,
+      "sharpe": 0.5057732093407171,
+      "max_dd": -0.24656399536607998,
+      "wechsel_pa": 6.443661971830986
+    },
+    "M3 L6 S1 N2": {
+      "cagr": 0.09995605451043454,
+      "sharpe": 0.40580325672171486,
+      "max_dd": -0.37759625289021914,
+      "wechsel_pa": 4.630281690140845
+    },
+    "M3 L6 S1 N3": {
+      "cagr": 0.10250459017380265,
+      "sharpe": 0.45441441320791626,
+      "max_dd": -0.33369038014885477,
+      "wechsel_pa": 5.774647887323944
+    },
+    "M3 L6 S1 N5": {
+      "cagr": 0.09287110380891828,
+      "sharpe": 0.4232299399713162,
+      "max_dd": -0.30702678583456,
+      "wechsel_pa": 6.426056338028169
+    },
+    "M3 L12 S0 N2": {
+      "cagr": 0.1252385139450245,
+      "sharpe": 0.5475502629813457,
+      "max_dd": -0.3940930059437706,
+      "wechsel_pa": 2.904929577464789
+    },
+    "M3 L12 S0 N3": {
+      "cagr": 0.1259046478358561,
+      "sharpe": 0.5868928735924107,
+      "max_dd": -0.3318662366183439,
+      "wechsel_pa": 3.75
+    },
+    "M3 L12 S0 N5": {
+      "cagr": 0.11559550394489482,
+      "sharpe": 0.579587779970228,
+      "max_dd": -0.31642222104443696,
+      "wechsel_pa": 4.559859154929578
+    },
+    "M3 L12 S1 N2": {
+      "cagr": 0.11478593376920831,
+      "sharpe": 0.48879064640427133,
+      "max_dd": -0.4615347252102475,
+      "wechsel_pa": 2.922535211267606
+    },
+    "M3 L12 S1 N3": {
+      "cagr": 0.11473396288012627,
+      "sharpe": 0.5117000762493453,
+      "max_dd": -0.33712757599013055,
+      "wechsel_pa": 3.767605633802817
+    },
+    "M3 L12 S1 N5": {
+      "cagr": 0.11184701840520006,
+      "sharpe": 0.5407972274432816,
+      "max_dd": -0.310125214188928,
+      "wechsel_pa": 4.559859154929578
+    }
+  },
+  "anteil_varianten_cagr_ueber_markt_oos": 0.6388888888888888,
+  "anteil_varianten_sharpe_ueber_markt_oos": 0.7222222222222222,
+  "walk_forward": {
+    "auswahl": [
+      {
+        "fenster": "1940–1949",
+        "gewaehlt": "M2 L12 S0 N5"
+      },
+      {
+        "fenster": "1950–1959",
+        "gewaehlt": "M2 L12 S0 N5"
+      },
+      {
+        "fenster": "1960–1969",
+        "gewaehlt": "M2 L12 S0 N5"
+      },
+      {
+        "fenster": "1970–1979",
+        "gewaehlt": "M2 L12 S0 N5"
+      },
+      {
+        "fenster": "1980–1989",
+        "gewaehlt": "M2 L12 S0 N5"
+      },
+      {
+        "fenster": "1990–1999",
+        "gewaehlt": "M2 L12 S0 N5"
+      },
+      {
+        "fenster": "2000–2009",
+        "gewaehlt": "M2 L12 S0 N5"
+      },
+      {
+        "fenster": "2010–2019",
+        "gewaehlt": "M2 L12 S0 N5"
+      },
+      {
+        "fenster": "2020–2026",
+        "gewaehlt": "M2 L12 S0 N5"
+      }
+    ],
+    "strategie": {
+      "start": "1940-01-01",
+      "ende": "2026-09-01",
+      "jahre": 86.8,
+      "gesamtrendite": 23007.841995078812,
+      "cagr": 0.1227452015526862,
+      "volatilitaet": 0.12759864374085073,
+      "sharpe": 0.6990019460499147,
+      "sortino": 0.8947509079851594,
+      "max_drawdown": -0.32125317400754627,
+      "calmar": 0.38208245547109493,
+      "laengste_unterwasserphase_monate": 55,
+      "schlechtester_monat": -0.23746,
+      "schlechtestes_12m_fenster": -0.2790669363484184
+    },
+    "markt": {
+      "start": "1940-01-01",
+      "ende": "2026-09-01",
+      "jahre": 86.8,
+      "gesamtrendite": 11668.924321719393,
+      "cagr": 0.11399342793093847,
+      "volatilitaet": 0.14935476011678073,
+      "sharpe": 0.5646884293020906,
+      "sortino": 0.7846490852372533,
+      "max_drawdown": -0.5031170717166412,
+      "calmar": 0.22657435881074675,
+      "laengste_unterwasserphase_monate": 72,
+      "schlechtester_monat": -0.22590000000000002,
+      "schlechtestes_12m_fenster": -0.4256738570312244
+    },
+    "jahrzehnte": [
+      {
+        "jahrzehnt": "1940er",
+        "strategie": 0.09053312484896225,
+        "markt": 0.09489938227126737,
+        "mehrrendite": -0.00436625742230512
+      },
+      {
+        "jahrzehnt": "1950er",
+        "strategie": 0.2143809400430916,
+        "markt": 0.18343736054420123,
+        "mehrrendite": 0.030943579498890372
+      },
+      {
+        "jahrzehnt": "1960er",
+        "strategie": 0.0875763414640327,
+        "markt": 0.08258255644694446,
+        "mehrrendite": 0.004993785017088248
+      },
+      {
+        "jahrzehnt": "1970er",
+        "strategie": 0.09651053264454368,
+        "markt": 0.06059683503071267,
+        "mehrrendite": 0.03591369761383101
+      },
+      {
+        "jahrzehnt": "1980er",
+        "strategie": 0.147166108974901,
+        "markt": 0.168722552738646,
+        "mehrrendite": -0.021556443763744992
+      },
+      {
+        "jahrzehnt": "1990er",
+        "strategie": 0.20319775097011306,
+        "markt": 0.17992308051364492,
+        "mehrrendite": 0.02327467045646814
+      },
+      {
+        "jahrzehnt": "2000er",
+        "strategie": 0.04355566287043433,
+        "markt": -0.0038002067642533,
+        "mehrrendite": 0.04735586963468763
+      },
+      {
+        "jahrzehnt": "2010er",
+        "strategie": 0.11352168442564636,
+        "markt": 0.136006890687846,
+        "mehrrendite": -0.02248520626219963
+      },
+      {
+        "jahrzehnt": "2020er",
+        "strategie": 0.11741770622896341,
+        "markt": 0.1496563618910054,
+        "mehrrendite": -0.03223865566204198
+      }
+    ],
+    "anteil_jahrzehnte_positiv": 0.5555555555555556
+  },
+  "sensitivitaet_beste": {
+    "Basis (lag 1, 0,2 %)": {
+      "cagr": 0.1192838832072931,
+      "mehrrendite_vs_markt": 0.008149088418345718,
+      "sharpe": 0.6057197549678972,
+      "max_dd": -0.32125317400754627
+    },
+    "lag 2": {
+      "cagr": 0.1093174501059011,
+      "mehrrendite_vs_markt": -0.0018173446830462847,
+      "sharpe": 0.5235207750041571,
+      "max_dd": -0.32117398399072006
+    },
+    "Kosten 0,5 %": {
+      "cagr": 0.10660879054567407,
+      "mehrrendite_vs_markt": -0.004526004243273318,
+      "sharpe": 0.5172706390859807,
+      "max_dd": -0.32899199251270883
+    },
+    "lag 2 + 0,5 %": {
+      "cagr": 0.09671735508999268,
+      "mehrrendite_vs_markt": -0.014417439698954704,
+      "sharpe": 0.43705181078775196,
+      "max_dd": -0.33128950842390836
+    }
+  },
+  "steuer_szenario_oos": {
+    "M2 L12 S0 N5": {
+      "endwert_vor_liquidation": 2560287.38368847,
+      "steuern_laufend": 417100.2277819962,
+      "steuer_bei_liquidation": 55174.934872110425,
+      "endwert_nach_steuern": 2505112.4488163595,
+      "cagr_nach_steuern": 0.10222455853769952
+    },
+    "Markt (nur halten)": {
+      "endwert_vor_liquidation": 3956060.5066392645,
+      "steuern_laufend": 0.0,
+      "steuer_bei_liquidation": 728541.4210382742,
+      "endwert_nach_steuern": 3227519.0856009903,
+      "cagr_nach_steuern": 0.10715682656553982
+    }
+  },
+  "etf_umsetzung": {
+    "zeitraum": "2000-02-01–2026-09-01",
+    "regel": "M2 L12 S0 N5",
+    "strategie": {
+      "start": "2000-02-01",
+      "ende": "2026-09-01",
+      "jahre": 26.7,
+      "gesamtrendite": 6.360929833551591,
+      "cagr": 0.07773000806997987,
+      "volatilitaet": 0.11473530759009173,
+      "sharpe": 0.546350442814689,
+      "sortino": 0.7964445945130446,
+      "max_drawdown": -0.22020056380445263,
+      "calmar": 0.35299640803375687,
+      "laengste_unterwasserphase_monate": 55,
+      "schlechtester_monat": -0.0949596789393563,
+      "schlechtestes_12m_fenster": -0.16763372893717743,
+      "umschichtungen_pro_jahr": 7.116104868913858,
+      "kosten_gesamt_pct_pa": 0.007610486891385769,
+      "anzahl_trades": 206,
+      "gewinnquote": 0.5436893203883495,
+      "durchschn_gewinn": 0.153024957332262,
+      "durchschn_verlust": -0.05180926059676957,
+      "profit_factor": 3.519208856412067,
+      "durchschn_haltedauer_monate": 6.669902912621359,
+      "max_verlustserie": 5
+    },
+    "spy": {
+      "start": "2000-02-01",
+      "ende": "2026-09-01",
+      "jahre": 26.7,
+      "gesamtrendite": 7.7422716477604165,
+      "cagr": 0.08470317443828979,
+      "volatilitaet": 0.15111028276225588,
+      "sharpe": 0.4903100793113569,
+      "sortino": 0.687281385577263,
+      "max_drawdown": -0.5078482927715586,
+      "calmar": 0.1667883414080731,
+      "laengste_unterwasserphase_monate": 74,
+      "schlechtester_monat": -0.1651866140371726,
+      "schlechtestes_12m_fenster": -0.43424399342916953
+    },
+    "hinweis": "kurzer Zeitraum, nur Plausibilitätsprüfung; Sektor-ETFs in USD"
+  },
+  "kriterien": {
+    "1_oos_vorteil": true,
+    "2_walk_forward_60pct": false,
+    "3_robust_lag2_kosten": false,
+    "4_nach_steuern_vorn": false,
+    "historisch_vielversprechend": false
+  }
+}
