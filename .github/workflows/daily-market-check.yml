@@ -1,13 +1,12 @@
 name: Täglicher Marktcheck (Forward-Test FT1)
 
-# Läuft kostenlos auf GitHub-Servern (keine Echtgeld-Orders, keine Broker-Verbindung).
-# Der automatische Zeitplan ist bewusst AUSKOMMENTIERT, bis Berdan ihn freigibt.
-# Freigabe = die drei Zeilen unter "schedule" einkommentieren.
+# Läuft kostenlos auf GitHub-Servern. Keine Echtgeld-Orders, keine Broker-Verbindung, keine Zugangsdaten.
+# Zeitplan: Mo–Fr 18:40 Uhr Europe/Berlin. GitHub-Cron ist UTC; zwei Einträge + Weiche
+# (scripts/schedule_gate.py) berücksichtigen Sommer- und Winterzeit automatisch.
+# GitHub startet geplante Läufe teils mit Verzögerung (typisch Minuten, selten länger).
 on:
   workflow_dispatch: {}
-  # schedule:
-  #   # 16:40 UTC = 18:40 Uhr MEZ (Winter) / 17:40 Uhr MESZ (Sommer); Xetra schließt 17:30 Uhr
-  #   - cron: "40 16 * * 1-5"
+  # ZEITPLAN-PLATZHALTER
 
 permissions:
   contents: write   # Bericht + Journal ins Repo schreiben
@@ -20,30 +19,60 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install -q -r requirements.txt
-      - name: Technische Tests
+
+      - name: Zeitplan-Weiche (18:40 Uhr Berlin, Sommer-/Winterzeit)
+        id: gate
+        run: python scripts/schedule_gate.py "${{ github.event_name }}" "${{ github.event.schedule }}"
+
+      - name: Abhängigkeiten
+        if: steps.gate.outputs.run == 'true'
+        run: pip install -q -r requirements.txt
+
+      - name: Technische Tests (inkl. Unveränderlichkeit der FT1-Signale)
+        if: steps.gate.outputs.run == 'true'
         run: python -m pytest -q tests
+
       - name: Marktcheck
+        if: steps.gate.outputs.run == 'true'
         run: python scripts/daily_check.py
+
       - name: Journal-Integrität prüfen
-        run: python -c "import sys; sys.path.insert(0,'.'); from bii import journal; ok,m=journal.verify(); print(m); sys.exit(0 if ok else 1)"
+        if: steps.gate.outputs.run == 'true'
+        run: python -m pytest -q tests/test_journal_pins.py
+
       - name: Ergebnisse speichern
+        if: steps.gate.outputs.run == 'true'
         run: |
           git config user.name "market-check-bot"
           git config user.email "actions@users.noreply.github.com"
           git add reports journal
-          git diff --cached --quiet || git commit -m "Marktcheck $(date -u +%F)"
-          git push
-      - name: Benachrichtigen (nur bei Signal, Warnung oder Datenausfall)
-        if: hashFiles('reports/alert.txt') != ''
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Marktcheck $(TZ=Europe/Berlin date +%F)"
+          for i in 1 2 3; do git pull -q --rebase origin "${GITHUB_REF_NAME}" && git push -q && exit 0; sleep 5; done
+          exit 1
+
+      - name: Benachrichtigen (nur bei wichtigen Ereignissen)
+        if: steps.gate.outputs.run == 'true' && hashFiles('reports/alert.txt') != ''
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh issue create --title "Marktcheck $(date -u +%d.%m.%Y): $(head -c 120 reports/alert.txt)" \
-            --body "Bericht: https://github.com/${{ github.repository }}/blob/${{ github.ref_name }}/reports/latest.md"
+          gh issue create --title "Marktcheck $(TZ=Europe/Berlin date +%d.%m.%Y): $(head -c 120 reports/alert.txt)" \
+            --body "$(cat reports/alert.txt)
+
+          Bericht: https://github.com/${{ github.repository }}/blob/${{ github.ref_name }}/reports/latest.md
+          Alle Signale sind virtuell. Echtgeld-Handel ist ausgeschlossen."
+
+      - name: Technischen Fehler melden
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "TECHNISCHER FEHLER Marktcheck $(TZ=Europe/Berlin date +%d.%m.%Y)" \
+            --body "Der Lauf ist fehlgeschlagen: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          Es wurden keine virtuellen Orders auf ungeprüfter Basis ausgeführt."

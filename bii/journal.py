@@ -28,11 +28,13 @@ def read(path: Path = JOURNAL) -> list[dict]:
     return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
 
 
-def append(entry: dict, path: Path = JOURNAL) -> dict:
+def append(entry: dict, path: Path = JOURNAL, now: datetime | None = None) -> dict:
+    """now: nur für Tests/Simulation; im Betrieb immer die echte Uhrzeit (Git-Commit belegt sie zusätzlich)."""
     entries = read(path)
     prev = entries[-1]["hash"] if entries else GENESIS
+    now = now or datetime.now(timezone.utc)
     e = {"seq": len(entries) + 1,
-         "erstellt_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+         "erstellt_utc": now.astimezone(timezone.utc).isoformat(timespec="seconds"),
          **entry, "prev_hash": prev}
     e["hash"] = _hash(e)
     path.parent.mkdir(parents=True, exist_ok=True)
