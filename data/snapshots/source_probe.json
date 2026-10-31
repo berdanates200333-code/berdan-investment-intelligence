@@ -1,0 +1,35 @@
+{
+  "ishares_nav_eunl": {
+    "status": 200,
+    "bytes": 3889099,
+    "typ": "text/html; charset=utf-8"
+  },
+  "onvista_api": {
+    "status": 200,
+    "bytes": 41316,
+    "typ": "application/json"
+  },
+  "boerse_frankfurt": {
+    "status": 200,
+    "bytes": 313845,
+    "typ": "text/html; charset=utf-8"
+  },
+  "ecb_fx": {
+    "status": 200,
+    "bytes": 534,
+    "typ": "text/csv"
+  },
+  "stooq": {
+    "fehler": "HTTPSConnectionPool(host='stooq.com', port=443): Max retries exceeded with url: /q/d/l/?s=eunl.de&i=d (Caused by ConnectTimeoutError(<HTTPSConnection("
+  },
+  "fred": {
+    "status": 200,
+    "bytes": 301521,
+    "typ": "application/csv"
+  },
+  "sec_edgar": {
+    "status": 403,
+    "bytes": 4819,
+    "typ": "text/html"
+  }
+}

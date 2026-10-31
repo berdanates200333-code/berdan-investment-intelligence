@@ -1,0 +1,29 @@
+{
+  "abgerufen_utc": "2026-10-31T11:41:43+00:00",
+  "dateien": {
+    "ff_10ind_monthly.csv": {
+      "quelle": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/10_Industry_Portfolios_CSV.zip",
+      "zeilen": 1203,
+      "von": "1926-07-01",
+      "bis": "2026-09-01",
+      "sha256": "6db5095978e0f84bf6e64e8fd79b17a9a0ef5f16732c911351ac5b3be65cb81f",
+      "hinweis": "Average Value Weighted Returns -- Monthly, Prozent"
+    },
+    "ff_factors_monthly.csv": {
+      "quelle": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_CSV.zip",
+      "zeilen": 1203,
+      "von": "1926-07-01",
+      "bis": "2026-09-01",
+      "sha256": "f5ea2fa174b3fbf9c4764a2d5bc61169f61bd5bb27912f663908d15c1623fc70",
+      "hinweis": "Monatlich, Prozent; RF = 1-Monats-T-Bill"
+    },
+    "etf_monthly.csv": {
+      "quelle": "Yahoo Finance chart API (inoffiziell), adjclose, interval=1mo",
+      "zeilen": 404,
+      "von": "1993-02-01",
+      "bis": "2026-09-01",
+      "sha256": "da74c5afe64c413a8736ac0a3fab186067140433cc4d7f7820a69577e821fe61",
+      "hinweis": "USD, Monatsanfang-Stempel = Monatsschluss dieses Monats; Fehler: {}"
+    }
+  }
+}
