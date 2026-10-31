@@ -30,17 +30,20 @@ class Instrument:
     yahoo: str | None = None
     stooq: str | None = None
     coingecko: str | None = None
+    # gleiche ISIN an anderen deutschen Handelsplätzen (Yahoo-Kürzel) – nur eingeschränkt unabhängig
+    alt_venues: tuple = ()
     asset_class: str = "equity_etf"
 
 
 # Beobachtungsuniversum Phase 1 (liquide, für deutsche Privatanleger handelbar)
 UNIVERSE = [
     Instrument("WORLD", "iShares Core MSCI World UCITS ETF (Acc)", "IE00B4L5Y983", "Xetra", "EUR",
-               yahoo="EUNL.DE", stooq="eunl.de"),
+               yahoo="EUNL.DE", stooq="eunl.de", alt_venues=("EUNL.F", "EUNL.DU", "EUNL.MU", "EUNL.SG")),
     Instrument("SP500", "iShares Core S&P 500 UCITS ETF (Acc)", "IE00B5BMR087", "Xetra", "EUR",
-               yahoo="SXR8.DE", stooq="sxr8.de"),
+               yahoo="SXR8.DE", stooq="sxr8.de", alt_venues=("SXR8.F", "SXR8.DU", "SXR8.MU", "SXR8.SG")),
     Instrument("GOLD", "Xetra-Gold (physisch hinterlegte Inhaberschuldverschreibung)", "DE000A0S9GB0", "Xetra", "EUR",
-               yahoo="4GLD.DE", stooq="4gld.de", asset_class="gold_etc"),
+               yahoo="4GLD.DE", stooq="4gld.de", asset_class="gold_etc",
+               alt_venues=("4GLD.F", "4GLD.DU", "4GLD.MU", "4GLD.SG")),
     Instrument("BTC", "Bitcoin", None, "Spot (Referenzkurs)", "EUR",
                yahoo="BTC-EUR", coingecko="bitcoin", asset_class="crypto"),
     Instrument("ETH", "Ethereum", None, "Spot (Referenzkurs)", "EUR",
@@ -75,7 +78,9 @@ def _yahoo(symbol: str, rng: str = "2y") -> pd.Series:
     ind = res["indicators"]
     vals = ind.get("adjclose", [{}])[0].get("adjclose") or ind["quote"][0]["close"]
     s = pd.Series(vals, index=ts.tz_convert("Europe/Berlin").normalize().tz_localize(None), dtype=float)
-    return s[~s.index.duplicated(keep="last")].dropna()
+    s = s[~s.index.duplicated(keep="last")].dropna()
+    s.attrs["currency"] = res.get("meta", {}).get("currency")
+    return s
 
 
 def _stooq(symbol: str) -> pd.Series:
@@ -102,28 +107,36 @@ def ecb_eurusd() -> tuple[float, str]:
     return float(df["OBS_VALUE"].iloc[-1]), str(df["TIME_PERIOD"].iloc[-1])
 
 
-def fetch(inst: Instrument, tolerance: float = 0.015) -> PriceSeries:
+def fetch(inst: Instrument, tolerance: float = 0.015, venue_tolerance: float = 0.025) -> PriceSeries:
+    """Primärquelle + Gegenprüfung. Reihenfolge der Zweitquellen: unabhängige Anbieter
+    (Stooq, CoinGecko), danach gleiche ISIN an anderem Handelsplatz (nur eingeschränkt unabhängig)."""
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
     primary, src, errors = None, None, []
-    for name, fn, arg in (("Yahoo Finance", _yahoo, inst.yahoo), ("Stooq", _stooq, inst.stooq),
-                          ("CoinGecko", _coingecko, inst.coingecko)):
+    candidates = [("Yahoo Finance", _yahoo, inst.yahoo, True), ("Stooq", _stooq, inst.stooq, True),
+                  ("CoinGecko", _coingecko, inst.coingecko, True)]
+    candidates += [(f"Yahoo {v} (anderer Handelsplatz)", _yahoo, v, False) for v in inst.alt_venues]
+    for name, fn, arg, independent in candidates:
         if not arg:
             continue
         try:
             s = fn(arg)
-            if len(s) < 50:
+            if len(s) < 50 and primary is None:
                 raise ValueError("zu wenige Datenpunkte")
+            cur = s.attrs.get("currency")
+            if cur and cur != inst.currency:
+                raise ValueError(f"Währung {cur} statt {inst.currency}")
             if primary is None:
                 primary, src = s, name
-            else:
-                # Gegenprüfung am letzten gemeinsamen Datum
-                common = primary.index.intersection(s.index)
-                if len(common):
-                    d = common[-1]
-                    dev = abs(primary[d] / s[d] - 1)
-                    ps = PriceSeries(inst, primary, src, now)
-                    return _finish(ps, {"quelle": name, "datum": str(d.date()), "abweichung": round(float(dev), 5),
-                                        "ok": bool(dev <= tolerance)}, errors)
+                continue
+            common = primary.index.intersection(s.index)
+            if not len(common):
+                raise ValueError("kein gemeinsames Datum")
+            d = common[-1]
+            dev = abs(primary[d] / s[d] - 1)
+            tol = tolerance if independent else venue_tolerance
+            return _finish(PriceSeries(inst, primary, src, now),
+                           {"quelle": name, "datum": str(d.date()), "abweichung": round(float(dev), 5),
+                            "ok": bool(dev <= tol), "unabhaengig": independent}, errors)
         except Exception as e:  # noqa: BLE001 - Quellen dürfen ausfallen, wird protokolliert
             errors.append(f"{name}: {type(e).__name__}: {e}"[:200])
     if primary is None:

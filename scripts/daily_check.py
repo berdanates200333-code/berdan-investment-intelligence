@@ -58,15 +58,23 @@ def main() -> int:
         sig = forward.trend_signal(c, today)
         trend = "–" if sig is None else ("über SMA" if sig["investiert"] else "UNTER SMA") + f" ({sig['abstand_zur_sma']*100:+.1f} %)"
         cc = ps.cross_check
-        dq = (f"✓ {ps.source} / {cc['quelle']} Δ{cc['abweichung']*100:.2f} %" if cc.get("ok")
-              else f"⚠ {ps.source}, " + ("; ".join(ps.warnings)[:80] if ps.warnings else "ungeprüft"))
+        if cc.get("ok"):
+            mark = "✓" if cc.get("unabhaengig", True) else "≈"
+            dq = f"{mark} {ps.source} vs. {cc['quelle']}: Δ {cc['abweichung']*100:.2f} %"
+        elif cc:
+            dq = f"⚠ Abweichung {cc['abweichung']*100:.2f} % zu {cc['quelle']} – Datenprüfung erforderlich"
+        else:
+            dq = f"⚠ nur {ps.source}, Zweitquelle ausgefallen"
+        old_px = [w for w in ps.warnings if "Tage alt" in w or "Tagessprung" in w]
+        if old_px:
+            dq += " · " + "; ".join(old_px)
         lines.append(f"| {ps.instrument.name[:34]} | {ps.last:,.2f} {ps.instrument.currency} | {ps.last_date:%d.%m.} | "
                      f"{d1*100:+.1f} % | {m1*100:+.1f} % | {trend} | {dq} |")
         if abs(d1) >= MOVE_ALERT[ps.instrument.asset_class]:
             alerts.append(f"{key}: Tagesbewegung {d1*100:+.1f} %")
     for k, v in failures.items():
         lines.append(f"| {k} | – | – | – | – | – | ✗ nicht abrufbar |")
-    lines.append("")
+    lines += ["", "Legende Datenqualität: ✓ unabhängige Zweitquelle bestätigt · ≈ gleicher Anbieter, anderer Handelsplatz · ⚠ ungeprüft", ""]
 
     # Signale
     sigs = [e for e in result["events"] if e["typ"] == "signal" and e["aktion"] != "HALTEN"]
@@ -76,8 +84,9 @@ def main() -> int:
         lines.append("Keine neuen Signale. **Keine Handlung erforderlich.**")
     for e in sigs:
         d = e["daten"]
-        lines.append(f"- **{e['aktion']} {e['asset']}** ({e['portfolio']}), Signal-ID `{e['signal_id']}`: "
-                     f"Monatsschluss {d.get('monatsschluss', '–')} vs. 12M-SMA {d.get('sma12', '–')}. "
+        why = ("Startkauf Buy & Hold (Vergleichsportfolio)" if e["portfolio"] == "BENCH" else
+               f"Monatsschluss {d.get('monat')} {d.get('monatsschluss')} vs. 12M-SMA {d.get('sma12')}")
+        lines.append(f"- **{e['aktion']} {e['asset']}** ({e['portfolio']}), Signal-ID `{e['signal_id']}`: {why}. "
                      f"Zielgewicht {e['zielgewicht']*100:.0f} %. Ausführung virtuell zum nächsten Tagesschluss.")
     for e in execs:
         lines.append(f"- Ausgeführt (virtuell): {e['aktion']} {e['asset']} ({e['portfolio']}) zu {e['kurs']} am {e['kursdatum']}.")
