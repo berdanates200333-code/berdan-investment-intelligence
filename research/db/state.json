@@ -2,23 +2,23 @@
   "unternehmen": {
     "NVDA": {
       "news_volumen": {
-        "2026-10-31": 115
+        "2026-10-31": 140
       },
-      "news_letzter_lauf": "2026-10-31T16:24:37+00:00",
+      "news_letzter_lauf": "2026-10-31T16:28:31+00:00",
       "initialisiert": true
     },
     "AMD": {
       "news_volumen": {
-        "2026-10-31": 85
+        "2026-10-31": 86
       },
-      "news_letzter_lauf": "2026-10-31T16:24:37+00:00",
+      "news_letzter_lauf": "2026-10-31T16:28:31+00:00",
       "initialisiert": true
     },
     "MSFT": {
       "news_volumen": {
-        "2026-10-31": 115
+        "2026-10-31": 142
       },
-      "news_letzter_lauf": "2026-10-31T16:24:37+00:00",
+      "news_letzter_lauf": "2026-10-31T16:28:31+00:00",
       "initialisiert": true
     }
   }

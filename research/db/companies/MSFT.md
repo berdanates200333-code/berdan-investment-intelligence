@@ -1,5 +1,5 @@
 # Microsoft Corporation (MSFT)
-Stand 2026-10-31T16:24:37+00:00 · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)
+Stand 2026-10-31T16:28:31+00:00 · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)
 
 **SEC-Finanzdaten:** nicht aktualisiert (SEC nicht erreichbar)
 
