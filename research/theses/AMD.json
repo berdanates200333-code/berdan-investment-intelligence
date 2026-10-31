@@ -1,0 +1,75 @@
+{
+  "ticker": "AMD",
+  "version": 2,
+  "stand": "2026-10-31",
+  "status": "vorläufig – Annahmen von Claude aus Wissensstand gesetzt, NICHT mit aktuellen SEC-Daten kalibriert. Bewertung wird automatisch berechnet, sobald SEC-Daten verfügbar sind; Annahmen bei der ersten KI-Analyse mit Daten überprüfen.",
+  "these": "Zweitlieferant für KI-Beschleuniger mit starker CPU-Position; Chance liegt in Marktanteilsgewinnen bei Rechenzentrums-GPUs durch Großkundenverträge.",
+  "kurstreiber": [
+    "Umsetzung der Großkundenverträge (z. B. Meta, OpenAI) in tatsächlichen Umsatz",
+    "Marktanteil Server-CPUs (EPYC)",
+    "Software-Ökosystem (ROCm) als Hürde gegenüber CUDA",
+    "Fertigungskapazität bei TSMC",
+    "Q3-2026-Zahlen am 03.11.2026 nach US-Börsenschluss (offizielle Terminankündigung)"
+  ],
+  "risiken": [
+    "Verträge enthalten Aktien-/Warrant-Komponenten (Verwässerung) oder hängen an Meilensteinen",
+    "Technologischer Rückstand gegenüber NVIDIA",
+    "Zyklik im PC-/Gaming-Geschäft",
+    "Abhängigkeit von TSMC",
+    "Kapitalbindung/Verknüpfung von Abnahme und Beteiligung (1 Mrd. USD in Metas Aktienemission, Konditionen unbekannt)",
+    "PC-Nachfrageschwäche bis mindestens H1 2027 laut Intel-Ausblick (Sekundärquellen, 30.10.2026)"
+  ],
+  "invalidierung": [
+    "Rechenzentrumsumsatz wächst zwei Quartale in Folge nicht gegenüber dem Vorjahr",
+    "Großkunde reduziert oder verschiebt angekündigte Abnahme offiziell",
+    "Bruttomarge zwei Quartale in Folge unter 50 %"
+  ],
+  "bewertung": {
+    "diskontsatz": 0.1,
+    "endwachstum": 0.03,
+    "wahrscheinlichkeiten": {
+      "negativ": 0.25,
+      "neutral": 0.5,
+      "positiv": 0.25
+    },
+    "szenarien": {
+      "negativ": {
+        "wachstum_j1_5": 0.05,
+        "wachstum_j6_10": 0.03,
+        "fcf_marge_ziel": 0.12,
+        "aktienzahl_aenderung_pa": 0.01,
+        "begruendung": "KI-Verträge bleiben hinter Erwartung, Verwässerung durch Warrants"
+      },
+      "neutral": {
+        "wachstum_j1_5": 0.2,
+        "wachstum_j6_10": 0.08,
+        "fcf_marge_ziel": 0.2,
+        "aktienzahl_aenderung_pa": 0.005,
+        "begruendung": "KI-GPU-Umsatz wächst deutlich, Margen steigen moderat"
+      },
+      "positiv": {
+        "wachstum_j1_5": 0.35,
+        "wachstum_j6_10": 0.12,
+        "fcf_marge_ziel": 0.26,
+        "aktienzahl_aenderung_pa": 0.005,
+        "begruendung": "AMD wird echter zweiter Standard für KI-Rechenzentren"
+      }
+    }
+  },
+  "einstieg": {
+    "referenz": "neutral",
+    "sicherheitsmarge": 0.25
+  },
+  "historie": [
+    {
+      "datum": "2026-10-31",
+      "aenderung": "Erstfassung",
+      "quelle": "Claude (Phase-2-Prototyp)"
+    },
+    {
+      "datum": "2026-10-31",
+      "aenderung": "Version 2: Kurstreiber Q3-Termin; Risiken Kapitalbindung Meta-Beteiligung und PC-Schwäche ergänzt; Bewertungsannahmen unverändert (keine Finanzdaten)",
+      "quelle": "research/analyses/2026-10-31_AMD_meta-partnerschaft.md"
+    }
+  ]
+}

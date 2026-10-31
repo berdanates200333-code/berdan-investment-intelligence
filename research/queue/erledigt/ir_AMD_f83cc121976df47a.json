@@ -3,7 +3,7 @@
   "ticker": "AMD",
   "titel": "AMD and Meta Advance Strategic Partnership to Power Meta’s Superintelligence Infrastructure",
   "erstellt_utc": "2026-10-31T16:24:37+00:00",
-  "status": "offen",
+  "status": "analysiert",
   "grund": "manuell angefordert",
   "kontext": {
     "ereignis": {
@@ -31,5 +31,6 @@
     "these": "research/theses/AMD.json",
     "quelltext": "research/sources/AMD/angefordert_3e7fc3998b4a.txt"
   },
-  "anleitung": ".claude/commands/research-analyse.md"
+  "anleitung": ".claude/commands/research-analyse.md",
+  "analyse": "research/analyses/2026-10-31_AMD_meta-partnerschaft.md"
 }

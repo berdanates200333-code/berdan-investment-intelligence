@@ -93,7 +93,37 @@ def company_md(p: dict, events: list[dict]) -> str:
     return "\n".join(L) + "\n"
 
 
+def thesis_md(th: dict, prof: dict | None) -> str:
+    L = [f"# Investmentthese {th['ticker']} (Version {th['version']}, Stand {th['stand']})", f"_Status: {th['status']}_", "",
+         f"**These:** {th['these']}", "", "## Mögliche Kurstreiber", *[f"- {x}" for x in th["kurstreiber"]], "",
+         "## Risiken", *[f"- {x}" for x in th["risiken"]], "", "## Widerlegt, wenn …", *[f"- {x}" for x in th["invalidierung"]], "",
+         "## Bewertungsannahmen", f"Diskontsatz {pct(th['bewertung']['diskontsatz'])}, Wachstum in der Endphase {pct(th['bewertung']['endwachstum'])}", "",
+         "| Szenario | Wachstum J1–5 | J6–10 | FCF-Marge Ziel | Aktienzahl p.a. | Wahrscheinlichkeit | Begründung |", "|---|---|---|---|---|---|---|"]
+    for n, a in th["bewertung"]["szenarien"].items():
+        L.append(f"| {n} | {pct(a['wachstum_j1_5'])} | {pct(a['wachstum_j6_10'])} | {pct(a['fcf_marge_ziel'])} | "
+                 f"{pct(a.get('aktienzahl_aenderung_pa', 0))} | {pct(th['bewertung'].get('wahrscheinlichkeiten', {}).get(n))} | {a.get('begruendung', '')} |")
+    v = (prof or {}).get("bewertung")
+    L += ["", "## Ergebnis"]
+    if v:
+        for n, s_ in v["szenarien"].items():
+            L.append(f"- {n}: {money(s_['wert_je_aktie'])} je Aktie ({pct(s_.get('abstand_zum_kurs'))} zum Kurs)")
+        if v.get("gewichteter_wert_je_aktie"):
+            L.append(f"- gewichtet: {money(v['gewichteter_wert_je_aktie'])}")
+        L.append(f"- eingepreistes Wachstum: {pct(v.get('eingepreistes_wachstum_10j'))} p.a. über 10 Jahre")
+    else:
+        L.append("- noch nicht berechnet: SEC-Finanzdaten fehlen (siehe Profil)")
+    e = th.get("einstieg", {})
+    L += ["", f"**Einstiegskriterium (Beobachtung, kein Handel):** Kurs ≤ {e.get('referenz')}-Wert × (1 − {pct(e.get('sicherheitsmarge'))})", "",
+          "## Historie", *[f"- {h['datum']}: {h['aenderung']} ({h.get('quelle', '')})" for h in th["historie"]]]
+    return "\n".join(L) + "\n"
+
+
 def write_all(run, cfg, profiles: dict, newsstats: dict) -> None:
+    import json
+    for c in cfg:
+        tp = ROOT / "research" / "theses" / f"{c['ticker']}.json"
+        if tp.exists():
+            (tp.with_suffix(".md")).write_text(thesis_md(json.loads(tp.read_text()), profiles.get(c["ticker"])))
     REP.mkdir(parents=True, exist_ok=True)
     since = (run.now - timedelta(days=30)).isoformat()[:10]
     for c in cfg:

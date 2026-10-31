@@ -47,6 +47,7 @@ unternehmen:
     beziehungen:
       - {art: lieferant, partner: TSMC, ticker: TSM, pruefwort: "TSMC", beschreibung: "Auftragsfertigung"}
       - {art: lieferant, partner: GlobalFoundries, ticker: GFS, pruefwort: "GLOBALFOUNDRIES", beschreibung: "Auftragsfertigung"}
+      - {art: kunde, partner: Meta Platforms, ticker: META, pruefwort: "Meta", beschreibung: "KI-Infrastruktur (Helios, Custom-Instinct-GPU, EPYC); AMD-Pressemitteilung 27.10.2026"}
       - {art: wettbewerber, partner: NVIDIA, ticker: NVDA, pruefwort: "NVIDIA", beschreibung: "GPUs/KI-Beschleuniger"}
       - {art: wettbewerber, partner: Intel, ticker: INTC, pruefwort: "Intel", beschreibung: "CPUs"}
 

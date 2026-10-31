@@ -1,8 +1,8 @@
 name: Research-Monitor (Unternehmen, SEC, Nachrichten)
 
 # Regelbasierte Erfassung (Python, keine KI, keine Schlüssel, keine Kosten).
-# Frequenz: 3× täglich. SEC-Einreichungen und Nachrichten sind keine Echtzeitquelle für uns;
-# Quartalszahlen erscheinen meist ~22:05 Uhr MEZ (16:05 New York) und werden im 23:20-Uhr-Lauf erfasst.
+# Frequenz: 3× täglich (periodisch, KEIN Echtzeit-Monitoring). Quartalszahlen erscheinen meist ~16:05 Uhr
+# New York (21:05 UTC) und werden im 21:35-UTC-Lauf erfasst; GitHub startet geplante Läufe teils verzögert.
 on:
   workflow_dispatch:
     inputs:
@@ -10,7 +10,9 @@ on:
         description: "Optional: Ereignis-IDs (kommagetrennt), die unabhängig von der Wichtigkeit zur KI-Analyse vorgemerkt werden"
         type: string
         default: ""
-  # ZEITPLAN-PLATZHALTER (wird nach erfolgreichem Probelauf aktiviert)
+  schedule:
+    - cron: "20 5,12 * * *"   # 06:20 / 13:20 UTC = 07:20 / 14:20 MEZ (08:20 / 15:20 MESZ)
+    - cron: "35 21 * * *"     # 21:35 UTC – nach US-Börsenschluss, wenn Quartalszahlen erscheinen
 
 permissions:
   contents: write

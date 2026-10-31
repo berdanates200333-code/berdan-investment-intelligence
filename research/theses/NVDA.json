@@ -1,0 +1,68 @@
+{
+  "ticker": "NVDA",
+  "version": 1,
+  "stand": "2026-10-31",
+  "status": "vorläufig – Annahmen von Claude aus Wissensstand gesetzt, NICHT mit aktuellen SEC-Daten kalibriert. Bewertung wird automatisch berechnet, sobald SEC-Daten verfügbar sind; Annahmen bei der ersten KI-Analyse mit Daten überprüfen.",
+  "these": "Marktführer bei KI-Beschleunigern mit Software-Ökosystem (CUDA) und Netzwerk/Systemen; Gewinnwachstum hängt am Investitionszyklus der Hyperscaler.",
+  "kurstreiber": [
+    "Rechenzentrums-Investitionen der großen Cloud-Anbieter (Capex-Pläne in deren Quartalsberichten)",
+    "Neue Produktgenerationen und Lieferfähigkeit (Auftragsfertigung, HBM-Speicher)",
+    "Bruttomarge als Indikator für Preissetzungsmacht",
+    "Exportregeln (insb. China)"
+  ],
+  "risiken": [
+    "Abkühlung oder Pause im KI-Investitionszyklus",
+    "Eigene Chips der Kunden (Custom-ASICs) und Wettbewerb (AMD)",
+    "Kundenkonzentration",
+    "Lieferkette (Konzentration auf einen Auftragsfertiger, Taiwan-Risiko)",
+    "Exportbeschränkungen"
+  ],
+  "invalidierung": [
+    "Umsatz zwei Quartale in Folge rückläufig gegenüber dem Vorquartal (SEC-Quartalsdaten)",
+    "Bruttomarge zwei Quartale in Folge unter 65 %",
+    "Mehrere große Cloud-Kunden senken ihre Investitionsprognose deutlich (offizielle Mitteilungen)"
+  ],
+  "bewertung": {
+    "diskontsatz": 0.1,
+    "endwachstum": 0.03,
+    "wahrscheinlichkeiten": {
+      "negativ": 0.25,
+      "neutral": 0.5,
+      "positiv": 0.25
+    },
+    "szenarien": {
+      "negativ": {
+        "wachstum_j1_5": 0.03,
+        "wachstum_j6_10": 0.02,
+        "fcf_marge_ziel": 0.3,
+        "aktienzahl_aenderung_pa": 0.0,
+        "begruendung": "Investitionszyklus dreht, Preisdruck durch Custom-ASICs/Wettbewerb"
+      },
+      "neutral": {
+        "wachstum_j1_5": 0.15,
+        "wachstum_j6_10": 0.07,
+        "fcf_marge_ziel": 0.42,
+        "aktienzahl_aenderung_pa": -0.005,
+        "begruendung": "Wachstum normalisiert sich, Margen bleiben hoch"
+      },
+      "positiv": {
+        "wachstum_j1_5": 0.28,
+        "wachstum_j6_10": 0.1,
+        "fcf_marge_ziel": 0.48,
+        "aktienzahl_aenderung_pa": -0.005,
+        "begruendung": "KI-Infrastruktur wächst lange zweistellig, Plattformvorsprung bleibt"
+      }
+    }
+  },
+  "einstieg": {
+    "referenz": "neutral",
+    "sicherheitsmarge": 0.25
+  },
+  "historie": [
+    {
+      "datum": "2026-10-31",
+      "aenderung": "Erstfassung",
+      "quelle": "Claude (Phase-2-Prototyp)"
+    }
+  ]
+}

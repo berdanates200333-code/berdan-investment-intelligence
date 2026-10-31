@@ -5,7 +5,8 @@ name: Heartbeat (GitHub-intern)
 # Dafür ist der unabhängige Heartbeat (Claude-Aufgabe, Anthropic-Infrastruktur) vorgesehen.
 on:
   workflow_dispatch: {}
-  # ZEITPLAN-PLATZHALTER
+  schedule:
+    - cron: "10 7 * * *"   # täglich 07:10 UTC
 
 permissions:
   contents: read
