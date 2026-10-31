@@ -1,0 +1,32 @@
+name: Research-Desk Benachrichtigung
+
+# Die tägliche Claude-Aufgabe schreibt research/desk/benachrichtigung.md nur bei wichtigen Ereignissen
+# (technischer Ausfall, neue Investmentidee, These geschwächt/widerlegt, Relevanz ≥ 4, Probelauf) und pusht.
+# Dieser Workflow macht daraus ein GitHub-Issue (Push auf das iPhone über die GitHub-App).
+# Erste Zeile der Datei = Titel, Rest = Text.
+on:
+  push:
+    branches: [claude/phase1-grundsystem]
+    paths: [research/desk/benachrichtigung.md]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Issue anlegen
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          f=research/desk/benachrichtigung.md
+          [ -s "$f" ] || exit 0
+          TITLE="$(head -n1 "$f" | sed 's/^# *//' | cut -c1-200)"
+          gh label create research-desk --color 5319e7 --description "Meldung des täglichen KI-Research-Desks" --force >/dev/null
+          gh issue create --title "$TITLE" --label research-desk --body "$(tail -n +2 "$f")
+
+          Commit: ${{ github.sha }}"

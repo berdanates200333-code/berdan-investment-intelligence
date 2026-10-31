@@ -56,10 +56,11 @@ Schreibe `research/desk/<JJJJ-MM-TT>.md`: Heartbeat, analysierte Themen mit Rele
 übersprungene Dubletten, neue Ideen, Tokensparmaßnahmen. Dann `python -m pytest -q tests`, committen („Research-Desk <datum>: …“),
 `git pull --rebase`, auf `claude/phase1-grundsystem` pushen.
 
-**Benachrichtigung nur wenn** (oder Argument „test“): technischer Ausfall · neue Investmentidee · These geschwächt/widerlegt ·
-Analyse mit Relevanz ≥ 4. Dann **ein** GitHub-Issue im Repository mit Label `research-desk`
-(Titel: „Research-Desk <TT.MM.JJJJ>: <Kernaussage>“, Text: 3–6 Sätze + Links zu Bericht/Analyse/Idee).
-Sonst keine Benachrichtigung.
+**Benachrichtigung nur wenn** (oder Probelauf „test“): technischer Ausfall · neue Investmentidee · These geschwächt/widerlegt ·
+Analyse mit Relevanz ≥ 4. Dann **vor dem Commit** die Datei `research/desk/benachrichtigung.md` überschreiben:
+erste Zeile = Titel „Research-Desk <TT.MM.JJJJ>: <Kernaussage>“ (Probelauf: „TEST – “ voranstellen), danach 3–6 Sätze und Links
+(relativ zum Repo) zu Tagesbericht, Analyse, Idee. Der Workflow `research-desk-notify.yml` macht daraus beim Push ein GitHub-Issue.
+Sonst die Datei **nicht** anfassen (keine Benachrichtigung). Kein Issue zusätzlich direkt anlegen (sonst doppelte Meldung).
 
 **Letzte Antwort der Sitzung** (wird als Push-Zusammenfassung genutzt): Beginne mit `WICHTIG:` nur, wenn eine Benachrichtigungsbedingung
 erfüllt ist; sonst mit `Keine wichtigen Neuigkeiten.` Danach höchstens 4 Sätze.

@@ -1,0 +1,103 @@
+{
+  "erstellt_utc": "2026-10-31T17:15:08+00:00",
+  "heartbeat": {
+    "ok": true,
+    "probleme": []
+  },
+  "offene_auftraege": 3,
+  "bereits_analysiert_uebersprungen": 0,
+  "themengruppen": [
+    {
+      "ticker": "NVDA",
+      "anzahl": 1,
+      "wichtigkeit_max": "mittel",
+      "auftraege": [
+        {
+          "datei": "research/queue/news_NVDA_13d8d62294d9305c.json",
+          "ereignis_id": "news:NVDA:13d8d62294d9305c",
+          "ticker": "NVDA",
+          "titel": "Nvidia Stock Declines as Competition Probe—and Spy Report—Presents New AI Concern",
+          "art": "news",
+          "wichtigkeit": "mittel",
+          "veroeffentlicht": "2026-10-29T17:19:00+00:00",
+          "zuverlaessigkeit": "Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium)",
+          "quelle": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOQUhtWFVGeXRmbWVsY083ckRJRUYwOHhEYTZ5cURrdlktQXNyVWk2QllyVVZpRGY3cWg0X3JTNU4xWVBjUTZ4M1pRWWJLR1V3c0FYcGsxQWwzd29jYjRETGpHYnhqMFZpMlk4RG81OFU2NUtUZ3JVaEwxY1NYZkVuYUxabUpWRjNyeVJmbg?oc=5",
+          "quelltext": "research/sources/NVDA/angefordert_932736301aae.txt",
+          "grund": "manuell angefordert",
+          "bereits_analysiert": false
+        }
+      ],
+      "fruehere_analysen": []
+    },
+    {
+      "ticker": "MSFT",
+      "anzahl": 2,
+      "wichtigkeit_max": "niedrig",
+      "auftraege": [
+        {
+          "datei": "research/queue/news_MSFT_f28bc248a2cf80a5.json",
+          "ereignis_id": "news:MSFT:f28bc248a2cf80a5",
+          "ticker": "MSFT",
+          "titel": "Microsoft expects to raise $25 billion in US bond sale, sources say",
+          "art": "news",
+          "wichtigkeit": "niedrig",
+          "veroeffentlicht": "2026-10-29T18:01:00+00:00",
+          "zuverlaessigkeit": "Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium)",
+          "quelle": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNakliRm9KY3R6ekRkaEl2SzZaUWtUdzczRlRyYmJNd2V2MDBLdkVVZjZQSmtVd3pzYk5JREM4M29hVHREdHBLWGljQ19rTWV5LVJMcmM0UW1OME9EY2MtTGcyRUpCcjVaYmcyVk1ZMEY5aWdvRmRpdy0tMGRfSWF2anVwQlBEOFNtaklfNDdsQURObDVXOERYejh6U3hTYzh0RGpJUDk4cU1KOE01N1FDdl9R?oc=5",
+          "quelltext": "research/sources/MSFT/angefordert_3d4d177165af.txt",
+          "grund": "manuell angefordert",
+          "bereits_analysiert": false
+        },
+        {
+          "datei": "research/queue/news_MSFT_6e272da23f666563.json",
+          "ereignis_id": "news:MSFT:6e272da23f666563",
+          "ticker": "MSFT",
+          "titel": "Microsoft plans to raise $25 billion in debt as it pursues AI buildout",
+          "art": "news",
+          "wichtigkeit": "niedrig",
+          "veroeffentlicht": "2026-10-30T00:38:00+00:00",
+          "zuverlaessigkeit": "Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium)",
+          "quelle": "https://news.google.com/rss/articles/CBMie0FVX3lxTE5hSGRFRkVaWUNYZDQ0MC14QVh6c2ZLUjdjbkpNWDV1X0RfZGRFSm1ON3ltUXByMFM0a0tlWkFPY1BDUzhpS1piMFJnR0dUMXBEUlJ5X29hT3dRQWE5UFBrU2tpV2NfY0pqOHJySE80MHBlVnlKbFoxbnRnZ9IBgAFBVV95cUxQUXFfSW5CQVJfdHFVSkpaTVpNUnFuZHcwUkx4MEN2SFE1Q0VjRE10bG83Z0NEeXdJOW5wZ1drdDVOSnlFY3RkbnAzb3AzY0ppYm9qMGtqNFVSU1VjeHY1clB2X3ZKUkJjSG8tX1lHQWVqTGo4al9SeXo3d3NEV1ZQZQ?oc=5",
+          "quelltext": "research/sources/MSFT/angefordert_1c744a9750f5.txt",
+          "grund": "manuell angefordert",
+          "bereits_analysiert": false
+        }
+      ],
+      "fruehere_analysen": []
+    }
+  ],
+  "aktive_ideen": [],
+  "thesen": {
+    "NVDA": {
+      "version": 1,
+      "stand": "2026-10-31",
+      "letzte_aenderung": {
+        "datum": "2026-10-31",
+        "aenderung": "Erstfassung",
+        "quelle": "Claude (Phase-2-Prototyp)"
+      }
+    },
+    "MSFT": {
+      "version": 1,
+      "stand": "2026-10-31",
+      "letzte_aenderung": {
+        "datum": "2026-10-31",
+        "aenderung": "Erstfassung",
+        "quelle": "Claude (Phase-2-Prototyp)"
+      }
+    },
+    "AMD": {
+      "version": 2,
+      "stand": "2026-10-31",
+      "letzte_aenderung": {
+        "datum": "2026-10-31",
+        "aenderung": "Version 2: Kurstreiber Q3-Termin; Risiken Kapitalbindung Meta-Beteiligung und PC-Schwäche ergänzt; Bewertungsannahmen unverändert (keine Finanzdaten)",
+        "quelle": "research/analyses/2026-10-31_AMD_meta-partnerschaft.md"
+      }
+    }
+  },
+  "budget": {
+    "max_tiefenanalysen": 3,
+    "hinweis": "Gruppen ab Platz 4 nur als Kurznotiz; bereits analysierte Themen nur bei neuen Fakten"
+  }
+}
