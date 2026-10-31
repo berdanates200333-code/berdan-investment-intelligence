@@ -1,0 +1,49 @@
+name: Täglicher Marktcheck (Forward-Test FT1)
+
+# Läuft kostenlos auf GitHub-Servern (keine Echtgeld-Orders, keine Broker-Verbindung).
+# Der automatische Zeitplan ist bewusst AUSKOMMENTIERT, bis Berdan ihn freigibt.
+# Freigabe = die drei Zeilen unter "schedule" einkommentieren.
+on:
+  workflow_dispatch: {}
+  # schedule:
+  #   # 16:40 UTC = 18:40 Uhr MEZ (Winter) / 17:40 Uhr MESZ (Sommer); Xetra schließt 17:30 Uhr
+  #   - cron: "40 16 * * 1-5"
+
+permissions:
+  contents: write   # Bericht + Journal ins Repo schreiben
+  issues: write     # Benachrichtigung per GitHub-Issue (Push auf iPhone via GitHub-App)
+
+concurrency:
+  group: market-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q -r requirements.txt
+      - name: Technische Tests
+        run: python -m pytest -q tests
+      - name: Marktcheck
+        run: python scripts/daily_check.py
+      - name: Journal-Integrität prüfen
+        run: python -c "import sys; sys.path.insert(0,'.'); from bii import journal; ok,m=journal.verify(); print(m); sys.exit(0 if ok else 1)"
+      - name: Ergebnisse speichern
+        run: |
+          git config user.name "market-check-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add reports journal
+          git diff --cached --quiet || git commit -m "Marktcheck $(date -u +%F)"
+          git push
+      - name: Benachrichtigen (nur bei Signal, Warnung oder Datenausfall)
+        if: hashFiles('reports/alert.txt') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "Marktcheck $(date -u +%d.%m.%Y): $(head -c 120 reports/alert.txt)" \
+            --body "Bericht: https://github.com/${{ github.repository }}/blob/${{ github.ref_name }}/reports/latest.md"
