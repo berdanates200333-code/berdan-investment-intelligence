@@ -1,0 +1,48 @@
+name: Paper-Trading täglich (virtuell)
+
+# Nur virtuelles Kapital: keine Broker-Verbindung, keine Zugangsdaten, keine kostenpflichtigen Dienste.
+# Läuft Mo–Fr 22:30 UTC (nach US-Börsenschluss auch in der Winterzeit, 21:00 UTC). Verarbeitet alle neuen, abgeschlossenen Handelstage.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 22 * * 1-5"
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: market-check     # nie gleichzeitig mit anderen schreibenden Workflows
+  cancel-in-progress: false
+
+jobs:
+  papertrading:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q -r requirements.txt
+      - name: Tests (inkl. eingefrorene Regeln und FT1-Journal)
+        run: python -m pytest -q tests
+      - name: Paper-Trading-Lauf
+        run: python scripts/pt_run.py
+      - name: Speichern
+        run: |
+          git config user.name "market-check-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add papertrading reports/papertrading
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Paper-Trading $(date -u +%F)"
+          for i in 1 2 3; do git pull -q --rebase origin "${GITHUB_REF_NAME}" && git push -q && exit 0; sleep 5; done
+          exit 1
+      - name: Technischen Fehler melden
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "TECHNISCHER FEHLER Paper-Trading $(date -u +%d.%m.%Y)" \
+            --body "Der Lauf ist fehlgeschlagen: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          Es wurden keine virtuellen Orders auf ungeprüfter Basis ausgeführt."

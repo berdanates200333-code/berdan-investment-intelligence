@@ -4,6 +4,7 @@ Persönliches Research-Desk sowie regelbasiertes Backtest- und Forward-Test-Syst
 
 - Aktueller Tagesbericht (FT1): [`reports/latest.md`](reports/latest.md) · Research-Monitor: [`reports/research/latest.md`](reports/research/latest.md)
 - **Phase 2 – Research-Desk:** [`docs/PHASE2_RESEARCH_DESK.md`](docs/PHASE2_RESEARCH_DESK.md) · Profile: `research/db/companies/` · Thesen: `research/theses/` · KI-Analysen: `research/analyses/`
+- **Phase 3 – Paper-Trading (virtuell):** [Strategie v1.0](docs/papertrading/STRATEGIE_v1.0.md) · [Status/Autonomie](docs/papertrading/PHASE3_STATUS.md) · [Tagesstand](reports/papertrading/latest.md) · [Wochenbericht](reports/papertrading/weekly/latest.md)
 - Phase-1-Bericht: [`docs/PHASE1_BERICHT.md`](docs/PHASE1_BERICHT.md)
 - Vorab festgelegtes Regelwerk: [`docs/REGELWERK_FT1.md`](docs/REGELWERK_FT1.md) (v1.0) · [`v1.1`](docs/REGELWERK_FT1_v1.1.md) · [`v1.2`](docs/REGELWERK_FT1_v1.2.md) · [Änderungen](docs/REGELWERK_AENDERUNGEN.md)
 - Backtest-Ergebnisse: [`research/backtest_phase1.md`](research/backtest_phase1.md) · Szenarien: [`research/szenarien.md`](research/szenarien.md)

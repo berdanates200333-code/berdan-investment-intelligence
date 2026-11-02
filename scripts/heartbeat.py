@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 # Höchstalter in Stunden: Marktcheck läuft nur Mo–Fr (Wochenende + Verzögerung -> 76 h)
 CHECKS = {
     "Marktcheck FT1": (ROOT / "journal" / "ops_status.json", "letzter_lauf_utc", 76),
+    "Paper-Trading": (ROOT / "papertrading" / "ops_status.json", "letzter_lauf_utc", 76),
     "Research-Monitor": (ROOT / "research" / "db" / "ops.json", "letzter_lauf_utc", 14),
     "Research-Monitor (erfolgreicher Datenabruf)": (ROOT / "research" / "db" / "ops.json", "letzter_erfolg_utc", 30),
 }

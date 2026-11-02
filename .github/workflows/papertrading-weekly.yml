@@ -1,0 +1,55 @@
+name: Paper-Trading Wochenbericht (virtuell)
+
+# Sonntag 09:00 UTC: Wochenbericht; nach dem 24.01.2027 zusätzlich Abschlussbewertung (und ggf. vorab festgelegte Verlängerung).
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * 0"
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: market-check
+  cancel-in-progress: false
+
+jobs:
+  bericht:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q -r requirements.txt
+      - run: python -m pytest -q tests
+      - name: Bericht
+        run: python scripts/pt_weekly_report.py
+      - name: Speichern
+        run: |
+          git config user.name "market-check-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add papertrading reports/papertrading
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Paper-Trading Wochenbericht $(date -u +%F)"
+          for i in 1 2 3; do git pull -q --rebase origin "${GITHUB_REF_NAME}" && git push -q && exit 0; sleep 5; done
+          exit 1
+      - name: Benachrichtigen
+        if: hashFiles('reports/papertrading/weekly/latest.md') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "Paper-Trading Wochenbericht $(date -u +%d.%m.%Y)" \
+            --body "$(head -n 12 reports/papertrading/weekly/latest.md)
+
+          Vollständig: https://github.com/${{ github.repository }}/blob/${{ github.ref_name }}/reports/papertrading/weekly/latest.md
+          Rein virtuell, keine Anlageberatung."
+      - name: Technischen Fehler melden
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "TECHNISCHER FEHLER Paper-Trading Wochenbericht $(date -u +%d.%m.%Y)" \
+            --body "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

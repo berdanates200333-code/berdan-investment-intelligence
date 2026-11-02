@@ -1,0 +1,3 @@
+{"versionen": [{"version": "1.0", "regeln": "bii/papertrading/rules_v1_0.py", "dokument": "docs/papertrading/STRATEGIE_v1.0.md",
+  "ordner": "papertrading/v1.0", "start": "2026-11-02", "ende": "2027-01-24", "status": "aktiv (eingefroren)",
+  "regeln_sha256": "43b29a9918f72dc35e2de0beb7f5a4fa33a01cc1d458639880b6ade0ce0eeb0d"}]}
