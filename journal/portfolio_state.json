@@ -12,12 +12,23 @@
         {
           "datum": "2026-10-30",
           "wert": 10000.0
+        },
+        {
+          "datum": "2026-11-01",
+          "wert": 10000.0
         }
       ]
     },
     "TREND": {
-      "cash": 10000.0,
-      "positions": {},
+      "cash": 9000.0,
+      "positions": {
+        "BTC": {
+          "stueck": 0.014186989118486246,
+          "einstand": 70136.4375,
+          "letzter_kurs": 70136.4375,
+          "kurs_datum": "2026-11-01"
+        }
+      },
       "history": [
         {
           "datum": "2026-10-31",
@@ -26,6 +37,10 @@
         {
           "datum": "2026-10-30",
           "wert": 10000.0
+        },
+        {
+          "datum": "2026-11-01",
+          "wert": 9995.02
         }
       ]
     }
@@ -46,20 +61,15 @@
       "aktion": "KAUF",
       "zielgewicht": 0.7,
       "erstellt": "2026-10-31T11:14:17+00:00"
-    },
-    {
-      "signal_id": "FT1-TREND-BTC-2026-09",
-      "portfolio": "TREND",
-      "asset": "BTC",
-      "aktion": "KAUF",
-      "zielgewicht": 0.1,
-      "erstellt": "2026-10-31T11:14:17+00:00"
     }
   ],
   "signals_done": [
     "BENCH:WORLD:init",
     "TREND:WORLD:2026-09",
     "TREND:GOLD:2026-09",
-    "TREND:BTC:2026-09"
+    "TREND:BTC:2026-09",
+    "TREND:WORLD:2026-10",
+    "TREND:GOLD:2026-10",
+    "TREND:BTC:2026-10"
   ]
 }

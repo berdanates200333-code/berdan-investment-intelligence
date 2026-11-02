@@ -1,10 +1,11 @@
 {
-  "datenproblem_folge": 0,
   "dd_warnung_aktiv": {
     "BENCH": false,
     "TREND": false
   },
   "bewegung_gemeldet": {},
   "letzter_wochenbericht": null,
-  "letzter_lauf_utc": "2026-10-31T11:38:21+00:00"
+  "letzter_lauf_utc": "2026-11-02T18:31:01+00:00",
+  "letzter_planlauf_datum": "2026-11-02",
+  "datenprobleme": {}
 }
