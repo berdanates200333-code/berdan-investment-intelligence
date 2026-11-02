@@ -41,7 +41,7 @@ def main() -> int:
     pd.DataFrame(state["equity"]).to_csv(vdir / "equity.csv", index=False)
     pd.DataFrame(state["closed"]).to_csv(vdir / "trades.csv", index=False)
     (PT / "ops_status.json").write_text(json.dumps({"letzter_lauf_utc": now.isoformat(timespec="seconds"),
-        "letzter_erfolg_utc": now.isoformat(timespec="seconds") if summ["verarbeitet"] or not summ["probleme"] else None,
+        "letzter_erfolg_utc": now.isoformat(timespec="seconds") if summ["verarbeitet"] and not summ["probleme"] else None,
         "letzter_handelstag": state["last_date"], "probleme": summ["probleme"][:20]}, indent=1, ensure_ascii=False))
     ok, msg = journal.verify(vdir / "journal.jsonl")
     m = report.metrics(state)
@@ -52,8 +52,8 @@ def main() -> int:
         f"- Offene Positionen: {m['trades_offen']} · abgeschlossen: {m['trades_abgeschlossen']} · Pause: {'JA' if state['paused'] else 'nein'}\n"
         f"- Journal-Kette: {'intakt' if ok else 'FEHLER: ' + msg}\n- Datenprobleme dieses Laufs: {len(summ['probleme'])}\n" + "".join(f"  - {p}\n" for p in summ["probleme"][:10]))
     print(json.dumps({"verarbeitet": summ["verarbeitet"], "probleme": summ["probleme"][:10], "journal": msg}, ensure_ascii=False))
-    # Exit 2 nur, wenn Pflichtdaten komplett fehlten (Workflow meldet technischen Fehler)
-    return 2 if any("Pflichtdaten" in p for p in summ["probleme"]) else 0
+    # Jeder Daten-/Integritätsfehler ist ein fehlgeschlagener Lauf, kein grüner Erfolg.
+    return 2 if summ["probleme"] or not ok else 0
 
 
 if __name__ == "__main__":

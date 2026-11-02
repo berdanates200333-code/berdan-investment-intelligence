@@ -29,7 +29,7 @@ def metrics(state: dict) -> dict:
                 "aktiv_eur": cap, "bench_eur": cap}
     m.update(aktiv_eur=float(eq["aktiv_eur"].iloc[-1]), bench_eur=float(eq["bench_eur"].iloc[-1]))
     m["rendite_aktiv"], m["rendite_bench"] = m["aktiv_eur"] / cap - 1, m["bench_eur"] / cap - 1
-    m["maxdd_aktiv"], m["maxdd_bench"] = _maxdd(eq["aktiv_eur"]), _maxdd(eq["bench_eur"])
+    m["maxdd_aktiv"], m["maxdd_bench"] = _maxdd(pd.concat([pd.Series([cap]), eq["aktiv_eur"]], ignore_index=True)), _maxdd(pd.concat([pd.Series([cap]), eq["bench_eur"]], ignore_index=True))
     m["datenqualitaet"] = float(eq["daten_ok"].mean())
     m["investiert_schnitt"] = float(1 - eq["cash_eur"].mean() / eq["aktiv_eur"].mean())
     if len(cl):
