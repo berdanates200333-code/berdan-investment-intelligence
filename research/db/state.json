@@ -4,9 +4,9 @@
       "news_volumen": {
         "2026-10-31": 170,
         "2026-11-01": 121,
-        "2026-11-02": 52
+        "2026-11-02": 118
       },
-      "news_letzter_lauf": "2026-11-02T06:16:08+00:00",
+      "news_letzter_lauf": "2026-11-02T13:25:01+00:00",
       "initialisiert": true,
       "ideen_erfuellt": {}
     },
@@ -14,9 +14,9 @@
       "news_volumen": {
         "2026-10-31": 87,
         "2026-11-01": 32,
-        "2026-11-02": 7
+        "2026-11-02": 35
       },
-      "news_letzter_lauf": "2026-11-02T06:16:08+00:00",
+      "news_letzter_lauf": "2026-11-02T13:25:01+00:00",
       "initialisiert": true,
       "ideen_erfuellt": {}
     },
@@ -24,9 +24,9 @@
       "news_volumen": {
         "2026-10-31": 155,
         "2026-11-01": 56,
-        "2026-11-02": 12
+        "2026-11-02": 41
       },
-      "news_letzter_lauf": "2026-11-02T06:16:08+00:00",
+      "news_letzter_lauf": "2026-11-02T13:25:01+00:00",
       "initialisiert": true,
       "ideen_erfuellt": {}
     }
