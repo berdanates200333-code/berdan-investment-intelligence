@@ -4,8 +4,6 @@ name: Paper-Trading täglich (virtuell)
 # Läuft Mo–Fr 22:30 UTC (nach US-Börsenschluss auch in der Winterzeit, 21:00 UTC). Verarbeitet alle neuen, abgeschlossenen Handelstage.
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "30 22 * * 1-5"
 
 permissions:
   contents: write
@@ -17,6 +15,7 @@ concurrency:
 
 jobs:
   papertrading:
+    if: ${{ false }} # Safety hold: legacy execution disabled pending validated 60-day replacement
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
