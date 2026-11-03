@@ -24,9 +24,10 @@ def main() -> int:
     rules.REGIME = "SPY"
     rules.BENCH = {"symbol": "SPY", "name": "Probelauf-Platzhalter (USD, nur Systemtest)", "currency": "USD"}   # Benchmark-Datenproblem (EUNL.DE) blockiert den Ausführungsnachweis nicht; Gate prüft EUNL.DE separat
     rc = 0
+    prov = ap.EngineProvider(lv, insts)      # EIN Anbieter für beide Konten: identische Daten, identischer FX-Kurs
+    states = {}
     for ki in ("claude", "chatgpt"):
         st = ap.load_state(ki, rules, root=root)
-        prov = ap.EngineProvider(lv, insts)
         res = ap.run_cycle(ki, st, prov, rules, now=now, root=root)
         if st["last_date"] and not st["positions"] and not st["pending"] and not st["closed"] and not st["failed"]:
             q = lv.get(insts["SPY"])
@@ -38,8 +39,14 @@ def main() -> int:
                 except Exception as e:  # noqa: BLE001
                     print(ki, "Order nicht angenommen:", e)
         ap.save_state(ki, st, root=root)
+        states[ki] = st
         print(ki, {"verarbeitet": res["verarbeitet"], "probleme": res["probleme"][:5], "pending": len(st["pending"]), "positionen": list(st["positions"]), "closed": len(st["closed"])})
         rc = rc or (2 if any("Pflichtdaten" in p for p in res["probleme"]) else 0)
+    a, b = states["claude"], states["chatgpt"]
+    keys = ("last_date", "cash_eur", "costs_eur")
+    if any(a[k] != b[k] for k in keys) or [o["limit"] for o in a["pending"]] != [o["limit"] for o in b["pending"]] or (a["bench"] is None) != (b["bench"] is None):
+        print("KONTEN WEICHEN VONEINANDER AB – gleiche Regeln/Daten verlangen identische Ergebnisse")
+        rc = 2
     return rc
 
 

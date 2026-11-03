@@ -210,3 +210,18 @@ def test_real_gate_not_started_and_pilot_unchanged():
     assert jr.phase() == "pilot"
     lines = [json.loads(x) for x in (ROOT / "forecast/claude/prognosen.jsonl").read_text().splitlines()]
     assert all("phase" not in e for e in lines)                       # Pilotprognosen unverändert (kein nachträgliches Feld)
+
+
+def test_fx_shared_with_retry_and_failure_is_closed():
+    calls = {"n": 0}
+
+    def flaky():
+        calls["n"] += 1
+        if calls["n"] < 3:
+            raise KeyError("rate limit")
+        return pd.Series([1.1], index=[pd.Timestamp("2026-11-02")])
+
+    prov = ap.EngineProvider(live=None, instruments={}, fx_fn=flaky)
+    assert prov.fx() is not None and prov.fx() is prov.fx() and calls["n"] == 3       # 3 Versuche, danach geteilt/zwischengespeichert
+    dead = ap.EngineProvider(live=None, instruments={}, fx_fn=lambda: (_ for _ in ()).throw(KeyError("x")))
+    assert dead.fx() is None and dead.log                                           # fail-closed, protokolliert

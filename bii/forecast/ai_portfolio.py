@@ -49,11 +49,18 @@ class EngineProvider:
         return q.df
 
     def fx(self):
-        try:
-            return self._fx_fn()
-        except Exception as e:  # noqa: BLE001
-            self.log.append(f"EUR/USD: {type(e).__name__}")
-            return None
+        """EUR/USD einmal je Lauf laden (3 Versuche) und für ALLE Konten teilen – gleiche Kursversorgung für beide KIs."""
+        if getattr(self, "_fx", None) is not None:
+            return self._fx
+        for _ in range(3):
+            try:
+                self._fx = self._fx_fn()
+                if self._fx is not None and len(self._fx):
+                    return self._fx
+            except Exception as e:  # noqa: BLE001
+                self.log.append(f"EUR/USD: {type(e).__name__}")
+        self._fx = None
+        return None
 
     def crosscheck(self, sym, d, close, tol):
         q = self.live.get(self.inst[sym])
