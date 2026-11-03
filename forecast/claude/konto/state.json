@@ -3,7 +3,13 @@
  "cash_eur": 10000.0,
  "closed": [],
  "costs_eur": 0.0,
- "daten_log": [],
+ "daten_log": [
+  {
+   "probleme": [],
+   "tage": [],
+   "zeit": "2026-11-03T16:49:40+00:00"
+  }
+ ],
  "equity": [],
  "failed": [],
  "kapital_eur": 10000.0,

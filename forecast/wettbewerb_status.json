@@ -1,5 +1,15 @@
 {
- "lauf_utc": "2026-11-03T16:44:32+00:00",
- "status": "nicht_gestartet",
- "konten": {}
+ "lauf_utc": "2026-11-03T16:49:40+00:00",
+ "status": "gestartet",
+ "modus": "solo",
+ "konten": {
+  "claude": {
+   "verarbeitet": [],
+   "positionen": [],
+   "letzter_tag": null,
+   "ausgelassen_heute": [],
+   "aktiv_eur": null
+  }
+ },
+ "probleme": []
 }
