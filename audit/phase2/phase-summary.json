@@ -1,0 +1,118 @@
+{
+  "date": "2026-11-03",
+  "test_count": 76,
+  "paper_start_proven": false,
+  "real_money": false,
+  "protected_files": 69,
+  "runs": {
+    "live-20261103": {
+      "ops": {
+        "status": "failed",
+        "run_id": "20261103T063900-ae69d640d732",
+        "observed_at": "2026-11-03T06:39:00.979526+00:00",
+        "error": "DataError: EUNL.DE: DataError: EUNL.DE: nonfinite/nonpositive bar",
+        "start_created": false,
+        "snapshot": "snapshots/20261103T063900-ae69d640d732"
+      },
+      "request_count": 64,
+      "validated_symbols": [
+        "AMZN",
+        "NVDA",
+        "AAPL",
+        "MSFT",
+        "TSLA",
+        "META",
+        "GOOGL",
+        "AVGO",
+        "V",
+        "JPM",
+        "LLY",
+        "MA",
+        "COST",
+        "XOM",
+        "UNH",
+        "WMT",
+        "NFLX",
+        "ORCL",
+        "PG",
+        "HD",
+        "AMD",
+        "CRM",
+        "ADBE",
+        "KO",
+        "ABBV",
+        "PEP",
+        "CAT",
+        "MRK",
+        "SPY",
+        "TMO",
+        "GE",
+        "FX"
+      ],
+      "errors": [
+        "EUNL.DE: DataError: EUNL.DE: nonfinite/nonpositive bar"
+      ],
+      "manifest_sha256": "3dc266158998715ed50ed89fdb298edf11166f3b8315138a2a0771754b71d40b",
+      "manifest_path": "audit/phase2/live-20261103/snapshots/20261103T063900-ae69d640d732/manifest.json"
+    },
+    "execute-20261103": {
+      "ops": {
+        "status": "failed",
+        "run_id": "20261103T070855-c2ff90fc1e94",
+        "observed_at": "2026-11-03T07:08:55.425894+00:00",
+        "error": "DataError: EUNL.DE: DataError: EUNL.DE: nonfinite/nonpositive bar",
+        "start_created": false,
+        "snapshot": "snapshots/20261103T070855-c2ff90fc1e94"
+      },
+      "request_count": 64,
+      "validated_symbols": [
+        "NVDA",
+        "AAPL",
+        "AMZN",
+        "MSFT",
+        "AVGO",
+        "TSLA",
+        "GOOGL",
+        "META",
+        "MA",
+        "JPM",
+        "V",
+        "LLY",
+        "UNH",
+        "COST",
+        "WMT",
+        "XOM",
+        "NFLX",
+        "ORCL",
+        "HD",
+        "PG",
+        "AMD",
+        "ADBE",
+        "KO",
+        "CRM",
+        "ABBV",
+        "CAT",
+        "PEP",
+        "MRK",
+        "SPY",
+        "TMO",
+        "GE",
+        "FX"
+      ],
+      "errors": [
+        "EUNL.DE: DataError: EUNL.DE: nonfinite/nonpositive bar"
+      ],
+      "manifest_sha256": "c4ae4c262b1d2039f6274ff97b2b7e9ff7f819101eaff8efb6a49cd8c3f23ac9",
+      "manifest_path": "audit/phase2/execute-20261103/snapshots/20261103T070855-c2ff90fc1e94/manifest.json"
+    }
+  },
+  "research": {
+    "status": "failed",
+    "observed_at": "2026-11-03T07:06:58.334547+00:00",
+    "new_events": 2051,
+    "coverage_count": 30,
+    "errors": {
+      "SEC": "SEC_USER_AGENT missing; no primary filing coverage"
+    }
+  }
+}
