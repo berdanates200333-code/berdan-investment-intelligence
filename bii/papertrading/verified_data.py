@@ -182,8 +182,12 @@ class VerifiedProvider:
 
     def prepare_news(self):
         # Fetch before decision timestamp; later engine reads this fixed snapshot.
-        for symbol in rules.UNIVERSE:
-            self.news_cache[symbol]=self.fetch_news(symbol,rules.PARAMS['news_days'],rules.NEG_NEWS)
+        def fetch(symbol):
+            return symbol, self.fetch_news(symbol,rules.PARAMS['news_days'],rules.NEG_NEWS)
+        # Bounded concurrency; decisions still wait for the entire snapshot.
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            results=list(pool.map(fetch,rules.UNIVERSE))
+        self.news_cache=dict(results)
 
     def news(self,symbol,days,neg):
         if symbol not in self.news_cache: raise DataError('News not archived before decision')
