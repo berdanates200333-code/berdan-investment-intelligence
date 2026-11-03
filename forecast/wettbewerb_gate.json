@@ -1,0 +1,39 @@
+{
+ "status": "nicht_gestartet",
+ "geprueft_utc": "2026-11-03T15:30:22+00:00",
+ "alle_erfuellt": false,
+ "bedingungen": {
+  "universum_ausreichend": {
+   "ok": false,
+   "detail": "34 zugelassen, Benchmark EUNL.DE NEIN"
+  },
+  "ausfuehrungszyklus_claude": {
+   "ok": false,
+   "detail": "noch kein erfolgreicher Probelauf-Zyklus"
+  },
+  "automatik_claude": {
+   "ok": false,
+   "detail": "0/2 unbeaufsichtigte Sitzungen (Commit+Reveal per Push)"
+  },
+  "konto_claude_bereit": {
+   "ok": true,
+   "detail": "10.000 € unberührt"
+  },
+  "ausfuehrungszyklus_chatgpt": {
+   "ok": false,
+   "detail": "noch kein erfolgreicher Probelauf-Zyklus"
+  },
+  "automatik_chatgpt": {
+   "ok": false,
+   "detail": "0/2 unbeaufsichtigte Sitzungen (Commit+Reveal per Push)"
+  },
+  "konto_chatgpt_bereit": {
+   "ok": true,
+   "detail": "10.000 € unberührt"
+  },
+  "kein_echtgeld": {
+   "ok": true,
+   "detail": "keine Broker-Anbindung im Repo; Engine rein virtuell"
+  }
+ }
+}

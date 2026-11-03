@@ -1,0 +1,27 @@
+{
+ "bench": null,
+ "cash_eur": 10000.0,
+ "closed": [],
+ "costs_eur": 0.0,
+ "daten_log": [
+  {
+   "probleme": [
+    "EUR/USD: KeyError",
+    "Pflichtdaten (SPY/Benchmark/EUR-USD) fehlen – kein Handel, nur Protokoll"
+   ],
+   "zeit": "2026-11-03T15:30:03+00:00"
+  }
+ ],
+ "equity": [],
+ "failed": [],
+ "kapital_eur": 10000.0,
+ "last_date": null,
+ "pause_seit": null,
+ "paused": false,
+ "peak": 10000.0,
+ "pending": [],
+ "plaene_verworfen": [],
+ "positions": {},
+ "start": "2026-11-02",
+ "version": "PROBELAUF"
+}

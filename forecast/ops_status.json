@@ -1,28 +1,90 @@
 {
- "lauf_utc": "2026-11-03T14:20:29+00:00",
+ "lauf_utc": "2026-11-03T15:30:19+00:00",
  "neue_bewertungen": 0,
  "instrumente": {
-  "^DJI": {
-   "letzter_kurs": 51983.9805,
-   "datum": "2026-11-02"
-  },
   "^GSPC": {
+   "stufe": "B_einquellig",
    "letzter_kurs": 7541.3999,
-   "datum": "2026-11-02"
+   "datum": "2026-11-02",
+   "zweitquelle": null,
+   "gruende": []
   },
   "^IXIC": {
+   "stufe": "B_einquellig",
    "letzter_kurs": 25164.3105,
-   "datum": "2026-11-02"
+   "datum": "2026-11-02",
+   "zweitquelle": null,
+   "gruende": []
+  },
+  "^DJI": {
+   "stufe": "B_einquellig",
+   "letzter_kurs": 51983.9805,
+   "datum": "2026-11-02",
+   "zweitquelle": null,
+   "gruende": []
   },
   "^RUT": {
+   "stufe": "B_einquellig",
    "letzter_kurs": 2805.8799,
-   "datum": "2026-11-02"
+   "datum": "2026-11-02",
+   "zweitquelle": null,
+   "gruende": []
   }
  },
  "probleme": [
-  "Hinweis ^GSPC: Zweitquelle Stooq nicht erreichbar (einquellig)",
-  "Hinweis ^IXIC: Zweitquelle Stooq nicht erreichbar (einquellig)",
-  "Hinweis ^DJI: Zweitquelle Stooq nicht erreichbar (einquellig)",
-  "Hinweis ^RUT: Zweitquelle Stooq nicht erreichbar (einquellig)"
+  "^GSPC: Zweitquelle Stooq nicht nutzbar (ValueError)",
+  "^IXIC: Zweitquelle Stooq nicht nutzbar (ValueError)",
+  "^DJI: Zweitquelle Stooq nicht nutzbar (ValueError)",
+  "^RUT: Zweitquelle Stooq nicht nutzbar (ValueError)"
+ ],
+ "abrufe": [
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/^GSPC",
+   "status": 200,
+   "sha256": "510c9d71aebafb327c160aea4dfafed4f7e0ebb891bde7f0aedb342be3711e75",
+   "abgerufen_utc": "2026-11-03T15:30:19+00:00"
+  },
+  {
+   "url": "https://stooq.com/q/d/l/",
+   "status": 200,
+   "sha256": "4e876ac2564a7d788ed61a1c4a0b16364a315a9c589df6c0964ccad511f788f1",
+   "abgerufen_utc": "2026-11-03T15:30:20+00:00"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/^IXIC",
+   "status": 200,
+   "sha256": "a350a97e4119eb11c908a89bc569bd48472a3ff9e4d56f8594b7a14cc299f93b",
+   "abgerufen_utc": "2026-11-03T15:30:20+00:00"
+  },
+  {
+   "url": "https://stooq.com/q/d/l/",
+   "status": 200,
+   "sha256": "7f1a5b6c408549dc0faeaec5cd300794f28147784e11a0ec845727ff90db910b",
+   "abgerufen_utc": "2026-11-03T15:30:20+00:00"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/^DJI",
+   "status": 200,
+   "sha256": "94cd2bdb1be33870a6e8da125dd29055ff3201396d774efb19c810bef0af766f",
+   "abgerufen_utc": "2026-11-03T15:30:20+00:00"
+  },
+  {
+   "url": "https://stooq.com/q/d/l/",
+   "status": 200,
+   "sha256": "d28f81757b1ec9e11bf5d8fc3b49088d935f75a9c2cdeced8334699f9bb7516d",
+   "abgerufen_utc": "2026-11-03T15:30:21+00:00"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/^RUT",
+   "status": 200,
+   "sha256": "95eab668afbe07d32c2c18a2e84aff69e339766853cfb1c967aefceefc536763",
+   "abgerufen_utc": "2026-11-03T15:30:21+00:00"
+  },
+  {
+   "url": "https://stooq.com/q/d/l/",
+   "status": 200,
+   "sha256": "55053fdc4af8bccf1de27c1a0bcd1d4192b330250924ffadec3cbdbee8aa08f5",
+   "abgerufen_utc": "2026-11-03T15:30:21+00:00"
+  }
  ]
 }
