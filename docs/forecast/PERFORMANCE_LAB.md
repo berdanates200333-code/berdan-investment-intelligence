@@ -24,3 +24,12 @@ Der Claude-Solo-Test (Hauptkonto, 1 % Risiko, eingefroren) bleibt unverändert. 
 
 ## Grenzen
 Kleine Stichprobe (60 Tage); Zielmarken sind kein Versprechen; das Risikolabor nutzt heutige Mega-Caps (Survivorship Bias) und rein mechanische Signale; Steuern sind nicht berücksichtigt; Hebel, Leerverkäufe und Echtgeld sind ausgeschlossen. Die Entscheidung über einen späteren Echtgeld-Piloten bleibt beim Nutzer.
+
+## Erste Ergebnisse des Risikolabors (03.11.2026, `reports/risikolabor/ergebnis.md`)
+Mechanische v1.0-Signale, 5 Marktphasen à ca. 6 Monate, je 10.000 € Start; **ohne Claudes Urteil**, Mega-Cap-Universum (Survivorship Bias), je Phase nur 1–29 Trades.
+| Profil | Ø Rendite je Phase | schlechteste Phase | Ø max. Rückgang | schlechtester Rückgang | Rendite je 1 % Rückgang |
+|---|---|---|---|---|---|
+| Hauptprofil (1 %, 20 %) | +1,95 % | −2,5 % | −4,0 % | −5,6 % | 0,49 |
+| Offensiv (2 %, 30 %, ≤ 6 % offen) | +1,86 % | −7,0 % | −6,6 % | −12,1 % | 0,28 |
+| Raster 3 % | +1,81 % | −4,9 % | −7,8 % | −14,8 % | 0,23 |
+**Lesart:** Die doppelte oder dreifache Positionsgröße hat bei identischen Signalen den Rückgang etwa verdoppelt, die Durchschnittsrendite aber nicht erhöht. Die Signale selbst haben nur geringen Vorsprung (2023 Erholung: −2,5 % bis −7,0 % bei SPY +14 %). Mehr Risiko vergrößert Gewinne *und* Verluste; eine höhere Rendite muss deshalb aus besserer **Auswahl** kommen (Claudes Analyse, `nur_offensiv`-Prognosen), nicht aus größeren Positionen. Fehler der ersten Version (die 20-%-Positionsgrenze begrenzte 2 %/3 % unbemerkt auf ~1 %) ist korrigiert und im Bericht dokumentiert. Nicht statistisch belastbar.
