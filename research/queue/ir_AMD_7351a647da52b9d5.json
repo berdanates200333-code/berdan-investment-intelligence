@@ -1,0 +1,36 @@
+{
+  "ereignis_id": "ir:AMD:7351a647da52b9d5",
+  "ticker": "AMD",
+  "titel": "AMD Reports Third Quarter 2026 Financial Results",
+  "erstellt_utc": "2026-11-03T22:19:07+00:00",
+  "status": "offen",
+  "grund": "Regel: Wichtigkeit hoch",
+  "kontext": {
+    "ereignis": {
+      "seq": 1260,
+      "erstellt_utc": "2026-11-03T22:19:18+00:00",
+      "typ": "ereignis",
+      "id": "ir:AMD:7351a647da52b9d5",
+      "art": "ir",
+      "ticker": "AMD",
+      "titel": "AMD Reports Third Quarter 2026 Financial Results",
+      "veroeffentlicht": "2026-11-03T21:15:00+00:00",
+      "quelle": {
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1303/amd-reports-third-quarter-2026-financial-results",
+        "herausgeber": "Advanced Micro Devices, Inc. (offizieller Newsroom)",
+        "feed": "https://ir.amd.com/news-events/press-releases/rss"
+      },
+      "zuverlaessigkeit": "offiziell (Unternehmensmitteilung, Primärquelle)",
+      "wichtigkeit": "hoch",
+      "regel": "Regel: offizielle Mitteilung zu Geschäftszahlen",
+      "quelltext": "research/sources/AMD/ir_7351a647da52b9d5.txt",
+      "erfasst_utc": "2026-11-03T22:19:07+00:00",
+      "prev_hash": "784acede28c89e2c82d8c4f746d61aaecd97da711cc449f67049d3565fb08b4f",
+      "hash": "a7dca72097faa5b0b7c243479fa4b7603ffcc5efbd6aa3826f36f0f0ca2847a4"
+    },
+    "profil": "research/db/companies/AMD.json",
+    "these": "research/theses/AMD.json",
+    "quelltext": "research/sources/AMD/ir_7351a647da52b9d5.txt"
+  },
+  "anleitung": ".claude/commands/research-analyse.md"
+}
