@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "30 12 * * 1-5"
+    - cron: "15 13 * * 1-5"    # Puffer bei verspätetem GitHub-Start (Orders sind idempotent; nach der Eröffnung dokumentierte Pläne verwirft die Engine)
 
 permissions:
   contents: write

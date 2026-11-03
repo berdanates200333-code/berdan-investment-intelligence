@@ -4,9 +4,8 @@ name: Versiegelter Prognose-Eingang (unbeaufsichtigt)
 # genau EIN Einmal-Schlüsselpaar je Sitzung (öffentlicher Schlüssel im Repo, privater nur im Arbeitsspeicher). Kein Secret, keine manuelle Eingabe.
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "30 10 * * 1-5"
-    - cron: "30 11 * * 1-5"
+  # Zeitplan für den Claude-Solo-Test ABGESCHALTET (Claude schreibt direkt per scripts/fc_add.py; der versiegelte Eingang wird erst für den
+  # späteren ChatGPT-Anschluss gebraucht). Zum Wiedereinschalten: schedule mit cron 30 10 / 30 11 * * 1-5 ergänzen.
 
 permissions:
   contents: write
