@@ -1,0 +1,28 @@
+{
+ "lauf_utc": "2026-11-03T14:20:29+00:00",
+ "neue_bewertungen": 0,
+ "instrumente": {
+  "^DJI": {
+   "letzter_kurs": 51983.9805,
+   "datum": "2026-11-02"
+  },
+  "^GSPC": {
+   "letzter_kurs": 7541.3999,
+   "datum": "2026-11-02"
+  },
+  "^IXIC": {
+   "letzter_kurs": 25164.3105,
+   "datum": "2026-11-02"
+  },
+  "^RUT": {
+   "letzter_kurs": 2805.8799,
+   "datum": "2026-11-02"
+  }
+ },
+ "probleme": [
+  "Hinweis ^GSPC: Zweitquelle Stooq nicht erreichbar (einquellig)",
+  "Hinweis ^IXIC: Zweitquelle Stooq nicht erreichbar (einquellig)",
+  "Hinweis ^DJI: Zweitquelle Stooq nicht erreichbar (einquellig)",
+  "Hinweis ^RUT: Zweitquelle Stooq nicht erreichbar (einquellig)"
+ ]
+}
