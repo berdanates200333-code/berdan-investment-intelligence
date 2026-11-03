@@ -35,3 +35,24 @@ Stufe 1 (handelbar, USD/US-Sitzungen): 30 Aktien + SPY, QQQ, IWM, GLD; Zulassung
 
 ## Startschranke
 Start nur wenn: ≥ 20 Instrumente + Benchmark zugelassen; für beide KIs ein Probelauf mit echter Ausführung auf Stufe-A-Daten über die gemeinsame Engine; beide KIs ≥ 2 unbeaufsichtigte Commit+Reveal-Sitzungen; Konten unberührt (10.000 €). Start frühestens zur nächsten Sitzung, 60 Kalendertage.
+
+---
+# Nachtrag Integrationsprüfung (03.11.2026)
+
+## Startschranke (`bii/forecast/gate.py`) prüft Belege
+Je KI: simulierte **Kauf-Ausführung** UND dokumentierter **Benchmark-Kauf** (`benchmark_ausfuehrung`) UND ≥ 2 verschiedene **reale XNYS-Handelstage** (`tagesabschluss`). Beide Konten müssen für jeden Tag dieselbe **Daten-Prüfsumme** (SHA-256 über alle Balken, Benchmark, FX) haben. Automatik: ≥ 2 verschiedene reale Handelstage mit Commit+Reveal (`ereignis=push`, `run_id`, Beleg-Dateien nur vom Bot `market-check-bot` committet, Journal-Einträge passen zum Commit-Hash). Zusätzlich: Benchmark festgeschrieben und zugelassen, ≥ 20 zugelassene Handelsinstrumente, Konten unberührt.
+
+## Produktiver Wettbewerbszyklus (`bii/forecast/wettbewerb.py`, `scripts/fc_wettbewerb.py`)
+Nach `fc_gate.py --start` (schreibt `wettbewerb.json` mit eingefrorenem Universum, Benchmark, Start = nächste Sitzung, Ende = Start + 60 Tage) verarbeitet der tägliche Workflow `forecast-evaluate.yml` die ECHTEN Konten `forecast/<ki>/konto`: Orders der Vorsitzung ausführen, Exits, Bewertung, Benchmark, Pause, `tagesabschluss`; danach werden neue KAUFEN-Prognosen mit `order{limit,stop,ziel}` als dokumentierte Orders eingereicht (abgelehnte werden journalisiert). Prüfsummen-Abweichung zwischen den Konten = Fehler. Der Ablauf ist Ende-zu-Ende über mehrere Handelstage getestet (`test_competition_cycle_end_to_end`); live läuft er erst nach dem Start.
+
+## Benchmark (festgeschrieben)
+`scripts/fc_benchmark.py` hat am 03.11.2026 16:25 UTC **EUNL.DE (EUR, Xetra)** festgeschrieben: Datenstufe A mit unabhängiger Zweitquelle StockAnalysis (S&P Global). Ersatzkandidaten URTH/ACWI/VT (USD, Umrechnung wie die Aktienkonten, Engine unterstützt das) wurden nicht benötigt. Die Datei `forecast/benchmark_entscheidung.json` wird nie überschrieben.
+
+## Datenstufe A, präzisiert
+Identität (Symbol, Instrumententyp), Währung, Handelsplatz/Zeitzone, aktueller endgültiger Balken, fehlende Handelstage laut Kalender, Sprung > 40 %, **Split ±30 Tage → Stufe C** (Preisdefinitionen nicht vergleichbar), Dividenden: Preisrendite ohne Dividenden. Zweitquellen-Toleranzen zweck- und instrumentbezogen statt pauschal 2 %: Schlusskurs Aktie 0,5 % / ETF, Gold, Index 0,3 % / Krypto 1 %; Open/High/Low Aktie 1,5 % / ETF, Gold, Index 0,8 % / Krypto 2 % (Begründung: der offizielle Schlusskurs ist anbieterübergreifend nahezu identisch, O/H/L hängen von Tape/Handelsplatz ab). Die Grenzwerte sind Annahmen und im Test `test_tolerances_depend_on_instrument_and_purpose` festgeschrieben.
+
+## Versiegelter Eingang (`bii/forecast/sealed.py`, `scripts/fc_seal_job.py`, `forecast-seal.yml`)
+Je Sitzung erzeugt ein unbeaufsichtigter Lauf ein Einmal-Schlüsselpaar (öffentlicher Schlüssel im Repo, privater nur im Arbeitsspeicher, kein Secret). Die KI legt ein **Chiffrat** unter `forecast/inbox/<ki>/<sitzung>/sealed.json` ab; die andere KI kann es nicht lesen. Nach dem Cutoff entschlüsselt der Lauf, prüft Frist/Hash/Informationsstichtag und schreibt das Prognosejournal. Nachweis: Offline-Test (fremder Schlüssel scheitert, Manipulation scheitert, Cutoff erzwungen). **Live-Nachweis steht aus.** Offen bleibt die Authentifizierung je KI (Pfad statt Identität): ein gemeinsames GitHub-Konto kann nicht zwischen den KIs unterscheiden.
+
+## Cockpit
+`python scripts/fc_cockpit.py claude` bzw. Chat-Befehl `/cockpit`: Portfolio, Einschätzungen, Kursprognosen, fällige Bewertungen, G/V, technischer Status und Startschranke; der Vergleich mit ChatGPT nur auf Wunsch und erst nach der eigenen Tagesprognose.
