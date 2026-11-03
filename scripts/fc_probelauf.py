@@ -22,6 +22,7 @@ def main() -> int:
     root = ROOT / "forecast" / "probelauf"
     rules = ap.make_rules(start, "2099-12-31", ("SPY",), version="PROBELAUF")
     rules.REGIME = "SPY"
+    rules.BENCH = {"symbol": "SPY", "name": "Probelauf-Platzhalter (USD, nur Systemtest)", "currency": "USD"}   # Benchmark-Datenproblem (EUNL.DE) blockiert den Ausführungsnachweis nicht; Gate prüft EUNL.DE separat
     rc = 0
     for ki in ("claude", "chatgpt"):
         st = ap.load_state(ki, rules, root=root)

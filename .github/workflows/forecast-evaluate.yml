@@ -52,7 +52,7 @@ jobs:
         run: |
           git config user.name "market-check-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add forecast reports/forecast
+          git add forecast
           git diff --cached --quiet && exit 0
           git commit -q -m "Prognosesystem: Datenprüfung, Probelauf, Erfolgskontrolle $(date -u +%F)"
           for i in 1 2 3; do git pull -q --rebase origin "${GITHUB_REF_NAME}" && git push -q && exit 0; sleep 5; done
