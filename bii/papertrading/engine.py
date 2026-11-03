@@ -248,13 +248,31 @@ def _plan_entries(state, bars_hist, spy, fx, rules, d, jpath, provider, vetos, n
 
 
 # ---------------------------------------------------------------- Hauptlauf
-def _bench_buy(state, df, rules, d):
+def _bench_buy(state, df, rules, d, fx=1.0):
+    """Benchmark-Kauf zur Eröffnung. EUR-Benchmark direkt; USD-Benchmark mit EZB-Vortageskurs und Währungsgebühr (wie die Aktienkonten)."""
     P = rules.PARAMS
     b = df.loc[pd.Timestamp(d)]
-    fill = b["open"] * (1 + P["half_spread"] + P["slippage"])
+    cur = rules.BENCH.get("currency", "EUR")
+    fill_local = b["open"] * (1 + P["half_spread"] + P["slippage"])
+    fill = fill_local if cur == "EUR" else fill_local / fx * (1 + P["fx_fee"])        # EUR je Stück inkl. Währungsgebühr
     n = math.floor((state["kapital_eur"] - P["fee_eur"]) / fill)
-    state["bench"] = {"symbol": rules.BENCH["symbol"], "stueck": n, "einstieg_eur": round(fill, 4), "datum": str(d.date()),
-                      "cash_eur": round(state["kapital_eur"] - n * fill - P["fee_eur"], 2), "kosten_eur": round(P["fee_eur"] + n * b["open"] * (P["half_spread"] + P["slippage"]), 2)}
+    cost = P["fee_eur"] + n * (fill - b["open"] / (1 if cur == "EUR" else fx))
+    state["bench"] = {"symbol": rules.BENCH["symbol"], "waehrung": cur, "stueck": n, "einstieg_eur": round(fill, 4), "datum": str(d.date()), "fx_einstieg": fx,
+                      "cash_eur": round(state["kapital_eur"] - n * fill - P["fee_eur"], 2), "kosten_eur": round(cost, 2)}
+
+
+def _bench_value(state, bench_df, rules, d, fx_val):
+    be = state["bench"]
+    px = float(bench_df.loc[d, "close"])
+    return be["stueck"] * (px if be.get("waehrung", "EUR") == "EUR" else px / fx_val) + be["cash_eur"]
+
+
+def _fingerprint(universe, spy, bench_df, rules, d, fx_before, fx_upto) -> str:
+    """Prüfsumme ALLER Eingabedaten eines Handelstags (Balken, Benchmark, Kurse): beide KI-Konten müssen dieselbe Prüfsumme haben."""
+    rows = {}
+    for sym, df in [*sorted(universe.items()), (rules.REGIME, spy), (rules.BENCH["symbol"], bench_df)]:
+        rows[sym] = [round(float(df.loc[d, k]), 6) for k in ("open", "high", "low", "close", "volume")] if df is not None and d in df.index else None
+    return hashlib.sha256(json.dumps({"bars": rows, "fx_vortag": round(fx_before, 8), "fx_tag": round(fx_upto, 8)}, sort_keys=True).encode()).hexdigest()
 
 
 def run(state: dict, provider, rules, jpath: Path, now: datetime | None = None, vetos: list | None = None, freigaben: list | None = None, ende: str | None = None) -> dict:
@@ -310,7 +328,8 @@ def run(state: dict, provider, rules, jpath: Path, now: datetime | None = None, 
             state["peak"] = state["equity"][-1]["aktiv_eur"]
             _jw(jpath, {"typ": "pause_beendet", "datum": str(d.date()), "version": rules.VERSION, "grund": "manuelle Freigabe (papertrading/freigabe.json)"}, late, now)
         if state["bench"] is None and d in bench_df.index:
-            _bench_buy(state, bench_df, rules, d)
+            _bench_buy(state, bench_df, rules, d, fxe)
+            _jw(jpath, {"typ": "benchmark_ausfuehrung", "datum": str(d.date()), "version": rules.VERSION, **{k: v for k, v in state["bench"].items()}}, late, now)
         # 1. Orders ausführen
         for o in list(state["pending"]):
             if pd.Timestamp(o["plan_datum"]) >= d:
@@ -329,11 +348,13 @@ def run(state: dict, provider, rules, jpath: Path, now: datetime | None = None, 
         closes = {t: float(b["close"]) for t, b in bars.items() if b is not None}
         eq = equity_eur(state, closes, _fx_upto(fx, d))
         be = state["bench"]
-        bench_eq = (be["stueck"] * float(bench_df.loc[d, "close"]) + be["cash_eur"]) if be and d in bench_df.index else (state["equity"][-1]["bench_eur"] if state["equity"] else state["kapital_eur"])
+        bench_eq = _bench_value(state, bench_df, rules, d, _fx_upto(fx, d)) if be and d in bench_df.index else (state["equity"][-1]["bench_eur"] if state["equity"] else state["kapital_eur"])
         dq = [x for x in provider.log if not x.startswith("Hinweis")]
         state["peak"] = max(state["peak"], eq)
         state["equity"].append({"datum": str(d.date()), "aktiv_eur": round(eq, 2), "bench_eur": round(bench_eq, 2), "cash_eur": round(state["cash_eur"], 2),
                                 "positionen": len(state["positions"]), "daten_ok": not dq})
+        _jw(jpath, {"typ": "tagesabschluss", "datum": str(d.date()), "version": rules.VERSION, "aktiv_eur": round(eq, 2), "bench_eur": round(bench_eq, 2),
+                    "daten_fingerprint": _fingerprint(universe, spy, bench_df, rules, d, fxe, _fx_upto(fx, d))}, late, now)
         if not state["paused"] and eq / state["peak"] - 1 <= -rules.PARAMS["drawdown_pause"]:
             state["paused"], state["pause_seit"] = True, str(d.date())
             _jw(jpath, {"typ": "pause", "datum": str(d.date()), "version": rules.VERSION, "grund": f"Portfoliorückgang {eq/state['peak']-1:.1%} vom Höchststand – keine neuen Positionen",

@@ -49,6 +49,10 @@ def validate(p: dict) -> None:
         x = p["horizonte"].get(str(h))
         if not x or not (0 < x["p_positiv"] < 1) or "erwartung_pct" not in x or not x.get("zieltermin"):
             raise ValueError(f"Horizont {h} unvollständig")
+    if p.get("trade_zulaessig"):
+        o = p.get("order") or {}
+        if not all(isinstance(o.get(k), (int, float)) and o[k] > 0 for k in ("limit", "stop", "ziel")):
+            raise ValueError("trade_zulaessig verlangt order {limit, stop, ziel}")
     if p["belastbarkeit"] not in ("belastbar", "eingeschraenkt", "nicht_belastbar"):
         raise ValueError("belastbarkeit ungültig")
 
@@ -73,6 +77,10 @@ def add(p: dict, now: datetime | None = None, ki_path: Path | None = None) -> di
         from . import universe
         if p["instrument"]["yahoo"] not in universe.admitted():
             raise ValueError("Instrument nicht im zugelassenen Universum (Datenstufe A + Liquidität)")
+        ref = next((i for i in universe.load()["stufe1_handelbar"] if i["yahoo"] == p["instrument"]["yahoo"]), None)
+        if ref is None:
+            raise ValueError("Instrument ist nicht handelbar (nur Stufe-1-Universum)")
+        p = {**p, "instrument": {**ref, "name": p["instrument"].get("name", ref["id"])}}      # Identität (ISIN/Börse/Währung/Klasse) kommt aus dem Universum, nicht von der KI
     p = {**p, "phase": phase()}
     p = {**p, "regelversion": REGELVERSION, "typ": "prognose"}
     for h in HORIZONTE:

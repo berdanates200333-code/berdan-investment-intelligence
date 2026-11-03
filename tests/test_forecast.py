@@ -16,7 +16,7 @@ from bii.forecast import evaluate, jr, quality, report  # noqa: E402
 
 PINS = {1: ('CLAUDE-2026-11-03-SPX-001', '791c8a25d676efe8e9f26174a8f34625877d9a2c8d8078442f87d63cf9f7400e'), 2: ('CLAUDE-2026-11-03-NDX-002', '55cf4218d5f8e9ae9b491647b615465d391ddd470b3abb8953fa613b742ee429'), 3: ('CLAUDE-2026-11-03-DJI-003', '25764af9e9778ae2472ed5b5f4ec7869f22f3d73a34bff4d5811462491cfdf5f'), 4: ('CLAUDE-2026-11-03-RUT-004', '941148b808d9502f4454269276b33a7a62bd0d6c7b81a2dcc7c15908be3db929')}   # festgeschriebene Hashes der ersten Claude-Prognosen (03.11.2026, vor US-Eröffnung) – nie ändern
 
-BASE = {"prognose_id": "T-1", "ki": "claude", "instrument": {"id": "X", "name": "X", "yahoo": "X", "venue": "XNYS"}, "trade_zulaessig": True,
+BASE = {"prognose_id": "T-1", "ki": "claude", "instrument": {"id": "X", "name": "X", "yahoo": "X", "venue": "XNYS"}, "trade_zulaessig": True, "order": {"limit": 101.0, "stop": 95.0, "ziel": 110.0},
         "referenz": {"kurs": 100.0, "waehrung": "USD", "datum": "2026-11-02", "quelle": ["q"]},
         "horizonte": {"1": {"tage": 1, "zieltermin": "2026-11-03", "erwartung_pct": 0.5, "p_positiv": 0.6},
                       "5": {"tage": 5, "zieltermin": "2026-11-09", "erwartung_pct": 1.0, "p_positiv": 0.6},

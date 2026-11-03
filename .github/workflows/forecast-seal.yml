@@ -1,0 +1,30 @@
+name: Versiegelter Prognose-Eingang (unbeaufsichtigt)
+
+# Zwei Start-Cron-Zeiten decken Sommer-/Winterzeit ab; das Skript prüft per Börsenkalender, ob der Cutoff in <= 2,5 h liegt, und erzeugt dann
+# genau EIN Einmal-Schlüsselpaar je Sitzung (öffentlicher Schlüssel im Repo, privater nur im Arbeitsspeicher). Kein Secret, keine manuelle Eingabe.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 10 * * 1-5"
+    - cron: "30 11 * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fc-seal
+  cancel-in-progress: false
+
+jobs:
+  versiegelt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 200
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/phase1-grundsystem
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q -r requirements.txt
+      - run: python scripts/fc_seal_job.py

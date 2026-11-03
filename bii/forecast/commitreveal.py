@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -57,7 +58,7 @@ def ingest(ki: str, sitzung: str, stage: str, payload: dict, now: datetime, even
     if stage == "commit":
         if now_ts >= cutoff:
             raise ValueError("Commit nach Cutoff – abgelehnt")
-        doc = {"ki": ki, "sitzung": sitzung, "stage": "commit", "hash": payload["hash"], "server_utc": now.isoformat(timespec="seconds"), "ereignis": event}
+        doc = {"ki": ki, "sitzung": sitzung, "stage": "commit", "hash": payload["hash"], "server_utc": now.isoformat(timespec="seconds"), "ereignis": event, "run_id": os.environ.get("GITHUB_RUN_ID")}
         _write_receipt(receipt_path(ki, sitzung, "commit", root), doc)
         return doc
     if stage != "reveal":
@@ -76,6 +77,39 @@ def ingest(ki: str, sitzung: str, stage: str, payload: dict, now: datetime, even
     for p in payload["prognosen"]:
         p = {**p, "ki": ki, "zeitnachweis": {"commit_utc": commit["server_utc"], "reveal_utc": now.isoformat(timespec="seconds"), "commit_hash": commit["hash"]}}
         ids.append(jr.add(p, now=now, ki_path=jpath)["prognose_id"])
-    doc = {"ki": ki, "sitzung": sitzung, "stage": "reveal", "prognose_ids": ids, "server_utc": now.isoformat(timespec="seconds"), "ereignis": event}
+    doc = {"ki": ki, "sitzung": sitzung, "stage": "reveal", "prognose_ids": ids, "server_utc": now.isoformat(timespec="seconds"), "ereignis": event, "run_id": os.environ.get("GITHUB_RUN_ID")}
+    _write_receipt(receipt_path(ki, sitzung, "reveal", root), doc)
+    return doc
+
+
+# ---------------------------------------------------------------- versiegelter Eingang (Chiffrat statt Hash+Klartext)
+def seal_accept(ki: str, sitzung: str, blob: dict, now: datetime, root: Path = ROOT, venue: str = "XNYS") -> dict:
+    """Chiffrat annehmen (bis Cutoff). Beleg 'commit' mit Hash des Chiffrats; Inhalt unlesbar."""
+    from . import sealed
+    day, opening = calendars.next_session_open(venue, now)
+    if str(day.date()) != sitzung or pd.Timestamp(now) >= opening - COMMIT_LEAD:
+        raise ValueError("Chiffrat nach Cutoff oder für falsche Sitzung – abgelehnt")
+    doc = {"ki": ki, "sitzung": sitzung, "stage": "commit", "hash": sealed.blob_hash(blob), "server_utc": now.isoformat(timespec="seconds"), "ereignis": "push",
+           "run_id": os.environ.get("GITHUB_RUN_ID"), "art": "versiegelt"}
+    _write_receipt(receipt_path(ki, sitzung, "commit", root), doc)
+    return doc
+
+
+def seal_reveal(ki: str, sitzung: str, blob: dict, private_pem: bytes, now: datetime, root: Path = ROOT, venue: str = "XNYS", jpath: Path | None = None) -> dict:
+    """Nach dem Cutoff entschlüsseln und ins Prognosejournal übernehmen (Prüfung wie beim Klartext-Reveal)."""
+    from . import sealed
+    day, opening = calendars.next_session_open(venue, now)
+    cutoff = opening - COMMIT_LEAD
+    if str(day.date()) != sitzung or not (pd.Timestamp(now) >= cutoff and pd.Timestamp(now) < opening):
+        raise ValueError("Entschlüsselung nur zwischen Cutoff und Eröffnung")
+    commit = json.loads(receipt_path(ki, sitzung, "commit", root).read_text())
+    if sealed.blob_hash(blob) != commit["hash"]:
+        raise ValueError("Chiffrat stimmt nicht mit dem Beleg überein")
+    ids = []
+    for p in sealed.decrypt(private_pem, blob):
+        p = {**p, "ki": ki, "zeitnachweis": {"commit_utc": commit["server_utc"], "reveal_utc": now.isoformat(timespec="seconds"), "commit_hash": commit["hash"], "art": "versiegelt"}}
+        ids.append(jr.add(p, now=now, ki_path=jpath)["prognose_id"])
+    doc = {"ki": ki, "sitzung": sitzung, "stage": "reveal", "prognose_ids": ids, "server_utc": now.isoformat(timespec="seconds"), "ereignis": "push",
+           "run_id": os.environ.get("GITHUB_RUN_ID"), "art": "versiegelt"}
     _write_receipt(receipt_path(ki, sitzung, "reveal", root), doc)
     return doc

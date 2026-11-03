@@ -34,11 +34,23 @@ jobs:
           set +e
           python scripts/fc_universe.py
           echo "code=$?" >> "$GITHUB_OUTPUT"
+      - name: Benchmark festschreiben (einmalig, Datenstufe A)
+        id: bm
+        run: |
+          set +e
+          python scripts/fc_benchmark.py
+          echo "code=$?" >> "$GITHUB_OUTPUT"
       - name: Systemprobelauf der KI-Konten (gemeinsame Engine)
         id: pro
         run: |
           set +e
           python scripts/fc_probelauf.py
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+      - name: Wettbewerbszyklus der echten KI-Konten (nur nach offiziellem Start)
+        id: wb
+        run: |
+          set +e
+          python scripts/fc_wettbewerb.py
           echo "code=$?" >> "$GITHUB_OUTPUT"
       - name: Erfolgskontrolle fälliger Prognosen
         id: ev
@@ -58,9 +70,9 @@ jobs:
           for i in 1 2 3; do git pull -q --rebase origin "${GITHUB_REF_NAME}" && git push -q && exit 0; sleep 5; done
           exit 1
       - name: Datenfehler melden
-        if: steps.ev.outputs.code != '0' || steps.pro.outputs.code != '0'
+        if: steps.ev.outputs.code != '0' || steps.pro.outputs.code != '0' || steps.wb.outputs.code != '0'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh issue create --title "DATENFEHLER Prognosesystem $(date -u +%d.%m.%Y)" \
-            --body "Erfolgskontrolle=${{ steps.ev.outputs.code }}, Probelauf=${{ steps.pro.outputs.code }}, Universum=${{ steps.uni.outputs.code }}. Details: forecast/ops_status.json, forecast/universum_status.json. Lauf: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            --body "Erfolgskontrolle=${{ steps.ev.outputs.code }}, Probelauf=${{ steps.pro.outputs.code }}, Wettbewerb=${{ steps.wb.outputs.code }}, Benchmark=${{ steps.bm.outputs.code }}, Universum=${{ steps.uni.outputs.code }}. Details: forecast/ops_status.json, forecast/universum_status.json. Lauf: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

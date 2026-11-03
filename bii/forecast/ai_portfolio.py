@@ -48,6 +48,9 @@ class EngineProvider:
             return None
         return q.df
 
+    def qual(self, sym):
+        return self.live.get(self.inst[sym])
+
     def fx(self):
         """EUR/USD einmal je Lauf laden (3 Versuche) und für ALLE Konten teilen – gleiche Kursversorgung für beide KIs."""
         if getattr(self, "_fx", None) is not None:

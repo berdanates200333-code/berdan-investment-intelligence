@@ -19,8 +19,8 @@ def main() -> int:
     insts = {i["yahoo"]: i for i in u["stufe1_handelbar"] + u["benchmarks"]}
     day = calendars.last_complete_session("XNYS", now)
     start = str(day.date())
-    root = ROOT / "forecast" / "probelauf"
-    rules = ap.make_rules(start, "2099-12-31", ("SPY",), version="PROBELAUF")
+    root = ROOT / "forecast" / "probelauf2"
+    rules = ap.make_rules(start, "2099-12-31", ("SPY",), version="PROBELAUF2")
     rules.REGIME = "SPY"
     rules.BENCH = {"symbol": "SPY", "name": "Probelauf-Platzhalter (USD, nur Systemtest)", "currency": "USD"}   # Benchmark-Datenproblem (EUNL.DE) blockiert den Ausführungsnachweis nicht; Gate prüft EUNL.DE separat
     rc = 0

@@ -225,3 +225,178 @@ def test_fx_shared_with_retry_and_failure_is_closed():
     assert prov.fx() is not None and prov.fx() is prov.fx() and calls["n"] == 3       # 3 Versuche, danach geteilt/zwischengespeichert
     dead = ap.EngineProvider(live=None, instruments={}, fx_fn=lambda: (_ for _ in ()).throw(KeyError("x")))
     assert dead.fx() is None and dead.log                                           # fail-closed, protokolliert
+
+
+# ---------------------------------------------------------------- Datenstufe A: zweck- und instrumentbezogene Grenzen
+def _qa(klasse, dc, dohl=0.0, split=False, typ=None):
+    df = _df()
+    d = df.index[-1]
+    q = quality.QualData("X", "XNYS", df, quality.B, klasse=klasse, actions={"splits": {"1": {"date": int(d.timestamp()) - 86400 * 5}}} if split else {})
+    q.secondary = {d: {"open": float(df.loc[d, "open"]) * (1 + dohl), "high": float(df.loc[d, "high"]) * (1 + dohl), "low": float(df.loc[d, "low"]), "close": float(df.loc[d, "close"]) * (1 + dc)}}
+    return q, d
+
+
+def test_tolerances_depend_on_instrument_and_purpose():
+    q, d = _qa("aktien_etf", 0.002)
+    assert q.tier_at(d) == quality.A
+    q, d = _qa("aktien_etf", 0.005)
+    assert q.tier_at(d) == quality.C                        # 0,5 % wäre bei Aktien ok, bei ETFs nicht (Close-Grenze 0,3 %)
+    q, d = _qa("aktie", 0.004)
+    assert q.tier_at(d) == quality.A
+    q, d = _qa("aktie", 0.0, dohl=0.012)
+    assert q.tier_at(d) == quality.A                        # OHL weiter gefasst als Close
+    q, d = _qa("aktie", 0.0, dohl=0.02)
+    assert q.tier_at(d) == quality.C                        # früher (2 %) wäre das durchgegangen
+    q, d = _qa("aktie", 0.001, split=True)
+    assert q.tier_at(d) == quality.C                        # Split im Fenster: Preisdefinitionen nicht vergleichbar
+    ok, r = quality.check_frame(_df(), "XNYS", NOW, "USD", {"waehrung": "USD", "zeitzone": "America/New_York", "typ": "EQUITY"}, "aktien_etf")
+    assert ok == quality.C and any("Instrumententyp" in x for x in r)       # Identität: Aktie ist kein ETF
+
+
+# ---------------------------------------------------------------- Benchmark in USD
+def test_usd_benchmark_uses_fx_and_fees(tmp_path):
+    data = _market()
+    rules = ap.make_rules("2026-11-02", "2027-01-31", ("AAPL",))
+    rules.BENCH = {"symbol": "EUNL.DE", "name": "USD-Test", "currency": "USD"}
+    st = ap.load_state("claude", rules, root=tmp_path)
+    ap.run_cycle("claude", st, Prov(data), rules, now=datetime(2026, 11, 3, 22, 30, tzinfo=UTC), root=tmp_path)
+    b = st["bench"]
+    assert b["waehrung"] == "USD" and b["fx_einstieg"] == 1.10
+    assert abs(b["stueck"] * b["einstieg_eur"] + b["cash_eur"] + 1.0 - 10_000) < 0.05           # Kapital + 1 € Gebühr
+    j = [e["typ"] for e in journal.read(tmp_path / "claude" / "konto" / "handel.jsonl")]
+    assert "benchmark_ausfuehrung" in j and "tagesabschluss" in j
+
+
+# ---------------------------------------------------------------- produktiver Wettbewerbszyklus (Ende-zu-Ende, mehrere Handelstage)
+class FakeLive:
+    def __init__(self, data):
+        self.data = data
+
+    def get(self, inst):
+        return _qd(self.data[inst["yahoo"]])
+
+
+def _setup_competition(tmp_path, data):
+    insts = [{"id": "AAPL", "yahoo": "AAPL", "venue": "XNYS", "waehrung": "USD", "klasse": "aktie"}]
+    bench = {"id": "EUNL.DE", "yahoo": "EUNL.DE", "art": "Test", "venue": "XNYS", "waehrung": "EUR", "klasse": "aktien_etf"}
+    fr = tmp_path / "forecast"
+    for ki in ("claude", "chatgpt"):
+        (fr / ki).mkdir(parents=True)
+    cfg = {"status": "gestartet", "experiment": "TEST-W", "start": "2026-11-03", "ende_exklusiv": "2027-01-02", "handelsuniversum_instrumente": insts, "benchmark_instrument": bench}
+    (fr / "wettbewerb.json").write_text(json.dumps(cfg))
+    # SPY wird als Kalender-/Regimeserie gebraucht
+    return FakeLive({**data, "SPY": data["SPY"]})
+
+
+def _forecast(ki, day):
+    d = cal.last_complete_session("XNYS", pd.Timestamp(day))
+    return {"prognose_id": f"{ki}-{d.date()}", "ki": ki, "phase": "wettbewerb", "entscheidung": "KAUFEN", "trade_zulaessig": True, "order": {"limit": 1000.0, "stop": 0.0, "ziel": 0.0}, "instrument": {"yahoo": "AAPL", "id": "AAPL", "venue": "XNYS"},
+            "referenz": {"datum": str(d.date())}}
+
+
+def test_competition_cycle_end_to_end(tmp_path):
+    from bii.forecast import wettbewerb
+    data = _market()
+    live = _setup_competition(tmp_path, data)
+    fr = tmp_path / "forecast"
+
+    class P(Prov):
+        def qual(self, sym):
+            return _qd(self.data[sym])
+
+    prov = P(data)
+    prov.inst = {}
+    # Nicht gestartet -> nichts passiert
+    assert wettbewerb.run_daily(live, datetime(2026, 11, 3, 22, 30, tzinfo=UTC), root=tmp_path / "leer", provider=prov)["status"] == "nicht_gestartet"
+    # Tag 1 (Start-Sitzung 03.11.): Benchmark-Kauf zur Eröffnung, Tagesabschluss, noch keine Orders
+    r1 = wettbewerb.run_daily(live, datetime(2026, 11, 3, 22, 30, tzinfo=UTC), root=tmp_path, provider=prov)
+    assert not r1["probleme"] and all(k["letzter_tag"] == "2026-11-03" for k in r1["konten"].values())
+    # Beide KIs reichen vor der Folgesitzung eine Prognose mit Order ein; Order wird geplant (Journal VOR Ausführung)
+    c = data["AAPL"].loc["2026-11-03", "close"]
+    for ki in ("claude", "chatgpt"):
+        p = _forecast(ki, "2026-11-03T22:40Z")
+        p["order"] = {"limit": round(c * 1.01, 2), "stop": round(c * 0.95, 2), "ziel": round(c * 1.10, 2)}
+        journal.append(p, path=fr / ki / "prognosen.jsonl", now=datetime(2026, 11, 3, 22, 35, tzinfo=UTC))
+    r1b = wettbewerb.run_daily(live, datetime(2026, 11, 3, 22, 40, tzinfo=UTC), root=tmp_path, provider=prov)
+    assert all(k["eingereicht"] for k in r1b["konten"].values()), r1b
+    # Tag 2: Ausführung, Bewertung, Journal fortgeschrieben
+    r2 = wettbewerb.run_daily(live, datetime(2026, 11, 4, 22, 30, tzinfo=UTC), root=tmp_path, provider=prov)
+    assert not r2["probleme"]
+    for ki in ("claude", "chatgpt"):
+        ev = journal.read(fr / ki / "konto" / "handel.jsonl")
+        kinds = [e["typ"] for e in ev]
+        assert kinds.index("order_plan") < kinds.index("ausfuehrung") and kinds.count("tagesabschluss") == 2 and "benchmark_ausfuehrung" in kinds
+        assert journal.verify(fr / ki / "konto" / "handel.jsonl")[0]
+        st = json.loads((fr / ki / "konto" / "state.json").read_text())
+        assert "AAPL" in st["positions"] and st["last_date"] == "2026-11-04" and len(st["equity"]) == 2
+    # Tag 3: Position wird fortgeschrieben und bewertet
+    r3 = wettbewerb.run_daily(live, datetime(2026, 11, 5, 22, 30, tzinfo=UTC), root=tmp_path, provider=prov)
+    st = json.loads((fr / "claude" / "konto" / "state.json").read_text())
+    assert st["last_date"] == "2026-11-05" and len(st["equity"]) == 3 and not r3["probleme"]
+
+
+# ---------------------------------------------------------------- Startschranke: Belege statt Behauptungen
+def _mk_probe(root, ki, fps, buy=True, bench_buy=True):
+    from bii import journal as j
+    p = root / "forecast" / "probelauf" / ki / "konto" / "handel.jsonl"
+    p.parent.mkdir(parents=True, exist_ok=True)
+    now = datetime(2026, 11, 4, 22, 0, tzinfo=UTC)
+    if buy:
+        j.append({"typ": "ausfuehrung", "seite": "kauf", "ticker": "SPY"}, path=p, now=now)
+    if bench_buy:
+        j.append({"typ": "benchmark_ausfuehrung", "datum": "2026-11-03"}, path=p, now=now)
+    for d, fp in fps.items():
+        j.append({"typ": "tagesabschluss", "datum": d, "daten_fingerprint": fp}, path=p, now=now)
+
+
+def test_gate_requires_executions_benchmark_same_data_and_real_days(tmp_path):
+    fp = {"2026-11-03": "a", "2026-11-04": "b"}
+    _mk_probe(tmp_path, "claude", fp)
+    _mk_probe(tmp_path, "chatgpt", fp)
+    c = gate.checks(tmp_path)
+    assert c["ausfuehrungszyklus_claude"]["ok"] and c["identische_eingabedaten"]["ok"]
+    assert not c["benchmark_festgeschrieben"]["ok"]                         # keine Entscheidung festgeschrieben
+    _mk_probe(tmp_path / "x", "claude", fp, bench_buy=False)
+    _mk_probe(tmp_path / "x", "chatgpt", fp)
+    assert not gate.checks(tmp_path / "x")["ausfuehrungszyklus_claude"]["ok"]      # Kauf ohne dokumentierten Benchmark-Kauf zählt nicht
+    _mk_probe(tmp_path / "y", "claude", fp)
+    _mk_probe(tmp_path / "y", "chatgpt", {"2026-11-03": "a", "2026-11-04": "ANDERS"})
+    assert not gate.checks(tmp_path / "y")["identische_eingabedaten"]["ok"]        # abweichende Eingabedaten
+    _mk_probe(tmp_path / "z", "claude", {"2026-11-03": "a", "2026-11-07": "b"})        # 07.11. ist ein Samstag
+    assert not gate.checks(tmp_path / "z")["ausfuehrungszyklus_claude"]["ok"]
+
+
+def test_gate_rejects_handmade_or_same_day_automation_receipts(tmp_path):
+    from bii.forecast import commitreveal as cr
+    prog = [copy.deepcopy(P)]
+    h = cr.commitment(prog, "n")
+    jp = tmp_path / "forecast" / "chatgpt" / "prognosen.jsonl"
+    jp.parent.mkdir(parents=True)
+    cr.ingest("chatgpt", "2026-11-03", "commit", {"hash": h}, datetime(2026, 11, 3, 12, 0, tzinfo=UTC), "push", root=tmp_path)
+    cr.ingest("chatgpt", "2026-11-03", "reveal", {"prognosen": prog, "nonce": "n"}, datetime(2026, 11, 3, 13, 40, tzinfo=UTC), "push", root=tmp_path, jpath=jp)
+    c = gate.checks(tmp_path)["automatik_chatgpt"]
+    assert not c["ok"] and c["detail"].startswith("0/2")          # ein Tag, keine run_id, nicht vom Bot committed -> kein Beleg
+
+
+# ---------------------------------------------------------------- versiegelter Eingang
+def test_sealed_submission_unreadable_until_cutoff_and_tamper_proof(tmp_path):
+    from bii.forecast import sealed
+    priv, pub = sealed.new_keypair()
+    prog = [copy.deepcopy(P)]
+    blob = sealed.encrypt(pub, prog)
+    assert "NICHT KAUFEN" not in json.dumps(blob) and "T-9" not in json.dumps(blob)                       # Chiffrat verrät nichts
+    priv2, _ = sealed.new_keypair()
+    with pytest.raises(Exception):
+        sealed.decrypt(priv2, blob)                                                                          # fremder Schlüssel (z. B. die andere KI) scheitert
+    assert sealed.decrypt(priv, blob) == prog
+    cr.seal_accept("chatgpt", "2026-11-03", blob, datetime(2026, 11, 3, 12, 0, tzinfo=UTC), root=tmp_path)
+    with pytest.raises(ValueError, match="Cutoff"):
+        cr.seal_accept("claude", "2026-11-03", blob, datetime(2026, 11, 3, 13, 45, tzinfo=UTC), root=tmp_path)    # zu spät
+    tampered = {**blob, "ct": blob["ct"][:-4] + "AAAA"}
+    with pytest.raises(ValueError, match="Beleg"):
+        cr.seal_reveal("chatgpt", "2026-11-03", tampered, priv, datetime(2026, 11, 3, 13, 40, tzinfo=UTC), root=tmp_path)
+    with pytest.raises(ValueError, match="zwischen Cutoff"):
+        cr.seal_reveal("chatgpt", "2026-11-03", blob, priv, datetime(2026, 11, 3, 13, 0, tzinfo=UTC), root=tmp_path)    # vor Cutoff
+    jp = tmp_path / "p.jsonl"
+    r = cr.seal_reveal("chatgpt", "2026-11-03", blob, priv, datetime(2026, 11, 3, 13, 40, tzinfo=UTC), root=tmp_path, jpath=jp)
+    assert r["prognose_ids"] == ["T-9"] and journal.read(jp)[0]["zeitnachweis"]["art"] == "versiegelt"

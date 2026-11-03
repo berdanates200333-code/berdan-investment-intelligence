@@ -384,7 +384,39 @@
    "venue": "XETR",
    "waehrung": "EUR",
    "isin": "IE00B4L5Y983",
-   "hinweis": "PR #10: Xetra-Schlusskurs 02.11. lieferte bei Yahoo null; Datenstufe wird geprüft, sonst kein Start"
+   "hinweis": "PR #10: Xetra-Schlusskurs 02.11. lieferte bei Yahoo null; Datenstufe wird geprüft, sonst kein Start",
+   "klasse": "aktien_etf"
+  },
+  {
+   "id": "URTH",
+   "yahoo": "URTH",
+   "art": "iShares MSCI World ETF (USD)",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US4642863926",
+   "klasse": "aktien_etf",
+   "hinweis": "Ersatzkandidat, Umrechnung wie die Aktienkonten (EZB-Vortageskurs + Währungsgebühr)"
+  },
+  {
+   "id": "ACWI",
+   "yahoo": "ACWI",
+   "art": "iShares MSCI ACWI ETF (USD)",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US4642882579",
+   "klasse": "aktien_etf",
+   "hinweis": "Ersatzkandidat 2"
+  },
+  {
+   "id": "VT",
+   "yahoo": "VT",
+   "art": "Vanguard Total World Stock ETF (USD)",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US9220427424",
+   "klasse": "aktien_etf",
+   "hinweis": "Ersatzkandidat 3"
   }
- ]
+ ],
+ "benchmark_regel": "Reihenfolge = Präferenz. Der erste Kandidat mit Datenstufe A wird per scripts/fc_benchmark.py EINMALIG festgeschrieben (forecast/benchmark_entscheidung.json) und gilt identisch für beide KIs bis Wettbewerbsende. Nachträgliche Änderung ausgeschlossen."
 }

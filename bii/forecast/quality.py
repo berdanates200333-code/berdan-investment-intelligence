@@ -18,7 +18,12 @@ from . import calendars
 
 A, B, C = "A_bestaetigt", "B_einquellig", "C_unzulaessig"
 RANK = {A: 2, B: 1, C: 0}
-TOL = 0.02
+# Zweck- und instrumentbezogene Toleranzen für die Zweitquellen-Bestätigung (statt pauschal 2 %):
+# Der offizielle Schlusskurs ist bei allen Anbietern praktisch identisch -> enge Grenze. Open/High/Low hängen von Handelsplatz-/Tape-Definition ab -> weitere Grenze.
+TOL_CLOSE = {"aktie": 0.005, "aktien_etf": 0.003, "gold": 0.003, "index": 0.003, "krypto": 0.010}
+TOL_OHL = {"aktie": 0.015, "aktien_etf": 0.008, "gold": 0.008, "index": 0.008, "krypto": 0.020}
+EXPECTED_TYPE = {"aktie": "EQUITY", "aktien_etf": "ETF", "gold": "ETF", "index": "INDEX", "krypto": "CRYPTOCURRENCY"}
+SPLIT_WINDOW = pd.Timedelta(days=30)     # Kapitalmaßnahme (Split) im Fenster -> Preisdefinitionen zwischen Anbietern nicht vergleichbar -> Stufe C
 MIN_TIER = {"wettbewerb": A, "ausfuehrung": A, "pilot": B}
 TZ = {"XNYS": "America/New_York", "XETR": "Europe/Berlin", "CRYPTO": "UTC"}
 
@@ -34,25 +39,36 @@ class QualData:
     secondary_name: str | None = None
     actions: dict = field(default_factory=dict)        # Kapitalmaßnahmen (Splits/Dividenden) laut Quelle
     meta: dict = field(default_factory=dict)
+    klasse: str = "aktie"
+
+    def split_near(self, d) -> bool:
+        d = pd.Timestamp(d)
+        for raw in (self.actions or {}).get("splits", {}).values():
+            ts = pd.Timestamp(raw["date"], unit="s").normalize()
+            if abs(ts - d) <= SPLIT_WINDOW:
+                return True
+        return False
 
     def tier_at(self, d) -> str:
         if self.frame_tier == C:
             return C
         d = pd.Timestamp(d)
-        if d not in self.df.index:
+        if d not in self.df.index or self.split_near(d):
             return C
         s = self.secondary.get(d)
         if s is None:
             return B
-        dev = max(abs(float(self.df.loc[d, k]) / s[k] - 1) for k in ("open", "high", "low", "close") if k in s and s[k])
-        return A if dev <= TOL else C
+        row = self.df.loc[d]
+        dc = abs(float(row["close"]) / s["close"] - 1) if s.get("close") else 1.0
+        dohl = max((abs(float(row[k]) / s[k] - 1) for k in ("open", "high", "low") if s.get(k)), default=0.0)
+        return A if dc <= TOL_CLOSE[self.klasse] and dohl <= TOL_OHL[self.klasse] else C
 
     def allowed(self, d, phase: str) -> tuple[bool, str]:
         t = self.tier_at(d)
         return RANK[t] >= RANK[MIN_TIER[phase]], t
 
 
-def check_frame(df: pd.DataFrame, venue: str, now, expected_currency=None, meta=None) -> tuple[str, list]:
+def check_frame(df: pd.DataFrame, venue: str, now, expected_currency=None, meta=None, klasse: str | None = None) -> tuple[str, list]:
     """Prüft einen Kursrahmen (nur abgeschlossene Balken). Rückgabe (Stufe, Gründe)."""
     reasons = []
     meta = meta or {}
@@ -75,6 +91,8 @@ def check_frame(df: pd.DataFrame, venue: str, now, expected_currency=None, meta=
         reasons.append("Symbol-Identität weicht ab")
     if expected_currency and meta.get("waehrung") and meta["waehrung"] != expected_currency:
         reasons.append(f"Währung {meta['waehrung']} statt {expected_currency}")
+    if klasse and meta.get("typ") and meta["typ"] != EXPECTED_TYPE[klasse]:
+        reasons.append(f"Instrumententyp {meta['typ']} statt {EXPECTED_TYPE[klasse]}")
     if meta.get("zeitzone") and meta["zeitzone"] != TZ[venue]:
         reasons.append(f"Handelsplatz/Zeitzone {meta['zeitzone']} passt nicht zu {venue}")
     try:
