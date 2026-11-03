@@ -1,5 +1,5 @@
 {
- "lauf_utc": "2026-11-03T16:25:41+00:00",
+ "lauf_utc": "2026-11-03T16:44:33+00:00",
  "neue_bewertungen": 0,
  "instrumente": {
   "^GSPC": {
@@ -41,50 +41,50 @@
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/^GSPC",
    "status": 200,
-   "sha256": "3c732de7492717bec77796cf4aabf6ed6d4758bfed58c55a2977b0a6aad935b0",
-   "abgerufen_utc": "2026-11-03T16:25:42+00:00"
+   "sha256": "feda506bc557891a20cd068762b05fe6296b22ff4e125d3dfca578f7748500fa",
+   "abgerufen_utc": "2026-11-03T16:44:33+00:00"
   },
   {
    "url": "https://stooq.com/q/d/l/",
    "status": 200,
-   "sha256": "e1a5572129ab96ada01341782b697844eeac629b11763b371704a40aa68c2679",
-   "abgerufen_utc": "2026-11-03T16:25:43+00:00"
+   "sha256": "790120d52606d57b4eabf4fbe9c0009f3f2bdc9e2f1f55d96bdf98c96a56759d",
+   "abgerufen_utc": "2026-11-03T16:44:34+00:00"
   },
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/^IXIC",
    "status": 200,
-   "sha256": "8c66f9076c1882b70b8686f2006d8d5d844ecdcbb120382ac11df87bdc2a1b70",
-   "abgerufen_utc": "2026-11-03T16:25:44+00:00"
+   "sha256": "2f7418403615be446f6126e485817b512bd6cd38c6f9729ad49dd83b1a0f226e",
+   "abgerufen_utc": "2026-11-03T16:44:34+00:00"
   },
   {
    "url": "https://stooq.com/q/d/l/",
    "status": 200,
-   "sha256": "dad05a8e72c22c78a20726036a91a6552ffeaa2d5cec63c31d224a3dc593611b",
-   "abgerufen_utc": "2026-11-03T16:25:44+00:00"
+   "sha256": "1d379c5dcf213520436b84457119c448acad8a0c1c5c063f85ccc808660e5644",
+   "abgerufen_utc": "2026-11-03T16:44:34+00:00"
   },
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/^DJI",
    "status": 200,
-   "sha256": "b3689dcc7d3b5e644eaa7e2b8c51302a79563a0339bf2d3e1aad2090f6ef9947",
-   "abgerufen_utc": "2026-11-03T16:25:45+00:00"
+   "sha256": "bd7507b6d5433b3f02d77e2db80d12e798d7c639901eb0868dd930d245553610",
+   "abgerufen_utc": "2026-11-03T16:44:34+00:00"
   },
   {
    "url": "https://stooq.com/q/d/l/",
    "status": 200,
-   "sha256": "354e83cc0a8a533eeff370ece672b16e6b4a06af52ed912ce60376a69c31e2ff",
-   "abgerufen_utc": "2026-11-03T16:25:45+00:00"
+   "sha256": "a2d4197b23b5c0a84d9e16acb2969ccf7ff8646af2f2fe340043695e57eccc52",
+   "abgerufen_utc": "2026-11-03T16:44:35+00:00"
   },
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/^RUT",
    "status": 200,
-   "sha256": "71f6816ff617d688ec36b118100df54f6da5505bd757565c52e35cc4b2800dd1",
-   "abgerufen_utc": "2026-11-03T16:25:45+00:00"
+   "sha256": "aaa8b5bddcbce007bcc9f506b2f38839397ce85b5c6282ad9c7d330d4188cfbb",
+   "abgerufen_utc": "2026-11-03T16:44:35+00:00"
   },
   {
    "url": "https://stooq.com/q/d/l/",
    "status": 200,
-   "sha256": "e5f8508e00d42978387c087bbf3572d6c7f2003c35faec93bd1b7d7bcd2e1291",
-   "abgerufen_utc": "2026-11-03T16:25:46+00:00"
+   "sha256": "bbeb664000dd3e75da324cf361f1cdd258d95f6c4c3fbf1a924436676b597fff",
+   "abgerufen_utc": "2026-11-03T16:44:35+00:00"
   }
  ]
 }
