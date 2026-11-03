@@ -1,0 +1,347 @@
+[
+  {
+    "path": "bii/papertrading/rules_v1_0.py",
+    "unchanged": true,
+    "sha256": "43b29a9918f72dc35e2de0beb7f5a4fa33a01cc1d458639880b6ade0ce0eeb0d"
+  },
+  {
+    "path": "data/historical/gold_monthly.csv",
+    "unchanged": true,
+    "sha256": "f5945c29f746ff14e54acd635dcbb43dbe9f4706f22d6ac8c5d7c3b7908ebcf5"
+  },
+  {
+    "path": "data/historical/sp500_shiller_monthly.csv",
+    "unchanged": true,
+    "sha256": "3a45dffabc414afc298c12159abc84c2875f88175ff3d4473ef7417e725ecac6"
+  },
+  {
+    "path": "data/snapshots/etf_monthly.csv",
+    "unchanged": true,
+    "sha256": "da74c5afe64c413a8736ac0a3fab186067140433cc4d7f7820a69577e821fe61"
+  },
+  {
+    "path": "data/snapshots/ff_10ind_monthly.csv",
+    "unchanged": true,
+    "sha256": "6db5095978e0f84bf6e64e8fd79b17a9a0ef5f16732c911351ac5b3be65cb81f"
+  },
+  {
+    "path": "data/snapshots/ff_factors_monthly.csv",
+    "unchanged": true,
+    "sha256": "f5ea2fa174b3fbf9c4764a2d5bc61169f61bd5bb27912f663908d15c1623fc70"
+  },
+  {
+    "path": "data/snapshots/manifest.json",
+    "unchanged": true,
+    "sha256": "242e553cb64702b21d1cc2d7f8347a3f412cb3d599b4ea8ff7f1c1e55e50195a"
+  },
+  {
+    "path": "data/snapshots/source_probe.json",
+    "unchanged": true,
+    "sha256": "96902098d8c13b1cd195b1f32639b84b450f6a6e0e266d490532ad64539b4733"
+  },
+  {
+    "path": "docs/PHASE1_BERICHT.md",
+    "unchanged": true,
+    "sha256": "c6adbda637f611ff55f158987afe75ab623ea57528a7d30cbb026407ef3d4604"
+  },
+  {
+    "path": "docs/PHASE2_RESEARCH_DESK.md",
+    "unchanged": true,
+    "sha256": "ab9c39733c46bc35ee5c37a14a97db6b6b689da43150314f65c229c74023ee73"
+  },
+  {
+    "path": "docs/REGELWERK_AENDERUNGEN.md",
+    "unchanged": true,
+    "sha256": "97e443f66e42a2eff34929c63fd86fd7be5893db7fb073ffc2e733d504fb3cea"
+  },
+  {
+    "path": "docs/REGELWERK_FT1.md",
+    "unchanged": true,
+    "sha256": "715f6099972294b3fd4af6fedd35fee71aac901b77cccf0f6b99c1ae3dcb89f4"
+  },
+  {
+    "path": "docs/REGELWERK_FT1_v1.1.md",
+    "unchanged": true,
+    "sha256": "34279eab479ea7f6e96314f5a7464cb54076e9e95486f20cfe2fd98a3b22cc91"
+  },
+  {
+    "path": "docs/REGELWERK_FT1_v1.2.md",
+    "unchanged": true,
+    "sha256": "ba31a7ea02caa285daee20be5ec36a8eebb26218723c96d4e00086d2a78b8375"
+  },
+  {
+    "path": "docs/papertrading/PHASE3_STATUS.md",
+    "unchanged": true,
+    "sha256": "4e20ce74158d7e1447f86a0a28756f8881438cd4ea6caf23d35a8b8e45dbf5bb"
+  },
+  {
+    "path": "docs/papertrading/STRATEGIE_v1.0.md",
+    "unchanged": true,
+    "sha256": "8167173c007646be30c68ea5082d2ccd0d80416235598ba7318a2824596c21e3"
+  },
+  {
+    "path": "docs/research/MOMENTUM_FAZIT.md",
+    "unchanged": true,
+    "sha256": "67dcb1de8828732054dcdc4d37130c7c5b67cc604afef0cabb7db8a3fd1e78f7"
+  },
+  {
+    "path": "docs/research/MOMENTUM_PLAN.md",
+    "unchanged": true,
+    "sha256": "b31ce7243651b26ca17713dea21625fe5166eb2824dab30ba2faafb104911b55"
+  },
+  {
+    "path": "journal/.gitkeep",
+    "unchanged": true,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "journal/journal.jsonl",
+    "unchanged": true,
+    "sha256": "17784a89eff9903ae1d0eaa75a1e6822d2e06c9e946015342cdd23063b2b052e"
+  },
+  {
+    "path": "journal/ops_status.json",
+    "unchanged": true,
+    "sha256": "cb13817c4fd71c576c56dddcf504663be844c1e43a931fd6cb1c08fe0917be26"
+  },
+  {
+    "path": "journal/portfolio_state.json",
+    "unchanged": true,
+    "sha256": "0b07ee79714ce042bbf7b492b76f62449327612106f95f96dc047d0df2f0a8e9"
+  },
+  {
+    "path": "papertrading/freigabe.json",
+    "unchanged": true,
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  {
+    "path": "papertrading/ops_status.json",
+    "unchanged": true,
+    "sha256": "148b6c301fc2d715696ce8b03666c981ccc17acdde39114c68d22a8f93983a12"
+  },
+  {
+    "path": "papertrading/registry.json",
+    "unchanged": true,
+    "sha256": "e033e1207af1092eea8cb2333005795c345d760de5e7f16a31fc3a677ac6ce6f"
+  },
+  {
+    "path": "papertrading/review/vetos.jsonl",
+    "unchanged": true,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "research/analyses/.gitkeep",
+    "unchanged": true,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "research/analyses/2026-10-31_AMD_meta-partnerschaft.md",
+    "unchanged": true,
+    "sha256": "bc3b137b7b8281c37b79036c41a999df42cd67aa517e7f32bda0f62314932ca9"
+  },
+  {
+    "path": "research/analyses/2026-10-31_MSFT_25mrd-anleihe.md",
+    "unchanged": true,
+    "sha256": "65da3e940fcd3ac5bb4e4f4da448ebc14f0082a51fcad32112d430ae7f334db9"
+  },
+  {
+    "path": "research/analyses/2026-10-31_NVDA_megaspeed-spionagebericht.md",
+    "unchanged": true,
+    "sha256": "c49497f44fdb6c0268b1073b546e211ba6f13900b6420eb8eecb989ff1d12d51"
+  },
+  {
+    "path": "research/backtest_phase1.json",
+    "unchanged": true,
+    "sha256": "92d88ba9e7deded8a63a055a0a8cbe02bac57cca5aa9ba58166a91f269416019"
+  },
+  {
+    "path": "research/backtest_phase1.md",
+    "unchanged": true,
+    "sha256": "c2cb867fc91330c3b9762a4a391b9e00d0fb7d3d8db00dc57e5b4e312c728d63"
+  },
+  {
+    "path": "research/companies.yaml",
+    "unchanged": true,
+    "sha256": "97091b280b3cb20820c325335ab6a692762ddae2bb91272f5eb3eb956c31563e"
+  },
+  {
+    "path": "research/db/companies/AMD.json",
+    "unchanged": true,
+    "sha256": "7797fe59afa81cac854897e4498800f95d018e4e272e12b50366815646df9485"
+  },
+  {
+    "path": "research/db/companies/AMD.md",
+    "unchanged": true,
+    "sha256": "561cbc36b6a18b429c7d38b9b7585e4842de1c0b12661d73aea0d58c847b4dc3"
+  },
+  {
+    "path": "research/db/companies/MSFT.json",
+    "unchanged": true,
+    "sha256": "dd647a5e9fc7eaaaf6389964ad9a10de61b55089d02f1b26170b2bb716238404"
+  },
+  {
+    "path": "research/db/companies/MSFT.md",
+    "unchanged": true,
+    "sha256": "62b5ac45ed3cb716b5671c14bc1b379c78e3141377d8db64de66d7c57657d706"
+  },
+  {
+    "path": "research/db/companies/NVDA.json",
+    "unchanged": true,
+    "sha256": "bdc93cfbf5454861ed65a97800c3341b950976e0ea5d0c2bfad6f9f02f06950a"
+  },
+  {
+    "path": "research/db/companies/NVDA.md",
+    "unchanged": true,
+    "sha256": "651f8a04f2f2bfacb1dff63698f393ad15aade5df531742223889eddefa4a987"
+  },
+  {
+    "path": "research/db/events.jsonl",
+    "unchanged": true,
+    "sha256": "598b593460201776609778190fb1a2b7048d227abf0f804e05bb010c0e8dca14"
+  },
+  {
+    "path": "research/db/ops.json",
+    "unchanged": true,
+    "sha256": "65d9e7ef801f4e7e7c9fc7c4154b76e6e6d9f6ffe2afad01b5a0ddd1a88a8a6a"
+  },
+  {
+    "path": "research/db/state.json",
+    "unchanged": true,
+    "sha256": "bedd9c64b4574344b82173c4cfc04623ab7b90a85ef70eaea3670fb8f37bd9f3"
+  },
+  {
+    "path": "research/desk/2026-10-31.md",
+    "unchanged": true,
+    "sha256": "30f0810407a9f28026f6618d98b26d42756abd17ae5046278e08355a549a49b5"
+  },
+  {
+    "path": "research/desk/benachrichtigung.md",
+    "unchanged": true,
+    "sha256": "4621b852343003e8301557dffaa5a48b995ba665e75f5458e135271e5e217754"
+  },
+  {
+    "path": "research/desk/prep.json",
+    "unchanged": true,
+    "sha256": "d70be30413cdfc5d8b88626895aef46d3f5e7d52aa65a01810d50fdaaa7354f3"
+  },
+  {
+    "path": "research/ideas/index.jsonl",
+    "unchanged": true,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "research/momentum_m1_m3.json",
+    "unchanged": true,
+    "sha256": "02c15e1b3d5fd11b8a9dfcc1e681611c363f9845ad2fbcc5ce3d8906320b5d7f"
+  },
+  {
+    "path": "research/momentum_m1_m3.md",
+    "unchanged": true,
+    "sha256": "d55f3a41b235ce0a724fe6ac9b5dc0833eba79fb588aee04b3414fac2ed4db92"
+  },
+  {
+    "path": "research/queue/.gitkeep",
+    "unchanged": true,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "research/queue/erledigt/.gitkeep",
+    "unchanged": true,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "research/queue/erledigt/ir_AMD_f83cc121976df47a.json",
+    "unchanged": true,
+    "sha256": "0f9775e113431481b8d84835e64767538d92c58cf09d43340c76c878a66ad008"
+  },
+  {
+    "path": "research/queue/erledigt/ir_NVDA_efb7fea1c4e3ff5f.json",
+    "unchanged": true,
+    "sha256": "799a80f1068eae717534d266942aa3426c66cc3eb328a7bc56273a3c8b47a2c4"
+  },
+  {
+    "path": "research/queue/erledigt/news_MSFT_6e272da23f666563.json",
+    "unchanged": true,
+    "sha256": "d145fb1eee6913214683e87877975b2c7515556ddfeded873a00d2649c4a54fd"
+  },
+  {
+    "path": "research/queue/erledigt/news_MSFT_f28bc248a2cf80a5.json",
+    "unchanged": true,
+    "sha256": "92d61e682ca0b9be8558cd048e5aae696390f2efa33835bca471ea329e66413e"
+  },
+  {
+    "path": "research/queue/erledigt/news_NVDA_13d8d62294d9305c.json",
+    "unchanged": true,
+    "sha256": "e38dc4f94406c265b2bc6450fbd233582417fce65be724b7768e035f550ec542"
+  },
+  {
+    "path": "research/sources/.gitkeep",
+    "unchanged": true,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "research/sources/AMD/angefordert_3e7fc3998b4a.txt",
+    "unchanged": true,
+    "sha256": "67ec21ff11f966b95920b7e705099334d243b152c2af6c3dd2f4d5db0d67b87a"
+  },
+  {
+    "path": "research/sources/MSFT/angefordert_1c744a9750f5.txt",
+    "unchanged": true,
+    "sha256": "3dc667abd395f5e12f0e762f595403237da8678de57a24947fc61e3ff1c94ead"
+  },
+  {
+    "path": "research/sources/MSFT/angefordert_3d4d177165af.txt",
+    "unchanged": true,
+    "sha256": "448393611e1e5c51ebf6541bf5d48a6363fdbf6c35a8ff02a06d1da1ba71f615"
+  },
+  {
+    "path": "research/sources/NVDA/angefordert_932736301aae.txt",
+    "unchanged": true,
+    "sha256": "daabb1363b0df28731acb9fe77deb8bf6c8ed75fc6082c976a757d06141b35f3"
+  },
+  {
+    "path": "research/sources/NVDA/ir_efb7fea1c4e3ff5f.txt",
+    "unchanged": true,
+    "sha256": "dcb61b92c18ef425fc851c03b23a0f144dba5a93dae91dae9401395ece3e75ca"
+  },
+  {
+    "path": "research/szenarien.md",
+    "unchanged": true,
+    "sha256": "a18738bb55a3c02f2107e08114e0efef37197c93c29e6e4d6718c68a29c98762"
+  },
+  {
+    "path": "research/theses/.gitkeep",
+    "unchanged": true,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "research/theses/AMD.json",
+    "unchanged": true,
+    "sha256": "6ea67eb2b0ee9a9b435015c3d292f95088b2a7c6bec516bfe24bfee93597ffba"
+  },
+  {
+    "path": "research/theses/AMD.md",
+    "unchanged": true,
+    "sha256": "e33dd96c8817fd761bcd0e6050276261d5c1ed83cd717fa18209a55bf60e67a8"
+  },
+  {
+    "path": "research/theses/MSFT.json",
+    "unchanged": true,
+    "sha256": "49bbb1903751368a6a31d90da27b811fe85a839799423b3acf1da4137f69e378"
+  },
+  {
+    "path": "research/theses/MSFT.md",
+    "unchanged": true,
+    "sha256": "9cf6694822fbb671a693c7b296ed15e84fb426af2555b5e7ee07a47e55e13e21"
+  },
+  {
+    "path": "research/theses/NVDA.json",
+    "unchanged": true,
+    "sha256": "7053813146b81f69dda4184f8e824d72fa61ca047a61036bc37b0b4ea0ce794c"
+  },
+  {
+    "path": "research/theses/NVDA.md",
+    "unchanged": true,
+    "sha256": "40f9794baa1354a526022585fa89b1efa5189a301866fa6804d17b241efe45e4"
+  }
+]
