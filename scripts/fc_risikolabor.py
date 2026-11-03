@@ -25,7 +25,7 @@ fx.index = pd.DatetimeIndex(fx.index)
 phases = [p for p in rl.PHASEN if len(sys.argv) < 2 or p[0].split()[0] in sys.argv[1:]]
 res = {}
 for name, a, b in phases:
-    res[name] = [rl.run_window(frames, fx, a, b, lvl, base.UNIVERSE) for lvl in rl.LEVELS]
+    res[name] = [rl.run_window(frames, fx, a, b, risk, base.UNIVERSE, cap=cap, pause=pause, open_risk=orisk, name=nm) for nm, risk, cap, pause, orisk in rl.PROFILE]
     print(name, [(round(r["rendite_pct"], 1), round(r["maxdd_pct"], 1), r["trades"]) for r in res[name]], flush=True)
 out = ROOT / "reports" / "risikolabor"
 out.mkdir(parents=True, exist_ok=True)

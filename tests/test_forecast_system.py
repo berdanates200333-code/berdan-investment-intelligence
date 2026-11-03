@@ -521,6 +521,6 @@ def test_risk_lab_runs_same_signals_with_three_risk_levels():
         op = c.shift(1).fillna(c.iloc[0]) * (1 + rng.normal(0, 0.006, len(idx)))
         frames[s] = pd.DataFrame({"open": op, "high": np.maximum(op, c) * 1.006, "low": np.minimum(op, c) * 0.994, "close": c, "volume": 5e6})
     fx = pd.Series(1.1, index=pd.date_range("2024-12-01", "2026-04-30"))
-    res = [rl.run_window(frames, fx, "2026-01-05", "2026-03-27", lvl, ("AAPL", "MSFT")) for lvl in rl.LEVELS]
-    assert [r["risiko"] for r in res] == [0.01, 0.02, 0.03] and all(r["handelstage"] > 50 for r in res)
+    res = [rl.run_window(frames, fx, "2026-01-05", "2026-03-27", risk, ("AAPL", "MSFT"), cap=cap, pause=pause, open_risk=orisk, name=nm) for nm, risk, cap, pause, orisk in rl.PROFILE]
+    assert [r["risiko"] for r in res] == [0.01, 0.02, 0.01, 0.02, 0.03] and all(r["handelstage"] > 50 for r in res)
     assert "Risikolabor" in rl.markdown({"Test": res})

@@ -226,6 +226,12 @@ def _plan_entries(state, bars_hist, spy, fx, rules, d, jpath, provider, vetos, n
         sz = size_position(equity, entry, limit, stop, fx, state["cash_eur"] - reserved, rules)
         if not skip and sz["stueck"] < 1:
             skip = sz["grund"]
+        cap = P.get("max_open_risk")                                   # nur Risikolabor/Performance-Profile; Hauptkonto: nicht gesetzt
+        if not skip and cap:
+            fxs = fx or 1.0
+            orisk = sum(max(q["einstieg"] - q["stop"], 0) * q["stueck"] / q.get("fx_einstieg", fxs) for q in state["positions"].values()) + sum(o.get("risiko_eur", 0.0) for o in state["pending"])
+            if orisk + sz["max_verlust_eur"] > cap * equity:
+                skip = f"Offenes geplantes Portfoliorisiko > {cap:.0%}"
         if skip:
             state["plaene_verworfen"].append({"datum": str(d.date()), "ticker": t, "grund": skip})
             _jw(jpath, {"typ": "plan_verworfen", "ticker": t, "datum": str(d.date()), "version": rules.VERSION, "grund": skip, "kennzahlen": ev["kennzahlen"]}, late, now)
@@ -242,7 +248,7 @@ def _plan_entries(state, bars_hist, spy, fx, rules, d, jpath, provider, vetos, n
             "quellen": ["Yahoo Finance (Tagesbalken)", cc.get("quelle", "Stooq (nicht verfügbar)"), "Google News RSS"] + (nw.get("quellen") or []),
         }, late, now)
         state["pending"].append({"id": oid, "ticker": t, "plan_datum": str(d.date()), "journal_utc": e["erstellt_utc"], "limit": limit, "stop": stop, "ziel": target,
-                                 "stueck": sz["stueck"], "grund_kurz": grund, "max_kosten_eur": sz["positionswert_eur"] * 1.01 + P["fee_eur"]})
+                                 "stueck": sz["stueck"], "grund_kurz": grund, "max_kosten_eur": sz["positionswert_eur"] * 1.01 + P["fee_eur"], "risiko_eur": sz["max_verlust_eur"]})
         reserved += sz["positionswert_eur"] * 1.01 + P["fee_eur"]
         new += 1
 
