@@ -1,0 +1,46 @@
+name: Prognose-Eingang (Commit-Reveal, unbeaufsichtigt)
+
+# KIs legen Dateien unter forecast/inbox/<ki>/<sitzung>/{commit,reveal}.json ab (Push auf die Standardbranch ODER auf den Zweig chatgpt/inbox).
+# Der Dienst vergibt die Zeitstempel selbst (Serverzeit), prüft Hash, Fristen (Börsenkalender), Informationsstichtag und übernimmt ins Journal.
+# Kein manuelles Einfügen. Nur virtuell.
+on:
+  push:
+    branches: [claude/phase1-grundsystem, chatgpt/inbox]
+    paths: ["forecast/inbox/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-check
+  cancel-in-progress: false
+
+jobs:
+  eingang:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/phase1-grundsystem
+      - name: Eingangsdateien vom Push-Stand übernehmen (nur forecast/inbox)
+        if: github.ref_name == 'chatgpt/inbox'
+        run: |
+          git fetch -q origin chatgpt/inbox
+          git checkout origin/chatgpt/inbox -- forecast/inbox
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q -r requirements.txt
+      - name: Eingang verarbeiten
+        run: python scripts/fc_ingest.py
+      - name: Speichern
+        run: |
+          git config user.name "market-check-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add forecast
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Prognose-Eingang $(date -u +%F' '%H:%M)"
+          for i in 1 2 3; do git pull -q --rebase origin claude/phase1-grundsystem && git push -q origin HEAD:claude/phase1-grundsystem && exit 0; sleep 5; done
+          exit 1

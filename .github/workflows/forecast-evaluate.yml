@@ -1,7 +1,8 @@
-name: Prognose-Erfolgskontrolle (virtuell)
+name: Prognose-Erfolgskontrolle, Universum, Probelauf (virtuell)
 
-# Täglich Mo–Fr 23:00 UTC (nach US-Börsenschluss): bewertet fällige Prognosen beider KIs mit Kursdaten,
-# speichert Bewertungen append-only im Repo. Keine Echtgeldorders, keine Zugangsdaten, keine Kosten.
+# Täglich Mo–Fr 23:00 UTC (nach allen US-Sitzungsschlüssen, auch bei Sommerzeit): Datenstufen prüfen, Universum zulassen,
+# fällige Prognosen bewerten (nur qualitätsgeprüfte Daten), Systemprobelauf der KI-Konten, Startschranke prüfen.
+# Keine Echtgeldorders, keine Broker-Verbindung, keine Zugangsdaten, keine Kosten.
 on:
   workflow_dispatch:
   schedule:
@@ -18,35 +19,48 @@ concurrency:
 jobs:
   evaluate:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - run: pip install -q -r requirements.txt
-      - name: Tests (Journal-Unveränderlichkeit)
-        run: python -m pytest -q tests/test_forecast.py tests/test_journal_pins.py
-      - name: Erfolgskontrolle
+      - name: Tests
+        run: python -m pytest -q tests
+      - name: Universum prüfen (Datenstufe A + Liquidität)
+        id: uni
+        run: |
+          set +e
+          python scripts/fc_universe.py
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+      - name: Systemprobelauf der KI-Konten (gemeinsame Engine)
+        id: pro
+        run: |
+          set +e
+          python scripts/fc_probelauf.py
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+      - name: Erfolgskontrolle fälliger Prognosen
         id: ev
         run: |
           set +e
           python scripts/fc_evaluate.py
           echo "code=$?" >> "$GITHUB_OUTPUT"
+      - name: Startschranke
+        run: python scripts/fc_gate.py
       - name: Speichern
         run: |
           git config user.name "market-check-bot"
           git config user.email "actions@users.noreply.github.com"
           git add forecast reports/forecast
           git diff --cached --quiet && exit 0
-          git commit -q -m "Prognose-Erfolgskontrolle $(date -u +%F)"
+          git commit -q -m "Prognosesystem: Datenprüfung, Probelauf, Erfolgskontrolle $(date -u +%F)"
           for i in 1 2 3; do git pull -q --rebase origin "${GITHUB_REF_NAME}" && git push -q && exit 0; sleep 5; done
           exit 1
       - name: Datenfehler melden
-        if: steps.ev.outputs.code != '0'
+        if: steps.ev.outputs.code != '0' || steps.pro.outputs.code != '0'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh issue create --title "DATENFEHLER Prognose-Erfolgskontrolle $(date -u +%d.%m.%Y)" \
-            --body "Kursdaten für mindestens ein Instrument fehlen. Details: forecast/ops_status.json. Lauf: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          exit 1
+          gh issue create --title "DATENFEHLER Prognosesystem $(date -u +%d.%m.%Y)" \
+            --body "Erfolgskontrolle=${{ steps.ev.outputs.code }}, Probelauf=${{ steps.pro.outputs.code }}, Universum=${{ steps.uni.outputs.code }}. Details: forecast/ops_status.json, forecast/universum_status.json. Lauf: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

@@ -1,30 +1,37 @@
-# Prognosesystem FC1-1.0: ChatGPT gegen Claude, 60 Tage (virtuell)
+# Prognosesystem FC1-1.0 (Stand nach Audit): ChatGPT gegen Claude, 60 Kalendertage, virtuell
 
-Start 03.11.2026, Ende 02.01.2027 (60 Kalendertage), danach Gesamtauswertung. Keine Echtgeldorders; Regeln eingefroren (Änderung = neue Regelversion, prospektiv).
+**Status: Wettbewerb NICHT gestartet.** Die vier Prognosen vom 03.11.2026 sind unveränderte **Pilotprognosen**. Der Start erfolgt erst, wenn `scripts/fc_gate.py` alle Bedingungen bestätigt (`forecast/wettbewerb_gate.json`) und dann explizit `--start` ausgeführt wird. Kein Rückdatieren, kein Echtgeld.
 
-## Struktur (getrennte Journale je KI)
-| Datei | Inhalt |
+## Bausteine
+| Baustein | Datei |
 |---|---|
-| `forecast/<ki>/prognosen.jsonl` | Prognosejournal, append-only, Hash-Kette, Prognose-ID je Eintrag |
-| `forecast/<ki>/bewertungen.jsonl` | automatische Erfolgskontrolle je Prognose und Horizont (1/5/20 Handelstage) |
-| `forecast/<ki>/handel.jsonl` | virtuelle Trades (10.000 € je KI), getrennt von Prognosen |
-| `forecast/ops_status.json` | Datenstatus der letzten Kontrolle |
-`<ki>` = `claude` oder `chatgpt`. Die ersten Claude-Prognosen sind per SHA-256 in `tests/test_forecast.py` festgeschrieben.
+| Journale je KI (append-only, Hash-Kette) | `forecast/<ki>/prognosen.jsonl`, `bewertungen.jsonl`; Kontojournal `forecast/<ki>/konto/handel.jsonl` |
+| Börsenkalender (XNYS/XETR/Krypto 24/7; Sommerzeit, Feiertage, verkürzte Tage) | `bii/forecast/calendars.py` (exchange_calendars); keine feste Eröffnungszeit |
+| Datenqualitätsstufen A/B/C | `bii/forecast/quality.py`; Wettbewerb/Ausführung nur Stufe A, Pilot Stufe B |
+| Live-Daten mit Zweitquelle | `bii/forecast/live.py` (Yahoo; Nasdaq/Stooq), Rohantworten per SHA-256 protokolliert |
+| Gemeinsame Handels-Engine | `bii/papertrading/engine.py` (ein Code für beide KIs); Adapter `bii/forecast/ai_portfolio.py` |
+| Blinder Eingang (Commit-Reveal, Serverzeit) | `bii/forecast/commitreveal.py`, `scripts/fc_ingest.py`, Workflow `forecast-intake.yml` |
+| Universum (stufenweise) | `forecast/universum.json`, Status `forecast/universum_status.json` |
+| Startschranke | `bii/forecast/gate.py`, `scripts/fc_gate.py` |
 
-## Regeln
-- Journalpflicht vor Bewertungszeitraum: `jr.add` lehnt Prognosen ab, sobald das 1-Tages-Ziel (14:30 UTC am Zieltag = US-Eröffnung) erreicht ist. Keine Überschreibung (doppelte ID → Fehler); Korrektur = neue Prognose.
-- Zielkurse werden aus Referenzkurs × Prozentprognose berechnet. Pflichtfelder: Instrument-ID, Referenzkurs/Währung/Datum/Quelle, Entscheidung, 3 Horizonte (Prozent, Zieltermin, P(positiv)), Gründe, Gegenargumente, Falsifikation, Quellen, Belastbarkeit.
-- Bewertung: tatsächliche Änderung = Schlusskurs am n-ten Handelstag nach Referenzdatum ÷ Schlusskurs Referenzdatum (Yahoo, Stooq-Gegenprüfung falls erreichbar). Richtung richtig = Vorzeichen stimmt; Wahrscheinlichkeitsfehler = Brier-Score; „Entscheidung sinnvoll“: KAUFEN ⇔ Ergebnis nach 0,3 % Rundreisekosten > 0, NICHT KAUFEN/VERKAUFEN ⇔ Ergebnis ≤ 0,3 %, HALTEN ⇔ > 0. Nicht handelbare Instrumente (z. B. Indizes) werden mit `entscheidung_bewerten=false` nur als Prognose gewertet.
-- Datenmangel > 5 Tage nach Fälligkeit → „nicht auswertbar“ (zählt nicht in die Trefferquote, wird separat ausgewiesen). Offene Prognosen verfälschen keine Quote.
-- Portfolios: je 10.000 €, kein Hebel, keine Leerverkäufe, ≤ 25 % je Position, Gebühr 1 €/Order, Spread+Slippage 0,10 %/Seite, Währungsumrechnung 0,25 %, Trade nur mit zuvor journalisierter Prognose und verifiziertem Kurs. Benchmark vorab: MSCI World (EUNL.DE) und S&P 500 (SXR8.DE) buy-and-hold ab 03.11.2026.
+## Datenqualität (hartes Tor)
+A = gültige Balken + Identität/Währung/Handelsplatz + aktuell + unabhängige Zweitquelle bestätigt (O/H/L/C ≤ 2 %). B = gültig, nur eine Quelle. C = ungültig (OHLC inkonsistent, nichtendlich, fehlende Handelstage laut Kalender, veraltet, Sprung > 40 %, falsche Währung/Börse) oder Zweitquelle weicht ab. Unter Mindeststufe wird **nicht bewertet und nicht ausgeführt**; nach 5 Tagen Karenz „nicht auswertbar“ mit Gründen (separat ausgewiesen, nicht in Treffer-/Fehlerquoten). Kursreihen sind split-bereinigt, ohne Dividenden (Preisrendite); Splits im Zeitraum werden markiert.
 
-## Unabhängigkeit der KIs — ehrliche Grenzen
-Alle Dateien liegen im selben Repo, technisch lesbar. Verabredet: Claude liest `forecast/chatgpt/` und Vergleichsberichte nie vor Abgabe der eigenen Tagesprognose; ChatGPT liest `forecast/claude/` nicht (Nutzer gibt ChatGPT nur Kursdaten, nicht die Claude-Ergebnisse). Das ist organisatorisch, nicht technisch erzwungen. Die automatische Erfolgskontrolle liest nur Kursdaten und Zielwerte.
+## Gemeinsame Simulation
+Beide KIs: identischer Code, identische Parameter (`rules_v1_0.PARAMS`: Gebühr 1 €, Spread+Slippage 0,10 %/Seite, Währung 0,25 % mit EZB-Vortageskurs, Risiko ≤ 1 % je Trade inkl. Kosten ab Limit, ≤ 5 Positionen, ≤ 20 % je Position, kein Hebel, Drawdown-Pause 10 %). Die KI liefert Prognose-ID, Limit, Stop, Ziel; die Stückzahl bestimmt die gemeinsame Risikoregel. Order wird vor der Ausführung im Kontojournal dokumentiert; Ausführung frühestens in der nächsten Sitzung, nur wenn die Dokumentation vor der Kalender-Eröffnung lag.
+**Integration mit PR #10:** `forward60` (Entwurf, anderer Zweig) nutzt dieselbe Engine und `verified_data` mit Nasdaq/StockAnalysis-Zweitquellen sowie fail-closed-Kapitalmaßnahmen; er ist signalgetrieben und eingefroren (Manifest-Hash) und nimmt keine KI-Orders an. Dieser Zweig übernimmt ihn nicht, sondern nutzt die gemeinsame Engine direkt. Beim Merge von PR #10 ist der Datenanbieter `EngineProvider` durch `VerifiedProvider` zu ersetzen (gleiche Schnittstelle: `ohlcv`, `fx`, `crosscheck`, `news`); `engine.py` wurde hier kalenderbasiert geändert (Hash im PR-#10-Manifest neu festschreiben, bevor dessen Start erfolgt).
 
-## ChatGPT-Anbindung
-ChatGPT kann nicht selbst ins Repo schreiben. Weg: ChatGPT erzeugt die Tagesprognosen als JSON-Liste im Schema unten → Nutzer startet in GitHub Actions „ChatGPT-Prognosen ins Journal übernehmen“ und fügt die JSON ein (vor US-Eröffnung, 14:30 UTC). Zeitstempel = Eingang im Journal/Commit; der behauptete ChatGPT-Zeitpunkt zählt nicht. **Fairnessrisiko:** ChatGPT hat ohne Webzugriff keine verifizierten Kurse – Referenzkurse muss der Nutzer aus derselben Quelle bereitstellen (`forecast/ops_status.json` oder Yahoo), damit beide dieselbe Datenbasis haben.
+## Fairness und Blindheit (technisch)
+Gleicher Informationsstichtag: `jr.add` verlangt Referenzdatum = letzter abgeschlossener Handelstag laut Kalender; Zieltermine werden gegen den Kalender geprüft. Gleiche Daten/Kosten/Universum: gemeinsamer Datenpfad und Engine. **Commit-Reveal:** erst Hash (bis Eröffnung − 60 min), Klartext erst danach; Zeitstempel = Serverzeit des Eingangsdienstes; Fristverstöße, Hash-Abweichung und fehlender Commit werden abgelehnt. Damit kann keine KI ihre Prognose nach Kenntnis der anderen ändern. **Grenze:** Klartexte vergangener Sitzungen liegen im gemeinsamen Repo; Lesen früherer Prognosen der anderen KI ist nicht technisch verhinderbar (Härtung: privates Eingangs-Repo mit getrennten Deploy-Keys je KI) und die Zuordnung „welche KI hat gepusht“ beruht auf dem Pfad, nicht auf Authentifizierung.
 
-Schema je Prognose (alle Felder Pflicht): `prognose_id` (z. B. `CHATGPT-2026-11-04-NVDA-001`), `instrument` {`id`,`name`,`yahoo`}, `referenz` {`kurs`,`waehrung`,`datum`,`quelle`}, `horizonte` {`"1"`,`"5"`,`"20"`: {`tage`,`zieltermin`,`erwartung_pct`,`p_positiv`}}, `entscheidung` (KAUFEN|HALTEN|VERKAUFEN|NICHT KAUFEN), `gruende`, `gegenargumente`, `falsifikation`, `quellen`, `belastbarkeit` (belastbar|eingeschraenkt|nicht_belastbar), optional `trade_zulaessig`, `positionsgroesse`.
+## ChatGPT-Anbindung (Stand: NICHT bewiesen)
+Eingang: Push von `forecast/inbox/chatgpt/<sitzung>/{commit,reveal}.json` auf `chatgpt/inbox` (oder die Standardbranch). Der Dienst läuft per Push-Ereignis, ohne manuelle Eingabe. Offen und nicht aus dieser Umgebung prüfbar: ob eine geplante ChatGPT-Aufgabe mit der vorhandenen GitHub-Verbindung im Hintergrund schreiben kann. Bekannt/vermutet: Connector-Zugriffe sind lesend oder bedürfen interaktiver Bestätigung; im Repo erscheinen `codex/*`-Zweige, also kann ein ChatGPT-Agent (Codex) Zweige pushen. Alternative autorisierte Übergabe: Codex-/Agent-Aufgabe, die täglich per Push auf `chatgpt/inbox` schreibt (Zweig per Ruleset auf diesen Akteur beschränkt). **Als funktionsfähig gilt der Weg erst nach 2 unbeaufsichtigten Sitzungen** (Belege `forecast/receipts/chatgpt/*` mit Ereignis `push`; Bedingung `automatik_chatgpt` der Startschranke).
 
-## Automatisierung: Status
-Siehe Abschnitt im Chat-Bericht; maßgeblich ist `forecast/ops_status.json` nach dem ersten Lauf von „Prognose-Erfolgskontrolle“.
+## Bewertung (Prognose ≠ Trading)
+Originalwerte bleiben unverändert im Journal. Je Prognose und Horizont (1/5/20 Handelstage laut Kalender): Ist-Änderung, Abweichung (PP), Richtung, Brier, Datenstufen, Vergleichsmodelle **Nullveränderung** und **historische Basisrate** (nur Daten vor dem Referenzdatum), kritische Fehlererklärung. Berichte: Abdeckung (Prognosetage), Bias, Ø absoluter Fehler, Brier gegen Basisrate, nicht auswertbar/offen getrennt. **Tradingperformance** (Nettorendite nach Kosten, Drawdown, Kosten) kommt ausschließlich aus dem Kontozustand der Engine und wird separat berichtet.
+
+## Universum
+Stufe 1 (handelbar, USD/US-Sitzungen): 30 Aktien + SPY, QQQ, IWM, GLD; Zulassung nur mit Datenstufe A und Ø-Dollarvolumen ≥ 100 Mio. $ (tägliche Prüfung). Stufe 2 (nur Daten, nicht handelbar): BTC-USD, ETH-USD (Engine unterstützt 24/7 nicht), 4GLD.DE (EUR/Xetra). Benchmark: EUNL.DE (Datenstufe wird geprüft; PR #10 meldete für den 02.11. einen Null-Schlusskurs). ISINs sind aus Wissen eingetragen und als ungeprüft markiert.
+
+## Startschranke
+Start nur wenn: ≥ 20 Instrumente + Benchmark zugelassen; für beide KIs ein Probelauf mit echter Ausführung auf Stufe-A-Daten über die gemeinsame Engine; beide KIs ≥ 2 unbeaufsichtigte Commit+Reveal-Sitzungen; Konten unberührt (10.000 €). Start frühestens zur nächsten Sitzung, 60 Kalendertage.

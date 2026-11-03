@@ -1,0 +1,4 @@
+{"status": "nicht_gestartet",
+ "hinweis": "Der 60-Kalendertage-Wettbewerb beginnt erst, wenn alle Bedingungen aus forecast/wettbewerb_gate.json erfüllt sind (scripts/fc_gate.py --start). Kein Rückdatieren. Die vier Prognosen vom 03.11.2026 sind Pilotprognosen.",
+ "pilot": {"prognosen": ["CLAUDE-2026-11-03-SPX-001", "CLAUDE-2026-11-03-NDX-002", "CLAUDE-2026-11-03-DJI-003", "CLAUDE-2026-11-03-RUT-004"],
+           "einordnung": "Pilot: technischer Probelauf des Journals und der Erfolgskontrolle. Zeitstempel, Zielkurse und Wahrscheinlichkeiten bleiben unverändert; sie zählen nicht als Start des Wettbewerbs und nicht in die Wettbewerbsstatistik (Phase 'pilot' getrennt ausgewiesen). Datenstufe B ist im Pilot zulässig, im Wettbewerb nicht."}}

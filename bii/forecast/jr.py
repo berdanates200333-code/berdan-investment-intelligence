@@ -5,10 +5,12 @@ Korrekturen = NEUE Prognose mit eigener ID (Feld 'ersetzt'), alte bleibt auswert
 """
 from __future__ import annotations
 
+import json
 from datetime import datetime, timezone
 from pathlib import Path
 
 from .. import journal
+from . import calendars
 
 ROOT = Path(__file__).resolve().parents[2]
 REGELVERSION = "FC1-1.0"
@@ -17,6 +19,15 @@ HORIZONTE = (1, 5, 20)
 ENTSCHEIDUNGEN = ("KAUFEN", "HALTEN", "VERKAUFEN", "NICHT KAUFEN")
 PFLICHT = ("prognose_id", "ki", "instrument", "referenz", "horizonte", "entscheidung", "gruende", "gegenargumente",
            "falsifikation", "quellen", "belastbarkeit")
+
+
+def phase() -> str:
+    """'pilot' bis der Wettbewerb gemäß Startnachweis (forecast/wettbewerb.json) offiziell gestartet ist."""
+    f = ROOT / "forecast" / "wettbewerb.json"
+    try:
+        return "wettbewerb" if json.loads(f.read_text()).get("status") == "gestartet" else "pilot"
+    except (OSError, ValueError):
+        return "pilot"
 
 
 def path(ki: str, name: str = "prognosen.jsonl") -> Path:
@@ -48,9 +59,21 @@ def add(p: dict, now: datetime | None = None, ki_path: Path | None = None) -> di
     if any(e["prognose_id"] == p["prognose_id"] for e in journal.read(jp)):
         raise ValueError("Prognose-ID existiert bereits (kein Überschreiben)")
     now = now or datetime.now(timezone.utc)
-    z1 = datetime.fromisoformat(p["horizonte"]["1"]["zieltermin"] + "T14:30:00+00:00")
-    if now >= z1:
-        raise ValueError("Bewertungszeitraum hat bereits begonnen (1-Tages-Ziel erreicht) – nachträgliche Prognose unzulässig")
+    venue = calendars.venue_of(p["instrument"])
+    expected = calendars.horizon_dates(venue, p["referenz"]["datum"])
+    for h in HORIZONTE:
+        if p["horizonte"][str(h)]["zieltermin"] != expected[str(h)]:
+            raise ValueError(f"Zieltermin {h} Handelstage passt nicht zum Börsenkalender {venue}: erwartet {expected[str(h)]}")
+    if not calendars.forecast_deadline_ok(venue, expected["1"], now):
+        raise ValueError("Bewertungszeitraum hat bereits begonnen (Eröffnung des 1-Tages-Zieltags laut Börsenkalender) – nachträgliche Prognose unzulässig")
+    info = calendars.last_complete_session(venue, now)
+    if str(info.date()) != p["referenz"]["datum"]:
+        raise ValueError(f"Informationsstichtag: Referenzdatum muss der letzte abgeschlossene Handelstag sein ({info.date()}), nicht {p['referenz']['datum']}")
+    if phase() == "wettbewerb":
+        from . import universe
+        if p["instrument"]["yahoo"] not in universe.admitted():
+            raise ValueError("Instrument nicht im zugelassenen Universum (Datenstufe A + Liquidität)")
+    p = {**p, "phase": phase()}
     p = {**p, "regelversion": REGELVERSION, "typ": "prognose"}
     for h in HORIZONTE:
         x = p["horizonte"][str(h)]

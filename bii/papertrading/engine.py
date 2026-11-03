@@ -19,9 +19,16 @@ from pathlib import Path
 import pandas as pd
 
 from .. import journal
+from ..forecast import calendars
 
-CLOSE_UTC = (21, 45)   # späteste US-Börsenschlusszeit (Winter 21:00 UTC) + Puffer: erst danach gilt ein Balken als abgeschlossen
-OPEN_CUTOFF = (13, 30) # frühestmögliche US-Eröffnung (Sommer) in UTC: Pläne müssen davor dokumentiert sein
+# Handelszeiten kommen aus dem Börsenkalender (XNYS: Sommerzeit, Feiertage, verkürzte Tage) – keine feste UTC-Uhrzeit mehr.
+def _close_ready(d) -> datetime:
+    """Zeitpunkt, ab dem der Tagesbalken von d endgültig ist (Handelsschluss + 45 min)."""
+    return (calendars.session_close("XNYS", d) + calendars.BAR_SETTLE).to_pydatetime()
+
+
+def _open_utc(d) -> datetime:
+    return calendars.session_open("XNYS", d).to_pydatetime()
 
 
 def new_state(rules) -> dict:
@@ -268,7 +275,7 @@ def run(state: dict, provider, rules, jpath: Path, now: datetime | None = None, 
         state["daten_log"].append({"zeit": now.isoformat(timespec="seconds"), "probleme": summary["probleme"]})
         return summary
     universe = {t: provider.ohlcv(t) for t in rules.UNIVERSE}
-    days = [d for d in spy.index if d >= pd.Timestamp(rules.START) and now >= _ts(d, CLOSE_UTC)
+    days = [d for d in spy.index if d >= pd.Timestamp(rules.START) and now >= _close_ready(d)
             and (state["last_date"] is None or d > pd.Timestamp(state["last_date"]))]
     # Fail closed before any execution or valuation. Never trade on a partial universe.
     problems = list(provider.log)
@@ -309,7 +316,7 @@ def run(state: dict, provider, rules, jpath: Path, now: datetime | None = None, 
             if pd.Timestamp(o["plan_datum"]) >= d:
                 continue
             state["pending"].remove(o)
-            if o["journal_utc"] >= _ts(d, OPEN_CUTOFF).isoformat(timespec="seconds"):
+            if o["journal_utc"] >= _open_utc(d).isoformat(timespec="seconds"):
                 state["failed"].append({"plan_id": o["id"], "datum": str(d.date()), "ticker": o["ticker"], "grund": "Plan erst nach Handelseröffnung dokumentiert – verworfen"})
                 _jw(jpath, {"typ": "ausfuehrung_fehlgeschlagen", "plan_id": o["id"], "ticker": o["ticker"], "datum": str(d.date()), "version": rules.VERSION,
                             "grund": "Plan erst nach Handelseröffnung dokumentiert – verworfen"}, late, now)

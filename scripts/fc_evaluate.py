@@ -1,6 +1,5 @@
-"""Automatische Erfolgskontrolle (täglich per GitHub Actions). Bewertet fällige Prognosen aller KIs und schreibt
-bewertungen.jsonl + Datenstatus. Arbeitet nur mit Kursdaten – liest keine Analysen/Gründe der KIs.
-Aufruf: python scripts/fc_evaluate.py [--datenstatus]"""
+"""Automatische Erfolgskontrolle (täglich per GitHub Actions). Bewertet fällige Prognosen aller KIs mit qualitätsgeprüften Kursdaten
+(nur Kursdaten, liest keine Gründe/Analysen der KIs). Aufruf: python scripts/fc_evaluate.py"""
 from __future__ import annotations
 
 import json
@@ -12,51 +11,32 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from bii import journal  # noqa: E402
-from bii.forecast import evaluate, jr  # noqa: E402
-from bii.papertrading.data import check_bars, stooq_close, yahoo_ohlcv  # noqa: E402
-
-
-class Live:
-    def __init__(self):
-        self.cache, self.log = {}, []
-
-    def closes(self, sym):
-        if sym not in self.cache:
-            try:
-                df = yahoo_ohlcv(sym, "1y")
-                probs = check_bars(df)
-                self.log += [f"{sym}: {p}" for p in probs]
-                s = df["close"]
-                try:   # Gegenprüfung des letzten Kurses mit Stooq (falls erreichbar)
-                    z = stooq_close(sym.lower().replace("^", "^") if sym.startswith("^") else sym.lower() + ".us")
-                    d = s.index[-1]
-                    if d in z.index and abs(s.iloc[-1] / z.loc[d] - 1) > 0.01:
-                        self.log.append(f"{sym}: Quellenabweichung Yahoo/Stooq > 1 % am {d.date()}")
-                except Exception:  # noqa: BLE001
-                    self.log.append(f"Hinweis {sym}: Zweitquelle Stooq nicht erreichbar (einquellig)")
-                self.cache[sym] = s
-            except Exception as e:  # noqa: BLE001
-                self.log.append(f"{sym}: Abruf fehlgeschlagen ({type(e).__name__})")
-                self.cache[sym] = None
-        return self.cache[sym]
+from bii.forecast import evaluate, jr, live, quality  # noqa: E402
 
 
 def main() -> int:
     now = datetime.now(timezone.utc)
-    live = Live()
-    syms = sorted({p["instrument"]["yahoo"] for ki in jr.KIS for p in journal.read(jr.path(ki))})
-    n_new = 0
+    lv = live.Live(now)
+    insts = {}
     for ki in jr.KIS:
-        n_new += len(evaluate.evaluate_ki(ki, live.closes, now.date(), now))
-    status = {"lauf_utc": now.isoformat(timespec="seconds"), "neue_bewertungen": n_new, "instrumente": {}, "probleme": live.log}
-    for s in syms:
-        c = live.closes(s)
-        status["instrumente"][s] = None if c is None else {"letzter_kurs": round(float(c.iloc[-1]), 4), "datum": str(c.index[-1].date())}
-    (ROOT / "reports" / "forecast").mkdir(parents=True, exist_ok=True)
+        for p in journal.read(jr.path(ki)):
+            insts[p["instrument"]["yahoo"]] = p["instrument"]
+    n_new = sum(len(evaluate.evaluate_ki(ki, lv.get, now.date(), now)) for ki in jr.KIS)
+    status = {"lauf_utc": now.isoformat(timespec="seconds"), "neue_bewertungen": n_new, "instrumente": {}, "probleme": lv.log, "abrufe": lv.requests}
+    bad = 0
+    for sym, inst in insts.items():
+        q = lv.get(inst)
+        if q is None:
+            status["instrumente"][sym] = {"stufe": quality.C, "grund": "keine Daten"}
+            bad += 1
+            continue
+        t = q.tier_at(q.df.index[-1])
+        status["instrumente"][sym] = {"stufe": t, "letzter_kurs": round(float(q.df.close.iloc[-1]), 4), "datum": str(q.df.index[-1].date()),
+                                      "zweitquelle": q.secondary_name, "gruende": q.reasons}
+        bad += t == "C_unzulaessig"
     (ROOT / "forecast" / "ops_status.json").write_text(json.dumps(status, indent=1, ensure_ascii=False))
-    ok = all(v is not None for v in status["instrumente"].values())
-    print(json.dumps(status, ensure_ascii=False)[:1500])
-    return 0 if ok else 2
+    print(json.dumps({k: v for k, v in status.items() if k != "abrufe"}, ensure_ascii=False)[:1500])
+    return 2 if bad else 0
 
 
 if __name__ == "__main__":

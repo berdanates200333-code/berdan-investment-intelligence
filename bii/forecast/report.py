@@ -4,20 +4,23 @@ from __future__ import annotations
 from datetime import date
 
 from .. import journal
-from . import evaluate, jr, portfolio
+from . import evaluate, jr
 
 
 def _pct(x, d=1):
     return "–" if x is None else f"{x*100:.{d}f} %"
 
 
-def stats_table(ki: str, today: date) -> str:
-    s = evaluate.stats(ki, today)
-    t = "| Horizont | Prognosen | fällig & bewertet | nicht auswertbar | offen | Trefferquote Richtung | Ø Fehler (PP) | Bias (PP) | Brier | Entscheidung sinnvoll |\n|---|---|---|---|---|---|---|---|---|---|\n"
+def stats_table(ki: str, today: date, phase: str | None = None) -> str:
+    """Prognosegüte (NICHT Tradingperformance). Offene und nicht auswertbare Prognosen werden getrennt ausgewiesen."""
+    s = evaluate.stats(ki, today, phase=phase)
+    t = f"Prognosen: {s['prognosen']} an {s['prognosetage']} Tag(en) · Phase: {s['phase']}\n\n"
+    t += ("| Horizont | Prognosen | bewertet | nicht auswertbar (Daten) | offen | Treffer Richtung | Ø abs. Fehler PP | Bias PP | Nullmodell Ø Fehler PP | Brier | Brier Basisrate (gleiche Fälle) |\n"
+          "|---|---|---|---|---|---|---|---|---|---|---|\n")
     for h, r in s["horizonte"].items():
+        f = lambda k, fmt: "–" if k not in r else format(r[k], fmt)  # noqa: E731
         t += (f"| {h} Tag(e) | {r['gesamt']} | {r['abgeschlossen']} | {r['nicht_auswertbar']} | {r['offen']} | {_pct(r.get('trefferquote'),0)} | "
-              f"{'–' if 'mae_pp' not in r else format(r['mae_pp'],'.2f')} | {'–' if 'bias_pp' not in r else format(r['bias_pp'],'+.2f')} | "
-              f"{'–' if 'brier' not in r else format(r['brier'],'.3f')} | {_pct(r.get('entscheidung_sinnvoll'),0)} |\n")
+              f"{f('mae_pp','.2f')} | {f('bias_pp','+.2f')} | {f('null_mae_pp','.2f')} | {f('brier','.3f')} | {f('basis_brier','.3f')} (n={r.get('n_basis',0)}) |\n")
     return t
 
 
