@@ -338,7 +338,7 @@ def test_competition_cycle_end_to_end(tmp_path):
 # ---------------------------------------------------------------- Startschranke: Belege statt Behauptungen
 def _mk_probe(root, ki, fps, buy=True, bench_buy=True):
     from bii import journal as j
-    p = root / "forecast" / "probelauf" / ki / "konto" / "handel.jsonl"
+    p = root / "forecast" / "probelauf2" / ki / "konto" / "handel.jsonl"
     p.parent.mkdir(parents=True, exist_ok=True)
     now = datetime(2026, 11, 4, 22, 0, tzinfo=UTC)
     if buy:
