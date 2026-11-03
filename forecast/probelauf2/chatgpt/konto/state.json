@@ -34,6 +34,16 @@
    "probleme": [],
    "tage": [],
    "zeit": "2026-11-03T19:30:05+00:00"
+  },
+  {
+   "probleme": [
+    "SPY: Datenstufe B_einquellig unzulässig für Ausführung (keine Zweitquelle)",
+    "SPY: Datenstufe B_einquellig unzulässig für Ausführung (keine Zweitquelle)",
+    "SPY: Datenstufe B_einquellig unzulässig für Ausführung (keine Zweitquelle)",
+    "SPY: Datenstufe B_einquellig unzulässig für Ausführung (keine Zweitquelle)",
+    "Pflichtdaten (SPY/Benchmark/EUR-USD) fehlen – kein Handel, nur Protokoll"
+   ],
+   "zeit": "2026-11-03T23:32:21+00:00"
   }
  ],
  "equity": [
