@@ -47,6 +47,10 @@ def add(p: dict, now: datetime | None = None, ki_path: Path | None = None) -> di
     jp = ki_path or path(p["ki"])
     if any(e["prognose_id"] == p["prognose_id"] for e in journal.read(jp)):
         raise ValueError("Prognose-ID existiert bereits (kein Überschreiben)")
+    now = now or datetime.now(timezone.utc)
+    z1 = datetime.fromisoformat(p["horizonte"]["1"]["zieltermin"] + "T14:30:00+00:00")
+    if now >= z1:
+        raise ValueError("Bewertungszeitraum hat bereits begonnen (1-Tages-Ziel erreicht) – nachträgliche Prognose unzulässig")
     p = {**p, "regelversion": REGELVERSION, "typ": "prognose"}
     for h in HORIZONTE:
         x = p["horizonte"][str(h)]
