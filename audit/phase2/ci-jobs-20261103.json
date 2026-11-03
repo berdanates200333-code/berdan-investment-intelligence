@@ -1,0 +1,129 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 125779132230,
+      "run_id": 41594676038,
+      "workflow_name": "Forward60 validation and research intake (no executions)",
+      "head_branch": "codex/forward60-validation",
+      "run_url": "https://api.github.com/repos/berdanates200333-code/berdan-investment-intelligence/actions/runs/41594676038",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVeBuZM8AAAAdSQU_Rg",
+      "head_sha": "da2121322a2300bf614ce3ade36a2438dc1f28d4",
+      "url": "https://api.github.com/repos/berdanates200333-code/berdan-investment-intelligence/actions/jobs/125779132230",
+      "html_url": "https://github.com/berdanates200333-code/berdan-investment-intelligence/actions/runs/41594676038/job/125779132230",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-03T07:11:32Z",
+      "started_at": "2026-11-03T07:11:35Z",
+      "completed_at": "2026-11-03T07:11:54Z",
+      "name": "verify",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-03T07:11:36Z",
+          "completed_at": "2026-11-03T07:11:36Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-03T07:11:36Z",
+          "completed_at": "2026-11-03T07:11:37Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-03T07:11:37Z",
+          "completed_at": "2026-11-03T07:11:38Z"
+        },
+        {
+          "name": "Run pip install -r requirements-pt60.lock",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-03T07:11:38Z",
+          "completed_at": "2026-11-03T07:11:47Z"
+        },
+        {
+          "name": "Run python -m pytest -q --junitxml=validation/tests.xml",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-03T07:11:47Z",
+          "completed_at": "2026-11-03T07:11:51Z"
+        },
+        {
+          "name": "Real data preflight (never creates start or orders)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6,
+          "started_at": "2026-11-03T07:11:51Z",
+          "completed_at": "2026-11-03T07:11:51Z"
+        },
+        {
+          "name": "Full universe research intake",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 7,
+          "started_at": "2026-11-03T07:11:51Z",
+          "completed_at": "2026-11-03T07:11:51Z"
+        },
+        {
+          "name": "Persist isolated research intake even on data failure",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 8,
+          "started_at": "2026-11-03T07:11:51Z",
+          "completed_at": "2026-11-03T07:11:51Z"
+        },
+        {
+          "name": "Preserve success and failure evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-03T07:11:51Z",
+          "completed_at": "2026-11-03T07:11:52Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-11-03T07:11:52Z",
+          "completed_at": "2026-11-03T07:11:52Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-11-03T07:11:52Z",
+          "completed_at": "2026-11-03T07:11:52Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-11-03T07:11:52Z",
+          "completed_at": "2026-11-03T07:11:52Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/berdanates200333-code/berdan-investment-intelligence/check-runs/125779132230",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000044,
+      "runner_name": "GitHub Actions 1000000044",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}
