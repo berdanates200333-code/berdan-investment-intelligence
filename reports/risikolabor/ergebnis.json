@@ -1,0 +1,225 @@
+{
+ "erstellt_utc": "2026-11-03T19:28:09+00:00",
+ "ergebnisse": {
+  "2022-H2 Bärenmarkt": [
+   {
+    "risiko": 0.01,
+    "rendite_pct": -0.848799999999994,
+    "maxdd_pct": -0.9182563023320545,
+    "vol_ann_pct": 1.2530621375109825,
+    "trades": 1,
+    "trefferquote_pct": 0.0,
+    "kosten_eur": 6.764671044793725,
+    "pausiert": false,
+    "schlechtester_trade_in_risiko": -0.8658573905947159,
+    "gap_stops": 0,
+    "spy_buy_hold_pct": 0.31213998318346814,
+    "handelstage": 127
+   },
+   {
+    "risiko": 0.02,
+    "rendite_pct": -1.7171999999999965,
+    "maxdd_pct": -2.0896509677188035,
+    "vol_ann_pct": 2.8975789212822347,
+    "trades": 1,
+    "trefferquote_pct": 0.0,
+    "kosten_eur": 11.261192173126357,
+    "pausiert": false,
+    "schlechtester_trade_in_risiko": -0.8613995485327314,
+    "gap_stops": 0,
+    "spy_buy_hold_pct": 0.31213998318346814,
+    "handelstage": 127
+   },
+   {
+    "risiko": 0.03,
+    "rendite_pct": -1.7171999999999965,
+    "maxdd_pct": -2.0896509677188035,
+    "vol_ann_pct": 2.8975789212822347,
+    "trades": 1,
+    "trefferquote_pct": 0.0,
+    "kosten_eur": 11.261192173126357,
+    "pausiert": false,
+    "schlechtester_trade_in_risiko": -0.8613995485327314,
+    "gap_stops": 0,
+    "spy_buy_hold_pct": 0.31213998318346814,
+    "handelstage": 127
+   }
+  ],
+  "2023 Erholung": [
+   {
+    "risiko": 0.01,
+    "rendite_pct": -0.7232000000000016,
+    "maxdd_pct": -5.165349847780131,
+    "vol_ann_pct": 9.137614698440505,
+    "trades": 29,
+    "trefferquote_pct": 34.48275862068966,
+    "kosten_eur": 289.74329358599243,
+    "pausiert": false,
+    "schlechtester_trade_in_risiko": -1.1501061571125266,
+    "gap_stops": 2,
+    "spy_buy_hold_pct": 14.087758333307555,
+    "handelstage": 128
+   },
+   {
+    "risiko": 0.02,
+    "rendite_pct": -1.6271999999999953,
+    "maxdd_pct": -7.1052060020586065,
+    "vol_ann_pct": 12.182060796619414,
+    "trades": 29,
+    "trefferquote_pct": 34.48275862068966,
+    "kosten_eur": 354.8392634698777,
+    "pausiert": false,
+    "schlechtester_trade_in_risiko": -1.150656960227273,
+    "gap_stops": 2,
+    "spy_buy_hold_pct": 14.087758333307555,
+    "handelstage": 128
+   },
+   {
+    "risiko": 0.03,
+    "rendite_pct": -1.4870999999999968,
+    "maxdd_pct": -6.962804161098535,
+    "vol_ann_pct": 12.342577352110824,
+    "trades": 29,
+    "trefferquote_pct": 34.48275862068966,
+    "kosten_eur": 356.6541974412697,
+    "pausiert": false,
+    "schlechtester_trade_in_risiko": -1.150656960227273,
+    "gap_stops": 2,
+    "spy_buy_hold_pct": 14.087758333307555,
+    "handelstage": 128
+   }
+  ],
+  "2024 Aufwärtstrend": [
+   {
+    "risiko": 0.01,
+    "rendite_pct": 8.686299999999992,
+    "maxdd_pct": -4.1153880924960085,
+    "vol_ann_pct": 10.15780959216272,
+    "trades": 22,
+    "trefferquote_pct": 54.54545454545454,
+    "kosten_eur": 241.4098817834195,
+    "pausiert": false,
+    "schlechtester_trade_in_risiko": -0.9746886299718763,
+    "gap_stops": 2,
+    "spy_buy_hold_pct": 14.162561903908365,
+    "handelstage": 126
+   },
+   {
+    "risiko": 0.02,
+    "rendite_pct": 9.758400000000012,
+    "maxdd_pct": -5.2190780069331755,
+    "vol_ann_pct": 12.995263719884665,
+    "trades": 23,
+    "trefferquote_pct": 52.17391304347826,
+    "kosten_eur": 291.2542813966998,
+    "pausiert": false,
+    "schlechtester_trade_in_risiko": -0.9744331152031654,
+    "gap_stops": 2,
+    "spy_buy_hold_pct": 14.162561903908365,
+    "handelstage": 126
+   },
+   {
+    "risiko": 0.03,
+    "rendite_pct": 10.077000000000002,
+    "maxdd_pct": -5.404097092846094,
+    "vol_ann_pct": 13.467149950569699,
+    "trades": 23,
+    "trefferquote_pct": 52.17391304347826,
+    "kosten_eur": 292.99307032149915,
+    "pausiert": false,
+    "schlechtester_trade_in_risiko": -0.9744331152031654,
+    "gap_stops": 2,
+    "spy_buy_hold_pct": 14.162561903908365,
+    "handelstage": 126
+   }
+  ],
+  "2025 Zollschock": [
+   {
+    "risiko": 0.01,
+    "rendite_pct": 3.839500000000018,
+    "maxdd_pct": -3.2743608515195644,
+    "vol_ann_pct": 6.073139947827416,
+    "trades": 10,
+    "trefferquote_pct": 60.0,
+    "kosten_eur": 110.25202480224603,
+    "pausiert": false,
+    "schlechtester_trade_in_risiko": -0.9615501673937304,
+    "gap_stops": 1,
+    "spy_buy_hold_pct": 5.73966516177884,
+    "handelstage": 124
+   },
+   {
+    "risiko": 0.02,
+    "rendite_pct": 5.497200000000002,
+    "maxdd_pct": -4.044382469101581,
+    "vol_ann_pct": 7.81081272994672,
+    "trades": 10,
+    "trefferquote_pct": 60.0,
+    "kosten_eur": 125.92609888271893,
+    "pausiert": false,
+    "schlechtester_trade_in_risiko": -0.9614176760879318,
+    "gap_stops": 1,
+    "spy_buy_hold_pct": 5.73966516177884,
+    "handelstage": 124
+   },
+   {
+    "risiko": 0.03,
+    "rendite_pct": 5.497200000000002,
+    "maxdd_pct": -4.044382469101581,
+    "vol_ann_pct": 7.81081272994672,
+    "trades": 10,
+    "trefferquote_pct": 60.0,
+    "kosten_eur": 125.92609888271893,
+    "pausiert": false,
+    "schlechtester_trade_in_risiko": -0.9614176760879318,
+    "gap_stops": 1,
+    "spy_buy_hold_pct": 5.73966516177884,
+    "handelstage": 124
+   }
+  ],
+  "2026 jüngste Phase": [
+   {
+    "risiko": 0.01,
+    "rendite_pct": 2.1001000000000047,
+    "maxdd_pct": -6.087274094680639,
+    "vol_ann_pct": 5.517325175757069,
+    "trades": 24,
+    "trefferquote_pct": 41.66666666666667,
+    "kosten_eur": 204.26348766432707,
+    "pausiert": false,
+    "schlechtester_trade_in_risiko": -1.0742574257425743,
+    "gap_stops": 2,
+    "spy_buy_hold_pct": 10.102270655764677,
+    "handelstage": 170
+   },
+   {
+    "risiko": 0.02,
+    "rendite_pct": -8.317800000000009,
+    "maxdd_pct": -10.497542841634843,
+    "vol_ann_pct": 6.7859523221778755,
+    "trades": 19,
+    "trefferquote_pct": 31.57894736842105,
+    "kosten_eur": 203.26803612842897,
+    "pausiert": true,
+    "schlechtester_trade_in_risiko": -1.0755064456721917,
+    "gap_stops": 1,
+    "spy_buy_hold_pct": 10.102270655764677,
+    "handelstage": 170
+   },
+   {
+    "risiko": 0.03,
+    "rendite_pct": -8.317800000000009,
+    "maxdd_pct": -10.497542841634843,
+    "vol_ann_pct": 6.7859523221778755,
+    "trades": 19,
+    "trefferquote_pct": 31.57894736842105,
+    "kosten_eur": 203.26803612842897,
+    "pausiert": true,
+    "schlechtester_trade_in_risiko": -1.0755064456721917,
+    "gap_stops": 1,
+    "spy_buy_hold_pct": 10.102270655764677,
+    "handelstage": 170
+   }
+  ]
+ }
+}
