@@ -1,0 +1,57 @@
+name: Forward60 validation and research intake (no executions)
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'bii/papertrading/**'
+      - 'scripts/pt60_run.py'
+      - 'scripts/research_watch60.py'
+      - 'tests/test_forward60.py'
+      - 'requirements-pt60.lock'
+      - '.github/workflows/forward60-validation.yml'
+  schedule:
+    - cron: '47 * * * *'
+permissions:
+  contents: write
+concurrency:
+  group: market-check
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-pt60.lock
+      - run: python -m pytest -q --junitxml=validation/tests.xml
+      - name: Real data preflight (never creates start or orders)
+        if: github.event_name != 'pull_request'
+        run: python scripts/pt60_run.py --output validation/paper
+      - name: Full universe research intake
+        if: always() && github.event_name != 'pull_request'
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+        run: python scripts/research_watch60.py
+      - name: Persist isolated research intake even on data failure
+        if: always() && github.event_name != 'pull_request'
+        run: |
+          git config user.name market-check-bot
+          git config user.email market-check-bot@users.noreply.github.com
+          git add research/watch60
+          if ! git diff --cached --quiet; then
+            git commit -m "Research intake: 30-stock evidence and status"
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+      - name: Preserve success and failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forward60-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            validation/
+            research/watch60/
+          retention-days: 90
