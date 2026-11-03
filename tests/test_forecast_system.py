@@ -5,6 +5,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import pytest
 
@@ -439,3 +440,87 @@ def test_solo_cycle_without_trade_and_with_partial_universe(tmp_path):
     st = json.loads((tmp_path / "forecast" / "claude" / "konto" / "state.json").read_text())
     assert st["last_date"] == "2026-11-03" and st["bench"] and not st["positions"] and st["cash_eur"] == 10_000      # Tageszyklus ohne Handel ist gültig
     assert not (tmp_path / "forecast" / "chatgpt").joinpath("konto").exists()
+
+
+# ---------------------------------------------------------------- Performance-Portfolio (Offensivkonto)
+def _wb_cfg(tmp_path, data, start="2026-11-03"):
+    live = _setup_competition(tmp_path, data)
+    cfg = json.loads((tmp_path / "forecast" / "wettbewerb.json").read_text())
+    cfg.update(kis=["claude"], modus="solo", start=start, start_eroeffnung_utc=f"{start}T14:30:00+00:00", letzter_kalendertag="2027-01-01")
+    (tmp_path / "forecast" / "wettbewerb.json").write_text(json.dumps(cfg))
+    return live, cfg
+
+
+def test_offensive_account_separate_params_same_engine_main_untouched(tmp_path):
+    from bii.forecast import offensiv, wettbewerb
+    from bii.papertrading import rules_v1_0 as base
+    data = _market()
+    live, cfg = _wb_cfg(tmp_path, data)
+    off = {**cfg, "status": "gestartet", "modus": "offensiv", "experiment": "T-OFF", "parameter": offensiv.PARAMETER}
+    (tmp_path / "forecast" / "offensiv").mkdir()
+    (tmp_path / "forecast" / "offensiv" / "config.json").write_text(json.dumps(off))
+    prov = Prov(data)
+    prov.inst = {}
+    class P(Prov):
+        def qual(self, sym):
+            return _qd(self.data[sym])
+    prov = P(data)
+    snap = json.dumps(base.PARAMS, sort_keys=True)
+    wettbewerb.run_daily(live, datetime(2026, 11, 3, 22, 30, tzinfo=UTC), root=tmp_path, provider=prov, submit=False)
+    offensiv.run_cycle(live, datetime(2026, 11, 3, 22, 30, tzinfo=UTC), root=tmp_path, provider=prov)
+    fr = tmp_path / "forecast"
+    c = data["AAPL"].loc["2026-11-03", "close"]
+    p = _forecast("claude", "2026-11-03T22:40Z")
+    p["order"] = {"limit": round(c * 1.01, 2), "stop": round(c * 0.95, 2), "ziel": round(c * 1.10, 2)}
+    journal.append(p, path=fr / "claude" / "prognosen.jsonl", now=datetime(2026, 11, 3, 22, 35, tzinfo=UTC))
+    n = datetime(2026, 11, 3, 22, 40, tzinfo=UTC)
+    a = wettbewerb.submit_orders_only(live, n, root=tmp_path, provider=prov)
+    b = offensiv.submit_orders(live, n, root=tmp_path, provider=prov)
+    main_plan = [e for e in journal.read(fr / "claude" / "konto" / "handel.jsonl") if e["typ"] == "order_plan"][0]
+    off_plan = [e for e in journal.read(fr / "claude_offensiv" / "konto" / "handel.jsonl") if e["typ"] == "order_plan"][0]
+    assert a["konten"]["claude"]["eingereicht"] and b["eingereicht"]
+    assert main_plan["risiko_anteil"] <= 0.0101 and 0.0151 < off_plan["risiko_anteil"] <= 0.0201          # 1 % vs. 2 % geplantes Risiko, gleiches Signal
+    assert off_plan["stueck"] > main_plan["stueck"] and off_plan["stop"] == main_plan["stop"] and off_plan["ziel"] == main_plan["ziel"]
+    assert json.dumps(base.PARAMS, sort_keys=True) == snap                                                      # gemeinsames PARAMS unverändert (Hauptkonto sicher)
+    assert off_plan["positionswert_eur"] <= 0.30 * 10_000 + 1
+
+
+def test_open_risk_cap_and_no_stale_orders(tmp_path):
+    from bii.forecast import offensiv, wettbewerb
+    data = _market()
+    rules = ap.make_rules("2026-11-02", "2027-01-31", ("AAPL",))
+    rules.PARAMS = {**rules.PARAMS, **offensiv.PARAMETER, "max_open_risk": 0.005}                 # absichtlich winzige Grenze
+    st = ap.load_state("claude_offensiv", rules, root=tmp_path)
+    q = _qd(data["AAPL"])
+    now = datetime(2026, 11, 3, 22, 30, tzinfo=UTC)
+    c0 = float(data["AAPL"].loc["2026-11-03", "close"])
+    with pytest.raises(ValueError, match="Offenes geplantes Portfoliorisiko"):
+        ap.submit_order("claude_offensiv", st, rules, "PROBELAUF:AAPL", round(c0 * 1.01, 2), round(c0 * 0.95, 2), round(c0 * 1.1, 2), 1.1, q, now=now, root=tmp_path, allowed={"AAPL"}, probelauf=True)
+    # veraltete Prognosen (anderer Informationsstichtag) werden nie nachträglich geordert
+    fr = tmp_path / "forecast"
+    (fr / "claude").mkdir(parents=True)
+    old = _forecast("claude", "2026-11-02T22:40Z")
+    old["order"] = {"limit": 101.0, "stop": 95.0, "ziel": 110.0}
+    journal.append(old, path=fr / "claude" / "prognosen.jsonl", now=now)
+    assert list(wettbewerb.pending_orders("claude", fr, "2026-11-03")) == []
+    assert len(list(wettbewerb.pending_orders("claude", fr, "2026-11-02"))) == 1
+    nur = _forecast("claude", "2026-11-03T22:40Z"); nur.update(prognose_id="x-nur", nur_offensiv=True, order={"limit": 1.0, "stop": 0.5, "ziel": 2.0})
+    journal.append(nur, path=fr / "claude" / "prognosen.jsonl", now=now)
+    assert [p["prognose_id"] for p in wettbewerb.pending_orders("claude", fr, "2026-11-03")] == []                      # Hauptkonto ignoriert nur_offensiv
+    assert [p["prognose_id"] for p in wettbewerb.pending_orders("claude_offensiv", fr, "2026-11-03", source="claude", offensiv=True)] == ["x-nur"]
+
+
+def test_risk_lab_runs_same_signals_with_three_risk_levels():
+    import exchange_calendars as xc
+    from bii.forecast import risikolabor as rl
+    idx = xc.get_calendar("XNYS").sessions_in_range("2025-01-02", "2026-03-31")
+    rng = np.random.default_rng(7)
+    frames = {}
+    for i, s in enumerate(("SPY", "AAPL", "MSFT")):
+        c = pd.Series(100 * np.cumprod(1 + 0.0007 + rng.normal(0, 0.012, len(idx))), index=idx)
+        op = c.shift(1).fillna(c.iloc[0]) * (1 + rng.normal(0, 0.006, len(idx)))
+        frames[s] = pd.DataFrame({"open": op, "high": np.maximum(op, c) * 1.006, "low": np.minimum(op, c) * 0.994, "close": c, "volume": 5e6})
+    fx = pd.Series(1.1, index=pd.date_range("2024-12-01", "2026-04-30"))
+    res = [rl.run_window(frames, fx, "2026-01-05", "2026-03-27", lvl, ("AAPL", "MSFT")) for lvl in rl.LEVELS]
+    assert [r["risiko"] for r in res] == [0.01, 0.02, 0.03] and all(r["handelstage"] > 50 for r in res)
+    assert "Risikolabor" in rl.markdown({"Test": res})

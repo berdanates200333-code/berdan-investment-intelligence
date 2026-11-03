@@ -44,3 +44,15 @@ except Exception as e:  # noqa: BLE001
 (ROOT / "forecast" / "daten").mkdir(exist_ok=True)
 (ROOT / "forecast" / "daten" / "referenz.json").write_text(json.dumps(ref, indent=1, ensure_ascii=False))
 print("Referenzdaten:", len(ref["instrumente"]))
+
+# Passives Mischportfolio (einfach, vorab festgelegt): 60 % EUNL + 30 % Gold (GLD, USD->EUR) + 10 % Bargeld. Append-only Kurslog je Handelstag.
+mixf = ROOT / "forecast" / "daten" / "mix.jsonl"
+try:
+    e, g, fxr = ref["instrumente"]["EUNL.DE"], ref["instrumente"]["GLD"], ref["eur_usd"]
+    last = json.loads(mixf.read_text().splitlines()[-1])["datum"] if mixf.exists() and mixf.read_text().strip() else None
+    if fxr and e["datum"] == g["datum"] and (last is None or e["datum"] > last):
+        with mixf.open("a") as f:
+            f.write(json.dumps({"datum": e["datum"], "eunl_eur": e["schluss"], "gld_usd": g["schluss"], "usd_je_eur": fxr["usd_je_eur"], "fx_datum": fxr["datum"]}) + "\n")
+        print("Mix-Log ergänzt:", e["datum"])
+except Exception as ex:  # noqa: BLE001
+    print("Mix-Log nicht ergänzt:", type(ex).__name__)

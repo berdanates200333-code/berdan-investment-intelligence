@@ -22,6 +22,12 @@ def jload(p, default=None):
         return default
 
 
+if mode == "risiko":
+    from bii.forecast import lab as _lab
+    for _ki in ("claude", "claude_offensiv"):
+        _a = _lab.load_account(_ki)
+        print(_lab.risk_analysis_text(_ki, *_a) if _a else f"# {_ki}: kein Konto")
+    raise SystemExit(0)
 wb = jload(FR / "wettbewerb.json", {})
 started = wb.get("status") == "gestartet"
 print(f"# Cockpit {now:%d.%m.%Y %H:%M} UTC\n")
@@ -77,3 +83,37 @@ print(f"- Benchmark: {bm['symbol'] + ' (festgeschrieben ' + bm['festgeschrieben_
 print(f"- Startschranke: {'ERFÜLLT' if g['alle_erfuellt'] else 'offen'}\n")
 for k, v in g["bedingungen"].items():
     print(f"  - {'✔' if v['ok'] else '✘'} {k}: {v['detail']}")
+
+
+# ------------------------------------------------------------------ Performance Lab (Haupt- und Offensivkonto nebeneinander)
+from bii.forecast import lab  # noqa: E402
+
+m_acc, o_acc = lab.load_account("claude"), lab.load_account("claude_offensiv")
+mm = lab.metrics(*m_acc) if m_acc and m_acc[0]["equity"] else None
+om = lab.metrics(*o_acc) if o_acc and o_acc[0]["equity"] else None
+print("\n## Performance Lab – Hauptkonto (1 % Risiko) vs. Offensivkonto (2 % Risiko)\n")
+if not o_acc:
+    print("Offensivkonto ist noch nicht angelegt.\n")
+else:
+    ocfg = jload(FR / "offensiv" / "config.json", {})
+    print(f"Offensivkonto: Start {ocfg.get('start')}, Regeln: 2 % Risiko je Trade, ≤ 6 % offenes Portfoliorisiko, ≤ 30 % je Instrument, Pause bei −15 %, kein Hebel/keine Leerverkäufe.\n")
+    f = lambda m, k, fmt, dash="–": dash if not m or m.get(k) is None else format(m[k], fmt)  # noqa: E731
+    mixp = lab.mix_pct()
+    rows = [("Kontostand €", "stand", ".2f"), ("Gewinn/Verlust €", "pnl_eur", "+.2f"), ("Gewinn/Verlust %", "pnl_pct", "+.2f"), ("Max. Rückgang %", "maxdd_pct", ".2f"),
+            ("Volatilität p.a. %", "vol_ann_pct", ".1f"), ("Abgeschl. Trades", "trades", "d"), ("Trefferquote Trades %", "treffer", ".0f"), ("Offene Positionen", "offen", "d"),
+            ("Kosten €", "kosten_eur", ".2f"), ("Gewinn je 1 € geplantem Risiko", "gewinn_je_risiko", "+.2f"), ("Offenes geplantes Risiko €", "offenes_risiko_eur", ".0f"),
+            ("Stressverlust €* ", "stress_verlust_eur", ".0f"), ("Schlechtester Trade in Vielfachen des geplanten Risikos", "schlechtester_trade_in_risiko", "+.2f")]
+    print("| Kennzahl | Hauptkonto | Offensiv |\n|---|---|---|")
+    for name, k, fmt in rows:
+        print(f"| {name} | {f(mm, k, fmt)} | {f(om, k, fmt)} |")
+    print(f"| Pause aktiv | {mm['pausiert'] if mm else '–'} | {om['pausiert'] if om else '–'} |")
+    ref = om or mm
+    print(f"| EUNL (Benchmark) % | {f(mm, 'bench_pct', '+.2f')} | {f(om, 'bench_pct', '+.2f')} |")
+    print(f"| Passiver Mix % (60 % EUNL / 30 % Gold / 10 % Bargeld) | {'–' if mixp is None else format(mixp, '+.2f')} | {'–' if mixp is None else format(mixp, '+.2f')} |")
+    print("\n*Stressverlust = alle Stops werden zusätzlich 3 % durchlaufen (Kurslücken). Stopkurse sind keine garantierte Verlustgrenze.")
+    if om:
+        print(f"\n**Zielmarke Offensivkonto (nach Kosten, 60 Tage):** {lab.ziel_label(om['pnl_pct'])} – experimentell, kein Versprechen.")
+    print("\n**Chancenwahl oder nur mehr Risiko?** " + lab.verdict(mm, om, lab.attribution(m_acc, o_acc)) + "\n")
+    for nm, acc in (("Hauptkonto", m_acc), ("Offensiv", o_acc)):
+        if acc and acc[0]["paused"]:
+            print(f"⚠️ {nm}: neue Positionen pausiert (Drawdown-Grenze). Vollständige Risikoanalyse siehe `python scripts/fc_cockpit.py risiko`.")

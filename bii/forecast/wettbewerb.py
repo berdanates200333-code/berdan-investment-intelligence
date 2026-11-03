@@ -27,12 +27,18 @@ def load_config(root: Path = ROOT):
     return c if c.get("status") == "gestartet" else None
 
 
-def pending_orders(ki: str, forecast_root: Path):
-    """KAUFEN-Prognosen der Wettbewerbsphase ohne Orderplan."""
-    done = {e.get("prognose_id") for e in journal.read(forecast_root / ki / "konto" / "handel.jsonl") if e["typ"] == "order_plan"}
-    for p in journal.read(forecast_root / ki / "prognosen.jsonl"):
-        if p.get("phase") == "wettbewerb" and p["entscheidung"] == "KAUFEN" and p.get("trade_zulaessig") and p["prognose_id"] not in done:
-            yield p
+def pending_orders(ki: str, forecast_root: Path, info_date: str | None = None, source: str | None = None, offensiv: bool = False):
+    """KAUFEN-Prognosen der Wettbewerbsphase ohne Orderplan/-ablehnung. Nur Prognosen für den aktuellen Informationsstichtag (info_date) – veraltete
+    Prognosen werden nie nachträglich geordert. Hauptkonto handelt keine 'nur_offensiv'-Prognosen; das Offensivkonto (offensiv=True) handelt alle."""
+    done = {e.get("prognose_id") for e in journal.read(forecast_root / ki / "konto" / "handel.jsonl") if e["typ"] in ("order_plan", "order_abgelehnt")}
+    for p in journal.read(forecast_root / (source or ki) / "prognosen.jsonl"):
+        if p.get("phase") != "wettbewerb" or p["entscheidung"] != "KAUFEN" or not p.get("trade_zulaessig") or p["prognose_id"] in done:
+            continue
+        if info_date and p["referenz"]["datum"] != info_date:
+            continue
+        if p.get("nur_offensiv") and not offensiv:
+            continue
+        yield p
 
 
 def _setup(live, now, root, provider, cfg):
@@ -103,7 +109,7 @@ def submit_orders_only(live, now: datetime | None = None, root: Path = ROOT, pro
         rules, missing, _ = _rules_today(cfg, bench, prov, st)
         submitted, rejected = [], []
         if now < __import__("pandas").Timestamp(cfg["ende_exklusiv"]).tz_localize("UTC") and pd_ge(now, cfg["start"], 0):
-            for p in pending_orders(ki, fr):
+            for p in pending_orders(ki, fr, str(calendars.last_complete_session('XNYS', now).date())):
                 try:
                     fx = prov.fx()
                     q = live.get(p["instrument"]) if live is not None else prov.qual(p["instrument"]["yahoo"])

@@ -123,6 +123,12 @@ def submit_order(ki: str, state: dict, rules, prognose_id: str, limit: float, st
     sz = engine.size_position(equity, entry, limit, stop, fx_usd_per_eur, state["cash_eur"] - reserved, rules)
     if sz["stueck"] < 1:
         raise ValueError(sz["grund"])
+    cap = rules.PARAMS.get("max_open_risk")       # nur Performance-Konto; beim Hauptkonto nicht gesetzt -> keine Wirkung
+    if cap:
+        open_risk = sum(max(q["einstieg"] - q["stop"], 0) * q["stueck"] / q.get("fx_einstieg", fx_usd_per_eur) for q in state["positions"].values())
+        open_risk += sum(o.get("risiko_eur", 0.0) for o in state["pending"])
+        if open_risk + sz["max_verlust_eur"] > cap * equity:
+            raise ValueError(f"Offenes geplantes Portfoliorisiko {open_risk + sz['max_verlust_eur']:.0f} € > {cap:.0%} des Kapitals")
     oid = f"{rules.VERSION}-{ki.upper()}-{t}-{info.date()}"
     e = journal.append({"typ": "order_plan", "id": oid, "ki": ki, "version": rules.VERSION, "ticker": t, "datum": str(info.date()), "prognose_id": prognose_id, "probelauf": probelauf,
                         "orderart": "Kauf Limit (nächste Sitzung), Stop-Market, Kursziel-Limit, Zeitstopp", "einstieg": entry, "limit": limit, "stop": stop, "ziel": target,
@@ -130,7 +136,8 @@ def submit_order(ki: str, state: dict, rules, prognose_id: str, limit: float, st
                         "risiko_anteil": round(sz["max_verlust_eur"] / equity, 4), "datenstufe": tier, "zweitquelle": qd.secondary_name},
                        path=account_dir(ki, root) / "handel.jsonl", now=now)
     state["pending"].append({"id": oid, "ticker": t, "plan_datum": str(info.date()), "journal_utc": e["erstellt_utc"], "limit": limit, "stop": stop, "ziel": target,
-                             "stueck": sz["stueck"], "grund_kurz": f"KI-Prognose {prognose_id}", "max_kosten_eur": sz["positionswert_eur"] * 1.01 + rules.PARAMS["fee_eur"]})
+                             "stueck": sz["stueck"], "grund_kurz": f"KI-Prognose {prognose_id}", "max_kosten_eur": sz["positionswert_eur"] * 1.01 + rules.PARAMS["fee_eur"],
+                             "risiko_eur": sz["max_verlust_eur"]})
     return e
 
 
