@@ -67,9 +67,10 @@ class Provider:
         if symbol not in self.cache:
             try:
                 df = yahoo_ohlcv(symbol)
-                for p in check_bars(df):
-                    self.log.append(f"{symbol}: {p}")
-                self.cache[symbol] = df
+                problems = check_bars(df)
+                for problem in problems:
+                    self.log.append(f"{symbol}: {problem}")
+                self.cache[symbol] = None if problems else df
             except Exception as e:  # noqa: BLE001 - Ausfälle werden protokolliert
                 self.log.append(f"{symbol}: Yahoo-Abruf fehlgeschlagen ({type(e).__name__})")
                 self.cache[symbol] = None

@@ -37,12 +37,22 @@ def _ts(d, hm) -> datetime:
 
 def _fx_before(fx: pd.Series, d) -> float:
     s = fx[fx.index < pd.Timestamp(d)]
-    return float(s.iloc[-1] if len(s) else fx.iloc[0])
+    if s.empty:
+        raise ValueError("Kein zum Entscheidungszeitpunkt verfügbarer Wechselkurs")
+    value = float(s.iloc[-1])
+    if not math.isfinite(value) or value <= 0:
+        raise ValueError("Ungültiger Wechselkurs")
+    return value
 
 
 def _fx_upto(fx: pd.Series, d) -> float:
     s = fx[fx.index <= pd.Timestamp(d)]
-    return float(s.iloc[-1] if len(s) else fx.iloc[0])
+    if s.empty:
+        raise ValueError("Kein zum Entscheidungszeitpunkt verfügbarer Wechselkurs")
+    value = float(s.iloc[-1])
+    if not math.isfinite(value) or value <= 0:
+        raise ValueError("Ungültiger Wechselkurs")
+    return value
 
 
 def _rejected(order_id: str, rate: float) -> bool:
@@ -73,7 +83,7 @@ def _execute_entry(state, o, bar, fx, rules, d, jpath, late, now):
     elif bar["open"] <= o["stop"]:
         reason = f"Eröffnung {bar['open']:.2f} bereits unter Stop {o['stop']:.2f} – nicht ausgeführt"
     if reason is None:
-        fill = bar["open"] * (1 + P["half_spread"] + P["slippage"])
+        fill = min(o["limit"], bar["open"] * (1 + P["half_spread"] + P["slippage"]))
         usd = o["stueck"] * fill
         eur = usd / fx * (1 + P["fx_fee"]) + P["fee_eur"]
         if eur > state["cash_eur"] or len(state["positions"]) >= P["max_positions"] or o["ticker"] in state["positions"]:
@@ -197,8 +207,8 @@ def _plan_entries(state, bars_hist, spy, fx, rules, d, jpath, provider, vetos, n
         if veto:
             skip = f"Claude-Veto: {veto[-1]['grund']}"
         cc = provider.crosscheck(t, d, ev["kennzahlen"]["schluss"], P["crosscheck_tol"])
-        if not skip and cc["status"] == "abweichend":
-            skip = f"Datenqualität: Quellenabweichung {cc['abweichung']*100:.2f} %"
+        if not skip and cc["status"] != "bestaetigt":
+            skip = f"Datenqualität: Zweitquelle nicht bestätigt ({cc['status']})"
         nw = provider.news(t, P["news_days"], rules.NEG_NEWS)
         if not skip and nw["treffer"]:
             skip = f"Nachrichten-Veto: {nw['treffer'][0][:100]}"
@@ -245,6 +255,10 @@ def run(state: dict, provider, rules, jpath: Path, now: datetime | None = None, 
     now = now or datetime.now(timezone.utc)
     vetos, freigaben = vetos or [], freigaben or []
     summary = {"verarbeitet": [], "probleme": []}
+    valid, message = journal.verify(jpath)
+    if not valid:
+        summary["probleme"] = ["Journalintegrität: " + message]
+        return summary
     ende = pd.Timestamp(ende or rules.END)
     spy = provider.ohlcv(rules.REGIME)
     bench_df = provider.ohlcv(rules.BENCH["symbol"])
@@ -256,6 +270,28 @@ def run(state: dict, provider, rules, jpath: Path, now: datetime | None = None, 
     universe = {t: provider.ohlcv(t) for t in rules.UNIVERSE}
     days = [d for d in spy.index if d >= pd.Timestamp(rules.START) and now >= _ts(d, CLOSE_UTC)
             and (state["last_date"] is None or d > pd.Timestamp(state["last_date"]))]
+    # Fail closed before any execution or valuation. Never trade on a partial universe.
+    problems = list(provider.log)
+    if any(df is None or df.empty for df in universe.values()):
+        problems.append("Universum unvollständig – keine Ausführung")
+    if spy.empty or bench_df.empty or fx.empty:
+        problems.append("Leere Pflichtdaten")
+    if not spy.empty:
+        completed = spy.index[spy.index <= pd.Timestamp(now.date())]
+        if len(completed) == 0 or (pd.Timestamp(now.date()) - completed[-1]).days > 4:
+            problems.append("SPY veraltet oder ohne historischen Balken")
+    for day in days:
+        try:
+            _fx_before(fx, day)
+            _fx_upto(fx, day)
+        except ValueError as exc:
+            problems.append(str(exc))
+        if any(df is None or day not in df.index for df in universe.values()):
+            problems.append(f"Universum ohne vollständige Balken für {day.date()}")
+    if problems:
+        summary["probleme"] = problems
+        state["daten_log"].append({"zeit": now.isoformat(timespec="seconds"), "probleme": problems})
+        return summary
     last_day = days[-1] if days else None
     for d in days:
         late = d != last_day
