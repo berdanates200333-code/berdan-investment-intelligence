@@ -2,8 +2,15 @@
   "rule": "FT1",
   "portfolios": {
     "BENCH": {
-      "cash": 10000.0,
-      "positions": {},
+      "cash": 0.0,
+      "positions": {
+        "WORLD": {
+          "stueck": 76.81090189132247,
+          "einstand": 129.92999267578125,
+          "letzter_kurs": 129.92999267578125,
+          "kurs_datum": "2026-11-02"
+        }
+      },
       "history": [
         {
           "datum": "2026-10-31",
@@ -16,17 +23,27 @@
         {
           "datum": "2026-11-01",
           "wert": 10000.0
+        },
+        {
+          "datum": "2026-11-02",
+          "wert": 9980.04
         }
       ]
     },
     "TREND": {
-      "cash": 9000.0,
+      "cash": 2019.6991136452452,
       "positions": {
         "BTC": {
           "stueck": 0.014186989118486246,
           "einstand": 70136.4375,
-          "letzter_kurs": 70136.4375,
-          "kurs_datum": "2026-11-01"
+          "letzter_kurs": 68503.5,
+          "kurs_datum": "2026-11-02"
+        },
+        "WORLD": {
+          "stueck": 53.616320655370636,
+          "einstand": 129.92999267578125,
+          "letzter_kurs": 129.92999267578125,
+          "kurs_datum": "2026-11-02"
         }
       },
       "history": [
@@ -41,28 +58,15 @@
         {
           "datum": "2026-11-01",
           "wert": 9995.02
+        },
+        {
+          "datum": "2026-11-02",
+          "wert": 9957.93
         }
       ]
     }
   },
-  "pending": [
-    {
-      "signal_id": "FT1-BENCH-WORLD-start",
-      "portfolio": "BENCH",
-      "asset": "WORLD",
-      "aktion": "KAUF",
-      "zielgewicht": 1.0,
-      "erstellt": "2026-10-31T11:14:17+00:00"
-    },
-    {
-      "signal_id": "FT1-TREND-WORLD-2026-09",
-      "portfolio": "TREND",
-      "asset": "WORLD",
-      "aktion": "KAUF",
-      "zielgewicht": 0.7,
-      "erstellt": "2026-10-31T11:14:17+00:00"
-    }
-  ],
+  "pending": [],
   "signals_done": [
     "BENCH:WORLD:init",
     "TREND:WORLD:2026-09",
