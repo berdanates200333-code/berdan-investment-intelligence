@@ -1,0 +1,19 @@
+{
+ "bench": null,
+ "cash_eur": 10000.0,
+ "closed": [],
+ "costs_eur": 0.0,
+ "daten_log": [],
+ "equity": [],
+ "failed": [],
+ "kapital_eur": 10000.0,
+ "last_date": null,
+ "pause_seit": null,
+ "paused": false,
+ "peak": 10000.0,
+ "pending": [],
+ "plaene_verworfen": [],
+ "positions": {},
+ "start": "2026-11-04",
+ "version": "FC1-SOLO-1"
+}

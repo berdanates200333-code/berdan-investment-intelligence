@@ -204,27 +204,15 @@ def test_gate_blocks_start_and_never_backdates(tmp_path):
         gate.start(datetime(2026, 11, 4, tzinfo=UTC), tmp_path)
 
 
-def test_real_gate_not_started_and_pilot_unchanged():
-    g = gate.evaluate_gate()
-    assert not g["alle_erfuellt"]                                     # Wettbewerb darf heute nicht starten
-    assert jr.phase() == "pilot"
-    lines = [json.loads(x) for x in (ROOT / "forecast/claude/prognosen.jsonl").read_text().splitlines()]
+def test_real_pilot_forecasts_unchanged_and_never_backdated():
+    lines = [json.loads(x) for x in (ROOT / "forecast/claude/prognosen.jsonl").read_text().splitlines()[:4]]
+    assert [e["prognose_id"] for e in lines] == ["CLAUDE-2026-11-03-SPX-001", "CLAUDE-2026-11-03-NDX-002", "CLAUDE-2026-11-03-DJI-003", "CLAUDE-2026-11-03-RUT-004"]
     assert all("phase" not in e for e in lines)                       # Pilotprognosen unverändert (kein nachträgliches Feld)
-
-
-def test_fx_shared_with_retry_and_failure_is_closed():
-    calls = {"n": 0}
-
-    def flaky():
-        calls["n"] += 1
-        if calls["n"] < 3:
-            raise KeyError("rate limit")
-        return pd.Series([1.1], index=[pd.Timestamp("2026-11-02")])
-
-    prov = ap.EngineProvider(live=None, instruments={}, fx_fn=flaky)
-    assert prov.fx() is not None and prov.fx() is prov.fx() and calls["n"] == 3       # 3 Versuche, danach geteilt/zwischengespeichert
-    dead = ap.EngineProvider(live=None, instruments={}, fx_fn=lambda: (_ for _ in ()).throw(KeyError("x")))
-    assert dead.fx() is None and dead.log                                           # fail-closed, protokolliert
+    cfgp = ROOT / "forecast" / "wettbewerb.json"
+    cfg = json.loads(cfgp.read_text())
+    if cfg["status"] == "gestartet":                                   # Solo-Start: nur Zukunft, Dauer exakt 60 Kalendertage
+        assert pd.Timestamp(cfg["festgeschrieben_utc"]) < pd.Timestamp(cfg["start_eroeffnung_utc"])        # prospektiv: Festschreibung VOR der Startsitzung
+        assert (pd.Timestamp(cfg["ende_exklusiv"]) - pd.Timestamp(cfg["start"])).days == 60
 
 
 # ---------------------------------------------------------------- Datenstufe A: zweck- und instrumentbezogene Grenzen

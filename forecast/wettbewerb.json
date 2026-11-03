@@ -1,4 +1,398 @@
-{"status": "nicht_gestartet",
- "hinweis": "Der 60-Kalendertage-Wettbewerb beginnt erst, wenn alle Bedingungen aus forecast/wettbewerb_gate.json erfüllt sind (scripts/fc_gate.py --start). Kein Rückdatieren. Die vier Prognosen vom 03.11.2026 sind Pilotprognosen.",
- "pilot": {"prognosen": ["CLAUDE-2026-11-03-SPX-001", "CLAUDE-2026-11-03-NDX-002", "CLAUDE-2026-11-03-DJI-003", "CLAUDE-2026-11-03-RUT-004"],
-           "einordnung": "Pilot: technischer Probelauf des Journals und der Erfolgskontrolle. Zeitstempel, Zielkurse und Wahrscheinlichkeiten bleiben unverändert; sie zählen nicht als Start des Wettbewerbs und nicht in die Wettbewerbsstatistik (Phase 'pilot' getrennt ausgewiesen). Datenstufe B ist im Pilot zulässig, im Wettbewerb nicht."}}
+{
+ "status": "gestartet",
+ "modus": "solo",
+ "kis": [
+  "claude"
+ ],
+ "experiment": "FC1-SOLO-1",
+ "kapital_eur": 10000,
+ "start": "2026-11-04",
+ "start_eroeffnung_utc": "2026-11-04T14:30:00+00:00",
+ "ende_exklusiv": "2027-01-03",
+ "letzter_kalendertag": "2027-01-02",
+ "festgeschrieben_utc": "2026-11-03T16:45:30+00:00",
+ "handelsuniversum_instrumente": [
+  {
+   "id": "SPY",
+   "yahoo": "SPY",
+   "art": "ETF",
+   "klasse": "aktien_etf",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US78462F1030",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "QQQ",
+   "yahoo": "QQQ",
+   "art": "ETF",
+   "klasse": "aktien_etf",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US46090E1038",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "IWM",
+   "yahoo": "IWM",
+   "art": "ETF",
+   "klasse": "aktien_etf",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US4642876555",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "GLD",
+   "yahoo": "GLD",
+   "art": "Gold-ETF (physisch hinterlegt)",
+   "klasse": "gold",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US78463V1070",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "AAPL",
+   "yahoo": "AAPL",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US0378331005",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "MSFT",
+   "yahoo": "MSFT",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US5949181045",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "NVDA",
+   "yahoo": "NVDA",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US67066G1040",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "AMZN",
+   "yahoo": "AMZN",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US0231351067",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "GOOGL",
+   "yahoo": "GOOGL",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US02079K3059",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "META",
+   "yahoo": "META",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US30303M1027",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "AVGO",
+   "yahoo": "AVGO",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US11135F1012",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "TSLA",
+   "yahoo": "TSLA",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US88160R1014",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "LLY",
+   "yahoo": "LLY",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US5324571083",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "JPM",
+   "yahoo": "JPM",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US46625H1005",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "V",
+   "yahoo": "V",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US92826C8394",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "MA",
+   "yahoo": "MA",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US57636Q1040",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "UNH",
+   "yahoo": "UNH",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US91324P1021",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "XOM",
+   "yahoo": "XOM",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US30231G1022",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "COST",
+   "yahoo": "COST",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US22160K1051",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "WMT",
+   "yahoo": "WMT",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US9311421039",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "HD",
+   "yahoo": "HD",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US4370761029",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "PG",
+   "yahoo": "PG",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US7427181091",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "NFLX",
+   "yahoo": "NFLX",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US64110L1061",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "ORCL",
+   "yahoo": "ORCL",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US68389X1054",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "AMD",
+   "yahoo": "AMD",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US0079031078",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "CRM",
+   "yahoo": "CRM",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US79466L3024",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "ADBE",
+   "yahoo": "ADBE",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US00724F1012",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "KO",
+   "yahoo": "KO",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US1912161007",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "PEP",
+   "yahoo": "PEP",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US7134481081",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "MRK",
+   "yahoo": "MRK",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US58933Y1055",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "ABBV",
+   "yahoo": "ABBV",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US00287Y1091",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "CAT",
+   "yahoo": "CAT",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US1491231015",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "GE",
+   "yahoo": "GE",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US3696043013",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  },
+  {
+   "id": "TMO",
+   "yahoo": "TMO",
+   "art": "Aktie",
+   "klasse": "aktie",
+   "venue": "XNYS",
+   "waehrung": "USD",
+   "isin": "US8835561023",
+   "isin_status": "aus Wissen eingetragen, nicht gegengeprüft"
+  }
+ ],
+ "benchmark_instrument": {
+  "id": "EUNL.DE",
+  "yahoo": "EUNL.DE",
+  "art": "MSCI World ETF (Acc)",
+  "venue": "XETR",
+  "waehrung": "EUR",
+  "isin": "IE00B4L5Y983",
+  "hinweis": "PR #10: Xetra-Schlusskurs 02.11. lieferte bei Yahoo null; Datenstufe wird geprüft, sonst kein Start",
+  "klasse": "aktien_etf"
+ },
+ "mindestbedingungen": {
+  "kurse_gueltig_und_frisch": {
+   "ok": true,
+   "detail": "Prüfung vor 0.0 h; 34 Handelsinstrumente Stufe A; Benchmark EUNL.DE zugelassen"
+  },
+  "datenabruf_nachgewiesen": {
+   "ok": true,
+   "detail": "79 protokollierte Abrufe mit Rohantwort-Hash"
+  },
+  "orderjournal_korrekt": {
+   "ok": true,
+   "detail": "Hash-Ketten intakt: True; Probelauf-Journal enthält ['benchmark_ausfuehrung', 'order_plan', 'tagesabschluss']"
+  },
+  "tageszyklus_erfolgreich": {
+   "ok": true,
+   "detail": "Probezyklus bis 2026-11-02, Benchmark gekauft: True, Datenprobleme im letzten Lauf: 0"
+  },
+  "kein_echtgeld": {
+   "ok": true,
+   "detail": "keine Broker-Anbindung; Engine rein virtuell"
+  }
+ },
+ "pilot": {
+  "prognosen": [
+   "CLAUDE-2026-11-03-SPX-001",
+   "CLAUDE-2026-11-03-NDX-002",
+   "CLAUDE-2026-11-03-DJI-003",
+   "CLAUDE-2026-11-03-RUT-004"
+  ],
+  "einordnung": "Pilot: technischer Probelauf des Journals und der Erfolgskontrolle. Zeitstempel, Zielkurse und Wahrscheinlichkeiten bleiben unverändert; sie zählen nicht als Start des Wettbewerbs und nicht in die Wettbewerbsstatistik (Phase 'pilot' getrennt ausgewiesen). Datenstufe B ist im Pilot zulässig, im Wettbewerb nicht."
+ },
+ "regel": "Solo-Forward-Test. Universum, Benchmark, Kosten- und Risikoregeln eingefroren. ChatGPT wird später in einem getrennten Test angeschlossen. Kein Rückdatieren, kein Echtgeld."
+}
