@@ -110,3 +110,67 @@ def start(now, root: Path = ROOT) -> dict:
     return {"status": "gestartet", "experiment": "FC1-1.0-W", "start": str(day.date()), "ende_exklusiv": str((day + timedelta(days=60)).date()),
             "handelsuniversum_instrumente": insts, "benchmark_instrument": b_inst, "festgeschrieben_utc": pd.Timestamp(now).isoformat(), "gate": g,
             "regel": "Universum, Benchmark und Regeln sind ab hier eingefroren; Änderungen nur als neue Version mit neuem Test."}
+
+
+# ---------------------------------------------------------------- Claude-Solo-Start: notwendige Mindestbedingungen
+MAX_AGE_H = 26
+
+
+def solo_checks(now, root: Path = ROOT) -> dict:
+    """Nur die für einen Solo-Test zwingenden Bedingungen (kein künstlicher Kauf, keine zwei Vortage, keine ChatGPT-Anbindung)."""
+    fr = root / "forecast"
+    out = {}
+    try:
+        us = json.loads((fr / "universum_status.json").read_text())
+    except (OSError, ValueError):
+        us = {}
+    ins = us.get("instrumente", {})
+    age = (pd.Timestamp(now) - pd.Timestamp(us["geprueft_utc"])).total_seconds() / 3600 if us.get("geprueft_utc") else 1e9
+    try:
+        bench = json.loads((fr / "benchmark_entscheidung.json").read_text())["symbol"]
+    except (OSError, ValueError, KeyError):
+        bench = None
+    trade = [k for k, v in ins.items() if v.get("zugelassen") and k != bench]
+    out["kurse_gueltig_und_frisch"] = {"ok": age <= MAX_AGE_H and len(trade) >= MIN_ADMITTED and bool(bench) and ins.get(bench, {}).get("zugelassen", False),
+                                      "detail": f"Prüfung vor {age:.1f} h; {len(trade)} Handelsinstrumente Stufe A; Benchmark {bench} {'zugelassen' if bench and ins.get(bench, {}).get('zugelassen') else 'NICHT zugelassen'}"}
+    reqs = us.get("abrufe", [])
+    out["datenabruf_nachgewiesen"] = {"ok": len(reqs) >= 10 and all(r.get("sha256") and r.get("status") == 200 for r in reqs[:10]), "detail": f"{len(reqs)} protokollierte Abrufe mit Rohantwort-Hash"}
+    p = fr / "probelauf2" / "claude" / "konto" / "handel.jsonl"
+    ents = journal.read(p) if p.exists() else []
+    kinds = {e["typ"] for e in ents}
+    chains = journal.verify(p)[0] if p.exists() else False
+    pj = fr / "claude" / "prognosen.jsonl"
+    chains = chains and (journal.verify(pj)[0] if pj.exists() else True)
+    out["orderjournal_korrekt"] = {"ok": chains and {"order_plan", "benchmark_ausfuehrung", "tagesabschluss"} <= kinds,
+                                   "detail": f"Hash-Ketten intakt: {chains}; Probelauf-Journal enthält {sorted(kinds & {'order_plan', 'benchmark_ausfuehrung', 'tagesabschluss'})}"}
+    sp = fr / "probelauf2" / "claude" / "konto" / "state.json"
+    st = json.loads(sp.read_text()) if sp.exists() else {}
+    last_log = (st.get("daten_log") or [{}])[-1]
+    last = calendars.last_complete_session("XNYS", now)
+    cyc = bool(st.get("last_date")) and (last - pd.Timestamp(st["last_date"])).days <= 4 and not last_log.get("probleme") and bool(st.get("bench"))
+    out["tageszyklus_erfolgreich"] = {"ok": cyc, "detail": f"Probezyklus bis {st.get('last_date')}, Benchmark gekauft: {bool(st.get('bench'))}, Datenprobleme im letzten Lauf: {len(last_log.get('probleme') or [])}"}
+    out["kein_echtgeld"] = {"ok": True, "detail": "keine Broker-Anbindung; Engine rein virtuell"}
+    return out
+
+
+def start_solo(now, root: Path = ROOT) -> dict:
+    c = solo_checks(now, root)
+    if not all(v["ok"] for v in c.values()):
+        raise ValueError("Solo-Mindestbedingungen nicht erfüllt: " + ", ".join(k for k, v in c.items() if not v["ok"]))
+    fr = root / "forecast"
+    u = json.loads((fr / "universum.json").read_text())
+    st = json.loads((fr / "universum_status.json").read_text())["instrumente"]
+    bench = json.loads((fr / "benchmark_entscheidung.json").read_text())
+    day, opening = calendars.next_session_open("XNYS", now)       # ausschließlich Zukunft: nächste Eröffnung, nie rückdatiert
+    old = {}
+    try:
+        old = json.loads((fr / "wettbewerb.json").read_text())
+    except (OSError, ValueError):
+        pass
+    return {"status": "gestartet", "modus": "solo", "kis": ["claude"], "experiment": "FC1-SOLO-1", "kapital_eur": 10000,
+            "start": str(day.date()), "start_eroeffnung_utc": opening.isoformat(), "ende_exklusiv": str((day + timedelta(days=60)).date()),
+            "letzter_kalendertag": str((day + timedelta(days=59)).date()), "festgeschrieben_utc": pd.Timestamp(now).isoformat(timespec="seconds"),
+            "handelsuniversum_instrumente": [i for i in u["stufe1_handelbar"] if st.get(i["id"], {}).get("zugelassen")],
+            "benchmark_instrument": next(i for i in u["benchmarks"] if i["yahoo"] == bench["symbol"]),
+            "mindestbedingungen": c, "pilot": old.get("pilot"),
+            "regel": "Solo-Forward-Test. Universum, Benchmark, Kosten- und Risikoregeln eingefroren. ChatGPT wird später in einem getrennten Test angeschlossen. Kein Rückdatieren, kein Echtgeld."}

@@ -1,0 +1,49 @@
+name: Virtuelle Orders einreichen (vor US-Eröffnung)
+
+# Mo–Fr 12:30 UTC: vor der Eröffnung (Sommer 13:30 UTC, Winter 14:30 UTC). Reicht neue KAUFEN-Prognosen des Vorabends als dokumentierte
+# virtuelle Orders ein. Nur virtuell. Ausführung erst im Nachtlauf zur Eröffnung der Sitzung (simuliert).
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 12 * * 1-5"
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: market-check
+  cancel-in-progress: false
+
+jobs:
+  orders:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q -r requirements.txt
+      - run: python -m pytest -q tests
+      - name: Orders einreichen
+        id: o
+        run: |
+          set +e
+          python scripts/fc_orders.py
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+      - name: Speichern
+        run: |
+          git config user.name "market-check-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add forecast
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Orders eingereicht $(date -u +%F)"
+          for i in 1 2 3; do git pull -q --rebase origin "${GITHUB_REF_NAME}" && git push -q && exit 0; sleep 5; done
+          exit 1
+      - name: Fehler melden
+        if: steps.o.outputs.code != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "FEHLER Orderplanung $(date -u +%d.%m.%Y)" --body "Siehe forecast/orders_status.json. Lauf: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

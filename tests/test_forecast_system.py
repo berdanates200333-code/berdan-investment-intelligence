@@ -400,3 +400,54 @@ def test_sealed_submission_unreadable_until_cutoff_and_tamper_proof(tmp_path):
     jp = tmp_path / "p.jsonl"
     r = cr.seal_reveal("chatgpt", "2026-11-03", blob, priv, datetime(2026, 11, 3, 13, 40, tzinfo=UTC), root=tmp_path, jpath=jp)
     assert r["prognose_ids"] == ["T-9"] and journal.read(jp)[0]["zeitnachweis"]["art"] == "versiegelt"
+
+
+# ---------------------------------------------------------------- Claude-Solo-Test
+def _solo_repo(tmp_path, now, age_h=2, probe=True, abrufe=12):
+    fr = tmp_path / "forecast"
+    (fr / "probelauf2" / "claude" / "konto").mkdir(parents=True)
+    ins = {f"S{i}": {"zugelassen": True, "stufe": "A_bestaetigt"} for i in range(25)}
+    ins["EUNL.DE"] = {"zugelassen": True, "stufe": "A_bestaetigt"}
+    (fr / "universum_status.json").write_text(json.dumps({"geprueft_utc": (pd.Timestamp(now) - pd.Timedelta(hours=age_h)).isoformat(), "instrumente": ins,
+                                                         "abrufe": [{"sha256": "x" * 64, "status": 200}] * abrufe}))
+    (fr / "benchmark_entscheidung.json").write_text(json.dumps({"symbol": "EUNL.DE"}))
+    (fr / "universum.json").write_text(json.dumps({"stufe1_handelbar": [{"id": f"S{i}", "yahoo": f"S{i}"} for i in range(25)], "benchmarks": [{"yahoo": "EUNL.DE", "id": "EUNL.DE", "art": "x", "waehrung": "EUR"}]}))
+    if probe:
+        p = fr / "probelauf2" / "claude" / "konto" / "handel.jsonl"
+        for t in ("order_plan", "benchmark_ausfuehrung", "tagesabschluss"):
+            journal.append({"typ": t}, path=p, now=now)
+        last = cal.last_complete_session("XNYS", now)
+        (fr / "probelauf2" / "claude" / "konto" / "state.json").write_text(json.dumps({"last_date": str(last.date()), "bench": {"symbol": "X"}, "daten_log": [{"probleme": []}]}))
+    return tmp_path
+
+
+def test_solo_minimum_conditions_start_in_future_without_trade_or_chatgpt(tmp_path):
+    now = datetime(2026, 11, 3, 17, 0, tzinfo=UTC)                   # US-Börse offen -> Start erst zur NÄCHSTEN Eröffnung
+    root = _solo_repo(tmp_path, now)
+    doc = gate.start_solo(now, root)
+    assert doc["modus"] == "solo" and doc["kis"] == ["claude"] and doc["start"] == "2026-11-04" and doc["start_eroeffnung_utc"].startswith("2026-11-04T14:30")
+    assert doc["ende_exklusiv"] == "2027-01-03" and doc["letzter_kalendertag"] == "2027-01-02"        # 60 Kalendertage, kein Rückdatieren
+    assert all(v["ok"] for v in doc["mindestbedingungen"].values())                                    # weder Kauf noch ChatGPT noch 2 Vortage verlangt
+
+
+@pytest.mark.parametrize("kw,fail", [({"age_h": 40}, "kurse_gueltig_und_frisch"), ({"probe": False}, "orderjournal_korrekt"), ({"abrufe": 3}, "datenabruf_nachgewiesen")])
+def test_solo_blocks_on_necessary_conditions(tmp_path, kw, fail):
+    now = datetime(2026, 11, 3, 17, 0, tzinfo=UTC)
+    root = _solo_repo(tmp_path, now, **kw)
+    with pytest.raises(ValueError, match=fail):
+        gate.start_solo(now, root)
+
+
+def test_solo_cycle_without_trade_and_with_partial_universe(tmp_path):
+    from bii.forecast import wettbewerb
+    data = _market()
+    live = _setup_competition(tmp_path, data)
+    cfg = json.loads((tmp_path / "forecast" / "wettbewerb.json").read_text())
+    cfg.update(kis=["claude"], modus="solo", handelsuniversum_instrumente=cfg["handelsuniversum_instrumente"] + [{"id": "MSFT", "yahoo": "MSFT", "venue": "XNYS", "waehrung": "USD", "klasse": "aktie"}])
+    (tmp_path / "forecast" / "wettbewerb.json").write_text(json.dumps(cfg))
+    prov = Prov(data)                       # MSFT hat keine Daten (Stufe < A) -> wird heute ausgelassen, Tag wird NICHT abgebrochen
+    r = wettbewerb.run_daily(live, datetime(2026, 11, 3, 22, 30, tzinfo=UTC), root=tmp_path, provider=prov, submit=False)
+    assert not r["probleme"] and list(r["konten"]) == ["claude"] and r["konten"]["claude"]["ausgelassen_heute"] == ["MSFT"]
+    st = json.loads((tmp_path / "forecast" / "claude" / "konto" / "state.json").read_text())
+    assert st["last_date"] == "2026-11-03" and st["bench"] and not st["positions"] and st["cash_eur"] == 10_000      # Tageszyklus ohne Handel ist gültig
+    assert not (tmp_path / "forecast" / "chatgpt").joinpath("konto").exists()
