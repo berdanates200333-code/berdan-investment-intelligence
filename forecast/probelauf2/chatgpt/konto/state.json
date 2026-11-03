@@ -1,0 +1,67 @@
+{
+ "bench": {
+  "cash_eur": 448.75,
+  "datum": "2026-11-02",
+  "einstieg_eur": 682.1607,
+  "fx_einstieg": 1.1172,
+  "kosten_eur": 34.33,
+  "stueck": 14,
+  "symbol": "SPY",
+  "waehrung": "USD"
+ },
+ "cash_eur": 10000.0,
+ "closed": [],
+ "costs_eur": 0.0,
+ "daten_log": [
+  {
+   "probleme": [],
+   "tage": [
+    "2026-11-02"
+   ],
+   "zeit": "2026-11-03T16:25:36+00:00"
+  }
+ ],
+ "equity": [
+  {
+   "aktiv_eur": 10000.0,
+   "bench_eur": 9836.59,
+   "cash_eur": 10000.0,
+   "daten_ok": true,
+   "datum": "2026-11-02",
+   "positionen": 0
+  }
+ ],
+ "failed": [],
+ "kapital_eur": 10000.0,
+ "last_date": "2026-11-02",
+ "pause_seit": null,
+ "paused": false,
+ "peak": 10000.0,
+ "pending": [
+  {
+   "grund_kurz": "KI-Prognose PROBELAUF:SPY",
+   "id": "PROBELAUF2-CHATGPT-SPY-2026-11-02",
+   "journal_utc": "2026-11-03T16:25:36+00:00",
+   "limit": 759.62,
+   "max_kosten_eur": 1373.6001,
+   "plan_datum": "2026-11-02",
+   "stop": 729.54,
+   "stueck": 2,
+   "ticker": "SPY",
+   "ziel": 797.23
+  }
+ ],
+ "plaene_verworfen": [
+  {
+   "daten": {
+    "spy_close": 752.1,
+    "spy_sma100": 759.49
+   },
+   "datum": "2026-11-02",
+   "grund": "Marktfilter: SPY unter SMA100"
+  }
+ ],
+ "positions": {},
+ "start": "2026-11-02",
+ "version": "PROBELAUF2"
+}

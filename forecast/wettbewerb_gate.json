@@ -1,19 +1,23 @@
 {
  "status": "nicht_gestartet",
- "geprueft_utc": "2026-11-03T15:33:28+00:00",
+ "geprueft_utc": "2026-11-03T16:25:47+00:00",
  "alle_erfuellt": false,
  "bedingungen": {
   "universum_ausreichend": {
-   "ok": false,
-   "detail": "34 zugelassen, Benchmark EUNL.DE NEIN"
+   "ok": true,
+   "detail": "34 zugelassene Handelsinstrumente (Minimum 20)"
+  },
+  "benchmark_festgeschrieben": {
+   "ok": true,
+   "detail": "Benchmark EUNL.DE; zugelassen: True"
   },
   "ausfuehrungszyklus_claude": {
    "ok": false,
-   "detail": "noch kein erfolgreicher Probelauf-Zyklus"
+   "detail": "0 simulierte Käufe, 1 dokumentierte Benchmark-Käufe, 1 verarbeitete Handelstage (Minimum 2)"
   },
   "automatik_claude": {
    "ok": false,
-   "detail": "0/2 unbeaufsichtigte Sitzungen (Commit+Reveal per Push)"
+   "detail": "0/2 verschiedene reale Handelstage mit Commit+Reveal per Push (Beleg vom Bot, Journal passt zum Commit)"
   },
   "konto_claude_bereit": {
    "ok": true,
@@ -21,15 +25,19 @@
   },
   "ausfuehrungszyklus_chatgpt": {
    "ok": false,
-   "detail": "noch kein erfolgreicher Probelauf-Zyklus"
+   "detail": "0 simulierte Käufe, 1 dokumentierte Benchmark-Käufe, 1 verarbeitete Handelstage (Minimum 2)"
   },
   "automatik_chatgpt": {
    "ok": false,
-   "detail": "0/2 unbeaufsichtigte Sitzungen (Commit+Reveal per Push)"
+   "detail": "0/2 verschiedene reale Handelstage mit Commit+Reveal per Push (Beleg vom Bot, Journal passt zum Commit)"
   },
   "konto_chatgpt_bereit": {
    "ok": true,
    "detail": "10.000 € unberührt"
+  },
+  "identische_eingabedaten": {
+   "ok": false,
+   "detail": "1 gemeinsame Tage; Daten-Prüfsummen identisch"
   },
   "kein_echtgeld": {
    "ok": true,

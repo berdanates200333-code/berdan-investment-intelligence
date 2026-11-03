@@ -1,0 +1,16 @@
+{
+ "symbol": "EUNL.DE",
+ "waehrung": "EUR",
+ "venue": "XETR",
+ "festgeschrieben_utc": "2026-11-03T16:25:35+00:00",
+ "regel": "Reihenfolge = Präferenz. Der erste Kandidat mit Datenstufe A wird per scripts/fc_benchmark.py EINMALIG festgeschrieben (forecast/benchmark_entscheidung.json) und gilt identisch für beide KIs bis Wettbewerbsende. Nachträgliche Änderung ausgeschlossen.",
+ "tests": [
+  {
+   "symbol": "EUNL.DE",
+   "waehrung": "EUR",
+   "stufe": "A_bestaetigt",
+   "zweitquelle": "StockAnalysis",
+   "gruende": []
+  }
+ ]
+}
