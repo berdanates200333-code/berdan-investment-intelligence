@@ -1,4 +1,4 @@
-"""Systemprobelauf der KI-Konten (identischer Orderpfad wie im Wettbewerb, aber getrennte Konten forecast/probelauf/<ki>/).
+"""Systemprobelauf der KI-Konten (identischer Orderpfad wie im Wettbewerb, aber getrennte Konten forecast/probelauf2/<ki>/).
 Beweist: Datenstufe A -> Order dokumentiert -> Ausführung in der Folgesitzung über die gemeinsame Engine, für beide Konten identisch.
 Kein Teil des Wettbewerbs. Aufruf täglich nach Börsenschluss."""
 from __future__ import annotations

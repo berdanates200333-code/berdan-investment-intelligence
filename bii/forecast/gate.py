@@ -56,7 +56,7 @@ def checks(root: Path = ROOT) -> dict:
     out["benchmark_festgeschrieben"] = {"ok": bool(bench) and bench["symbol"] in adm, "detail": f"Benchmark {bench['symbol'] if bench else 'nicht festgeschrieben'}; zugelassen: {bool(bench) and bench['symbol'] in adm}"}
     days = {}
     for ki in ("claude", "chatgpt"):
-        p = fr / "probelauf" / ki / "konto" / "handel.jsonl"
+        p = fr / "probelauf2" / ki / "konto" / "handel.jsonl"
         ents = journal.read(p) if p.exists() else []
         kauf = [e for e in ents if e["typ"] == "ausfuehrung" and e.get("seite") == "kauf"]
         bench_buy = [e for e in ents if e["typ"] == "benchmark_ausfuehrung"]
