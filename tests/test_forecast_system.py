@@ -524,3 +524,16 @@ def test_risk_lab_runs_same_signals_with_three_risk_levels():
     res = [rl.run_window(frames, fx, "2026-01-05", "2026-03-27", risk, ("AAPL", "MSFT"), cap=cap, pause=pause, open_risk=orisk, name=nm) for nm, risk, cap, pause, orisk in rl.PROFILE]
     assert [r["risiko"] for r in res] == [0.01, 0.02, 0.01, 0.02, 0.03] and all(r["handelstage"] > 50 for r in res)
     assert "Risikolabor" in rl.markdown({"Test": res})
+
+
+def test_competition_phase_identity_from_universe_without_venue(monkeypatch, tmp_path):
+    """Die Routine liefert nur id/name/yahoo; Börse, Währung, Klasse, ISIN kommen aus dem Universum (Regression: venue_of lief vorher zu früh)."""
+    from bii.forecast import jr as _jr, universe
+    monkeypatch.setattr(_jr, "phase", lambda: "wettbewerb")
+    monkeypatch.setattr(universe, "admitted", lambda: {"V"})
+    p = copy.deepcopy(P)
+    p["prognose_id"], p["ki"] = "T-ID", "claude"
+    p["instrument"] = {"id": "V", "name": "Visa", "yahoo": "V"}
+    p["referenz"] = {**p["referenz"], "datum": "2026-11-02"}
+    e = _jr.add(p, now=datetime(2026, 11, 3, 14, 0, tzinfo=UTC), ki_path=tmp_path / "p.jsonl")
+    assert e["instrument"]["venue"] == "XNYS" and e["instrument"]["waehrung"] == "USD" and e["phase"] == "wettbewerb"

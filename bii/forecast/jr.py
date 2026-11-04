@@ -63,6 +63,14 @@ def add(p: dict, now: datetime | None = None, ki_path: Path | None = None) -> di
     if any(e["prognose_id"] == p["prognose_id"] for e in journal.read(jp)):
         raise ValueError("Prognose-ID existiert bereits (kein Überschreiben)")
     now = now or datetime.now(timezone.utc)
+    if phase() == "wettbewerb":
+        from . import universe
+        if p["instrument"]["yahoo"] not in universe.admitted():
+            raise ValueError("Instrument nicht im zugelassenen Universum (Datenstufe A + Liquidität)")
+        ref = next((i for i in universe.load()["stufe1_handelbar"] if i["yahoo"] == p["instrument"]["yahoo"]), None)
+        if ref is None:
+            raise ValueError("Instrument ist nicht handelbar (nur Stufe-1-Universum)")
+        p = {**p, "instrument": {**ref, "name": p["instrument"].get("name", ref["id"])}}      # Identität (ISIN/Börse/Währung/Klasse) kommt aus dem Universum, nicht von der KI
     venue = calendars.venue_of(p["instrument"])
     expected = calendars.horizon_dates(venue, p["referenz"]["datum"])
     for h in HORIZONTE:
@@ -73,14 +81,6 @@ def add(p: dict, now: datetime | None = None, ki_path: Path | None = None) -> di
     info = calendars.last_complete_session(venue, now)
     if str(info.date()) != p["referenz"]["datum"]:
         raise ValueError(f"Informationsstichtag: Referenzdatum muss der letzte abgeschlossene Handelstag sein ({info.date()}), nicht {p['referenz']['datum']}")
-    if phase() == "wettbewerb":
-        from . import universe
-        if p["instrument"]["yahoo"] not in universe.admitted():
-            raise ValueError("Instrument nicht im zugelassenen Universum (Datenstufe A + Liquidität)")
-        ref = next((i for i in universe.load()["stufe1_handelbar"] if i["yahoo"] == p["instrument"]["yahoo"]), None)
-        if ref is None:
-            raise ValueError("Instrument ist nicht handelbar (nur Stufe-1-Universum)")
-        p = {**p, "instrument": {**ref, "name": p["instrument"].get("name", ref["id"])}}      # Identität (ISIN/Börse/Währung/Klasse) kommt aus dem Universum, nicht von der KI
     p = {**p, "phase": phase()}
     p = {**p, "regelversion": REGELVERSION, "typ": "prognose"}
     for h in HORIZONTE:
