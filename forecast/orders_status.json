@@ -1,8 +1,10 @@
 {
- "lauf_utc": "2026-11-03T16:51:20+00:00",
+ "lauf_utc": "2026-11-04T10:34:11+00:00",
  "konten": {
   "claude": {
-   "eingereicht": [],
+   "eingereicht": [
+    "FC1-SOLO-1-CLAUDE-V-2026-11-03"
+   ],
    "abgelehnt": []
   }
  },
