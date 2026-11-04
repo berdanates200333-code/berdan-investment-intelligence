@@ -44,5 +44,5 @@ def evaluations_table(ki: str, since: str | None = None) -> str:
             t += f"| {e['prognose_id']} | {e['horizont']} T | – | – | – | – | – | – | – | {e['status']}: {e.get('grund','')} |\n"
         else:
             t += (f"| {e['prognose_id']} | {e['horizont']} T | {e['prognose_pct']:+.2f} | {e['ist_pct']:+.2f} | {e['abweichung_pp']:+.2f} | {'✔' if e['richtung_richtig'] else '✘'} | "
-                  f"{e['p_positiv']:.0%} | {e['brier']:.3f} | {'–' if e['entscheidung_sinnvoll'] is None else ('sinnvoll' if e['entscheidung_sinnvoll'] else 'nicht sinnvoll')} | {e['datenqualitaet']} |\n")
+                  f"{e['p_positiv']:.0%} | {e['brier']:.3f} | {'–' if e['entscheidung_sinnvoll'] is None else ('sinnvoll' if e['entscheidung_sinnvoll'] else 'nicht sinnvoll')} | {e.get('datenhinweis') or (str(e.get('datenstufe_referenz', ''))[:1] + '/' + str(e.get('datenstufe_ziel', ''))[:1])} |\n")
     return t

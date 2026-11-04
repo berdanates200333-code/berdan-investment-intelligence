@@ -1,6 +1,6 @@
 name: Performance-Konto (offensiv, virtuell)
 
-# Getrennt vom Hauptkonto. 12:45 UTC: Orders einreichen (vor der Eröffnung). 23:15 UTC: Tageszyklus (nach dem Nachtlauf des Hauptkontos).
+# Getrennt vom Hauptkonto. 12:45 UTC: Orders einreichen (vor der Eröffnung). 08:20 UTC: Tageszyklus (nach dem Datenlauf des Hauptkontos um 08:00 UTC).
 # Fehler hier berühren das Hauptkonto nicht. Nur virtuell, kein Echtgeld.
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ on:
         type: string
   schedule:
     - cron: "45 12 * * 1-5"
-    - cron: "15 23 * * 1-5"
+    - cron: "20 8 * * 1-5"
 
 permissions:
   contents: write

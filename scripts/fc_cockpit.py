@@ -40,7 +40,7 @@ if started:
             c = (t + _pd.Timedelta(days=i)).replace(hour=h, minute=m, second=0, microsecond=0)
             if c > t and (not weekdays_only or c.weekday() < 5):
                 return c.strftime("%a %d.%m. %H:%M UTC")
-    print(f"**Nächste automatische Läufe:** Claude-Prognoseroutine {_next(23, 40)} · Orders einreichen {_next(12, 30)} · Nachtlauf (Ausführung, Bewertung, Erfolgskontrolle) {_next(23, 0)}\n")
+    print(f"**Nächste automatische Läufe:** Claude-Prognoseroutine {_next(9, 0)} · Orders einreichen {_next(12, 30)} · Datenlauf (Ausführung, Bewertung, Erfolgskontrolle) {_next(8, 0)} · Offensivkonto {_next(8, 20)} · Offensiv-Orders {_next(12, 45)}\n")
 else:
     print("**Wettbewerb:** NICHT gestartet – bisher nur Pilotdaten, Konten unberührt (10.000 €)\n")
 for ki in (("claude",) if mode == "claude" else jr.KIS):

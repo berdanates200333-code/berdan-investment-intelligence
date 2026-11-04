@@ -1,12 +1,12 @@
 name: Prognose-Erfolgskontrolle, Universum, Probelauf (virtuell)
 
-# Täglich Mo–Fr 23:00 UTC (nach allen US-Sitzungsschlüssen, auch bei Sommerzeit): Datenstufen prüfen, Universum zulassen,
+# Täglich Mo–Fr 08:00 UTC: Die Zweitquelle (Nasdaq) liefert den Tagesbalken erst am Morgen (abends nur Stufe B, belegt am 03./04.11.2026). Datenstufen prüfen, Universum zulassen,
 # fällige Prognosen bewerten (nur qualitätsgeprüfte Daten), Systemprobelauf der KI-Konten, Startschranke prüfen.
 # Keine Echtgeldorders, keine Broker-Verbindung, keine Zugangsdaten, keine Kosten.
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 23 * * 1-5"
+    - cron: "0 8 * * 1-5"
 
 permissions:
   contents: write
