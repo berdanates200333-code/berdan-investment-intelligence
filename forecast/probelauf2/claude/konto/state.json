@@ -42,6 +42,13 @@
     "Pflichtdaten (SPY/Benchmark/EUR-USD) fehlen – kein Handel, nur Protokoll"
    ],
    "zeit": "2026-11-03T23:32:21+00:00"
+  },
+  {
+   "probleme": [],
+   "tage": [
+    "2026-11-03"
+   ],
+   "zeit": "2026-11-04T09:55:44+00:00"
   }
  ],
  "equity": [
@@ -52,28 +59,30 @@
    "daten_ok": true,
    "datum": "2026-11-02",
    "positionen": 0
+  },
+  {
+   "aktiv_eur": 10000.0,
+   "bench_eur": 9895.84,
+   "cash_eur": 10000.0,
+   "daten_ok": true,
+   "datum": "2026-11-03",
+   "positionen": 0
   }
  ],
- "failed": [],
+ "failed": [
+  {
+   "datum": "2026-11-03",
+   "grund": "Plan erst nach Handelseröffnung dokumentiert – verworfen",
+   "plan_id": "PROBELAUF2-CLAUDE-SPY-2026-11-02",
+   "ticker": "SPY"
+  }
+ ],
  "kapital_eur": 10000.0,
- "last_date": "2026-11-02",
+ "last_date": "2026-11-03",
  "pause_seit": null,
  "paused": false,
  "peak": 10000.0,
- "pending": [
-  {
-   "grund_kurz": "KI-Prognose PROBELAUF:SPY",
-   "id": "PROBELAUF2-CLAUDE-SPY-2026-11-02",
-   "journal_utc": "2026-11-03T16:25:36+00:00",
-   "limit": 759.62,
-   "max_kosten_eur": 1373.6001,
-   "plan_datum": "2026-11-02",
-   "stop": 729.54,
-   "stueck": 2,
-   "ticker": "SPY",
-   "ziel": 797.23
-  }
- ],
+ "pending": [],
  "plaene_verworfen": [
   {
    "daten": {
@@ -81,6 +90,14 @@
     "spy_sma100": 759.49
    },
    "datum": "2026-11-02",
+   "grund": "Marktfilter: SPY unter SMA100"
+  },
+  {
+   "daten": {
+    "spy_close": 754.35,
+    "spy_sma100": 759.65
+   },
+   "datum": "2026-11-03",
    "grund": "Marktfilter: SPY unter SMA100"
   }
  ],
