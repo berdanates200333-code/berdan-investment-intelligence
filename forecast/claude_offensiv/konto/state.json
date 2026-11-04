@@ -59,7 +59,21 @@
  "pause_seit": null,
  "paused": false,
  "peak": 10000.0,
- "pending": [],
+ "pending": [
+  {
+   "grund_kurz": "KI-Prognose CLAUDE-2026-11-04-V-001",
+   "id": "FC1-OFFENSIV-1-CLAUDE_OFFENSIV-V-2026-11-03",
+   "journal_utc": "2026-11-04T10:36:30+00:00",
+   "limit": 424.62,
+   "max_kosten_eur": 2686.4486,
+   "plan_datum": "2026-11-03",
+   "risiko_eur": 145.1,
+   "stop": 404.74,
+   "stueck": 7,
+   "ticker": "V",
+   "ziel": 459.62
+  }
+ ],
  "plaene_verworfen": [],
  "positions": {},
  "start": "2026-11-04",
