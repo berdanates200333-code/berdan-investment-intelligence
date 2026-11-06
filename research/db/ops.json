@@ -1,12 +1,12 @@
 {
   "fehler": {
     "sec:alle|kontakt_fehlt": {
-      "folge": 20,
+      "folge": 21,
       "letzte_meldung": "SEC verlangt einen User-Agent mit echter Kontaktadresse: Repository-Variable SEC_USER_AGENT setzen (z. B. 'Vorname Nachname name@domain.de')."
     }
   },
-  "letzter_lauf_utc": "2026-11-05T22:24:05+00:00",
-  "letzter_erfolg_utc": "2026-11-05T22:24:05+00:00",
+  "letzter_lauf_utc": "2026-11-06T06:12:55+00:00",
+  "letzter_erfolg_utc": "2026-11-06T06:12:55+00:00",
   "quellenstatus": {
     "sec": "inaktiv (Kontaktangabe fehlt)",
     "unternehmen_mit_daten": [
