@@ -4,8 +4,8 @@
     "TREND": false
   },
   "bewegung_gemeldet": {},
-  "letzter_wochenbericht": null,
-  "letzter_lauf_utc": "2026-11-05T18:22:22+00:00",
-  "letzter_planlauf_datum": "2026-11-05",
+  "letzter_wochenbericht": "2026-W45",
+  "letzter_lauf_utc": "2026-11-06T18:29:22+00:00",
+  "letzter_planlauf_datum": "2026-11-06",
   "datenprobleme": {}
 }
