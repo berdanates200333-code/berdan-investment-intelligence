@@ -1,0 +1,15 @@
+{
+  "experiment": "signal1.0-execution60-v1",
+  "duration_calendar_days": 60,
+  "start_policy": "first successful prospective transaction after complete validated input; no backdating",
+  "timezone": "Europe/Berlin",
+  "capital_eur": 10000,
+  "benchmark_capital_eur": 10000,
+  "signal_file": "bii/papertrading/rules_v1_0.py",
+  "automatic_extension": false,
+  "automatic_real_money": false,
+  "broker_access": false,
+  "resume_drawdown_pause_automatically": false,
+  "dividend_policy": "gross receivable on ex-date; not spendable until verified payment date",
+  "end_policy": "stop new executions; retain final marked holdings separately; no forced retrospective liquidation"
+}
