@@ -65,6 +65,13 @@
     "2026-11-05"
    ],
    "zeit": "2026-11-06T08:47:06+00:00"
+  },
+  {
+   "probleme": [],
+   "tage": [
+    "2026-11-06"
+   ],
+   "zeit": "2026-11-09T08:58:25+00:00"
   }
  ],
  "equity": [
@@ -99,6 +106,14 @@
    "daten_ok": true,
    "datum": "2026-11-05",
    "positionen": 0
+  },
+  {
+   "aktiv_eur": 10000.0,
+   "bench_eur": 9668.69,
+   "cash_eur": 10000.0,
+   "daten_ok": true,
+   "datum": "2026-11-06",
+   "positionen": 0
   }
  ],
  "failed": [
@@ -110,7 +125,7 @@
   }
  ],
  "kapital_eur": 10000.0,
- "last_date": "2026-11-05",
+ "last_date": "2026-11-06",
  "pause_seit": null,
  "paused": false,
  "peak": 10000.0,
@@ -138,6 +153,14 @@
     "spy_sma100": 759.68
    },
    "datum": "2026-11-05",
+   "grund": "Marktfilter: SPY unter SMA100"
+  },
+  {
+   "daten": {
+    "spy_close": 735.29,
+    "spy_sma100": 759.53
+   },
+   "datum": "2026-11-06",
    "grund": "Marktfilter: SPY unter SMA100"
   }
  ],
