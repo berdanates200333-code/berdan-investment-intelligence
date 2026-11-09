@@ -2,7 +2,7 @@
   "ticker": "MSFT",
   "name": "Microsoft Corporation",
   "cik": 789019,
-  "stand_utc": "2026-11-09T13:29:08+00:00",
+  "stand_utc": "2026-11-09T22:21:14+00:00",
   "geschaeftsmodell": {
     "text": "Software und Cloud-Dienste: Azure (Cloud-Infrastruktur/KI), Microsoft 365/Office, LinkedIn, Dynamics, Windows, Gaming (Xbox, Activision Blizzard), Suchmaschinenwerbung. Großer Abnehmer von KI-Rechenzentrumshardware; Partnerschaft mit OpenAI.",
     "quelle": "Kurzfassung (Claude); Abgleich mit 10-K Item 1 im Profil"
@@ -15,9 +15,9 @@
   },
   "sec_daten_status": "nicht aktualisiert (SEC nicht erreichbar)",
   "kurs": {
-    "kurs": 530.6099853515625,
-    "vortag": 535.9299926757812,
-    "datum": "2026-11-06",
+    "kurs": 545.1799926757812,
+    "vortag": 530.6099853515625,
+    "datum": "2026-11-09",
     "waehrung": "USD",
     "quelle": "Yahoo Finance (inoffiziell, verzögert, ohne Zweitquelle)"
   },
