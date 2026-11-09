@@ -1,5 +1,14 @@
 {
- "bench": null,
+ "bench": {
+  "cash_eur": 94.22,
+  "datum": "2026-11-04",
+  "einstieg_eur": 128.6335,
+  "fx_einstieg": 1.1179,
+  "kosten_eur": 10.89,
+  "stueck": 77,
+  "symbol": "EUNL.DE",
+  "waehrung": "EUR"
+ },
  "cash_eur": 10000.0,
  "closed": [],
  "costs_eur": 0.0,
@@ -64,31 +73,67 @@
     "Pflichtdaten (SPY/Benchmark/EUR-USD) fehlen – kein Handel, nur Protokoll"
    ],
    "zeit": "2026-11-06T09:17:24+00:00"
+  },
+  {
+   "probleme": [],
+   "tage": [
+    "2026-11-04",
+    "2026-11-05",
+    "2026-11-06"
+   ],
+   "zeit": "2026-11-09T09:32:29+00:00"
   }
  ],
- "equity": [],
- "failed": [],
+ "equity": [
+  {
+   "aktiv_eur": 10000.0,
+   "bench_eur": 10141.18,
+   "cash_eur": 10000.0,
+   "daten_ok": true,
+   "datum": "2026-11-04",
+   "positionen": 0
+  },
+  {
+   "aktiv_eur": 10000.0,
+   "bench_eur": 9934.05,
+   "cash_eur": 10000.0,
+   "daten_ok": true,
+   "datum": "2026-11-05",
+   "positionen": 0
+  },
+  {
+   "aktiv_eur": 10000.0,
+   "bench_eur": 9897.48,
+   "cash_eur": 10000.0,
+   "daten_ok": true,
+   "datum": "2026-11-06",
+   "positionen": 0
+  }
+ ],
+ "failed": [
+  {
+   "datum": "2026-11-04",
+   "grund": "Eröffnung 427.42 über Kauflimit 424.62 (Gap) – nicht ausgeführt",
+   "plan_id": "FC1-OFFENSIV-1-CLAUDE_OFFENSIV-V-2026-11-03",
+   "ticker": "V"
+  }
+ ],
  "kapital_eur": 10000.0,
- "last_date": null,
+ "last_date": "2026-11-06",
  "pause_seit": null,
  "paused": false,
  "peak": 10000.0,
- "pending": [
+ "pending": [],
+ "plaene_verworfen": [
   {
-   "grund_kurz": "KI-Prognose CLAUDE-2026-11-04-V-001",
-   "id": "FC1-OFFENSIV-1-CLAUDE_OFFENSIV-V-2026-11-03",
-   "journal_utc": "2026-11-04T10:36:30+00:00",
-   "limit": 424.62,
-   "max_kosten_eur": 2686.4486,
-   "plan_datum": "2026-11-03",
-   "risiko_eur": 145.1,
-   "stop": 404.74,
-   "stueck": 7,
-   "ticker": "V",
-   "ziel": 459.62
+   "daten": {
+    "spy_close": 735.29,
+    "spy_sma100": 759.53
+   },
+   "datum": "2026-11-06",
+   "grund": "Marktfilter: SPY unter SMA100"
   }
  ],
- "plaene_verworfen": [],
  "positions": {},
  "start": "2026-11-04",
  "version": "FC1-OFFENSIV-1"
