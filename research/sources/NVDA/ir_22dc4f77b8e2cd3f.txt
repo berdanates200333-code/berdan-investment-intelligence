@@ -1,0 +1,110 @@
+QUELLE: https://blogs.nvidia.com/blog/korea-sovereign-ai-collaboration/
+ABGERUFEN: 2026-11-09T06:21:33+00:00
+
+From Chips to Skills, NVIDIA and Korea Expand Sovereign AI Collaboration | NVIDIA Blog 
+
+ Skip to content 
+
+ From Chips to Skills, NVIDIA and Korea Expand Sovereign AI Collaboration
+
+ November 8, 2026 by Jesse Clayton 
+
+ 0 Comments 
+
+ Share
+
+ Share This Article 
+
+ X 
+
+ Facebook 
+
+ LinkedIn 
+
+ Copy link
+
+ Link copied! 
+
+ NVIDIA and Korea’s Ministry of Science and ICT (MSIT) are expanding their collaboration across the country’s sovereign AI ecosystem, from AI semiconductors and data center infrastructure to talent, startups, models, agents and security. 
+
+ The collaboration lays the groundwork for Korean NPU and XPU companies to explore participation in the NVIDIA NVLink Fusion ecosystem, and includes NVIDIA training and certification programs, hackathons and technical seminars to strengthen GPU utilization. 
+
+ Through Korea’s AI for All initiative, NVIDIA will collaborate with three selected consortia and four leading Korean foundation model builders, using NVIDIA Dynamo software to optimize and scale AI inference. 
+
+ In addition, NVIDIA today announced a collaboration with SK Telecom and Rebellions, supported by MSIT, to advance sovereign AI infrastructure for Korean models and workloads with NVIDIA NVLink Fusion. Read more in the press release . 
+
+ The Best of GTC Berlin 
+
+ Deep dive on tech advances.
+
+ Watch On Demand 
+
+ Recent News
+
+ Robotics 
+
+ Korea Advances Physical AI Across Industries With NVIDIA 
+
+ November 8, 2026 
+
+ AI 
+
+ Korea’s AI Ecosystem Advances and Secures Agentic AI With NVIDIA 
+
+ November 8, 2026 
+
+ AI 
+
+ NVIDIA Dynamo Recipes Bring Korea’s Leading Open Models to Production 
+
+ November 8, 2026 
+
+ AI 
+
+ How NVIDIA Open Source Tools Are Helping Researchers Build Next-Generation 6G Networks 
+
+ November 6, 2026 
+
+ View All Recent News 
+
+ Categories: 
+ AI 
+
+ Tags: 
+ Dynamo NVLink Sovereign AI 
+
+ Related News
+
+ AI 
+
+ Korea’s AI Ecosystem Advances and Secures Agentic AI With NVIDIA 
+
+ Nov 8, 2026 
+
+ AI 
+
+ From Chips to Skills, NVIDIA and Korea Expand Sovereign AI Collaboration 
+
+ Nov 8, 2026 
+
+ AI 
+
+ NVIDIA Dynamo Recipes Bring Korea’s Leading Open Models to Production 
+
+ Nov 8, 2026 
+
+ NVIDIA Life 
+
+ The Wizard of Open Weights: Chris Alexiuk Makes AI Easy With Open Models 
+
+ Nov 5, 2026 
+
+ Share This 
+ Facebook 
+ LinkedIn 
+
+ Share on Mastodon
+
+ Enter your Mastodon instance URL (optional) 
+
+ Share
