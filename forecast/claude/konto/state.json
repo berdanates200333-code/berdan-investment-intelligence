@@ -92,6 +92,13 @@
     "2026-11-06"
    ],
    "zeit": "2026-11-09T08:58:27+00:00"
+  },
+  {
+   "probleme": [
+    "EUNL.DE: Datenstufe C_unzulaessig unzulässig für Ausführung (veraltet: letzter Balken 2026-11-06, erwartet 2026-11-09)",
+    "Pflichtdaten (SPY/Benchmark/EUR-USD) fehlen – kein Handel, nur Protokoll"
+   ],
+   "zeit": "2026-11-10T08:49:43+00:00"
   }
  ],
  "equity": [
