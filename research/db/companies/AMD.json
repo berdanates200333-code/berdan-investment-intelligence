@@ -2,7 +2,7 @@
   "ticker": "AMD",
   "name": "Advanced Micro Devices, Inc.",
   "cik": 2488,
-  "stand_utc": "2026-11-10T13:20:12+00:00",
+  "stand_utc": "2026-11-10T22:17:09+00:00",
   "geschaeftsmodell": {
     "text": "Entwickelt CPUs (EPYC, Ryzen), GPUs/KI-Beschleuniger (Instinct, Radeon), FPGAs/adaptive SoCs (ehemals Xilinx) und Semi-Custom-Chips (z. B. Spielkonsolen). Fertigung überwiegend extern (fabless).",
     "quelle": "Kurzfassung (Claude); Abgleich mit 10-K Item 1 im Profil"
@@ -15,11 +15,11 @@
   },
   "sec_daten_status": "nicht aktualisiert (SEC nicht erreichbar)",
   "kurs": {
-    "kurs": 508.5799865722656,
-    "vortag": 449.0400085449219,
-    "datum": "2026-11-09",
+    "kurs": 515.2100219726562,
+    "vortag": 508.5799865722656,
+    "datum": "2026-11-10",
     "waehrung": "USD",
     "quelle": "Yahoo Finance (inoffiziell, verzögert, ohne Zweitquelle)"
   },
-  "ir_neu": 0
+  "ir_neu": 1
 }
