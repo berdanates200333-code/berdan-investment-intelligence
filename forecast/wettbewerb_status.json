@@ -1,5 +1,5 @@
 {
- "lauf_utc": "2026-11-10T08:49:43+00:00",
+ "lauf_utc": "2026-11-11T08:48:30+00:00",
  "status": "gestartet",
  "modus": "solo",
  "konten": {
@@ -12,7 +12,7 @@
   }
  },
  "probleme": [
-  "claude: EUNL.DE: Datenstufe C_unzulaessig unzulässig für Ausführung (veraltet: letzter Balken 2026-11-06, erwartet 2026-11-09)",
+  "claude: EUNL.DE: Datenstufe C_unzulaessig unzulässig für Ausführung (veraltet: letzter Balken 2026-11-09, erwartet 2026-11-10)",
   "claude: Pflichtdaten (SPY/Benchmark/EUR-USD) fehlen – kein Handel, nur Protokoll"
  ]
 }
