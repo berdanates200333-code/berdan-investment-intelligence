@@ -1,24 +1,25 @@
-# Research-Monitor – 13.11.2026 13:26 UTC
+# Research-Monitor – 13.11.2026 22:21 UTC
 Regelbasierte Erfassung (Python). Analysen durch Claude stehen in `research/analyses/`.
 Quellen: offizielle Newsrooms ✓ · Google News/Yahoo RSS ✓ · SEC EDGAR: inaktiv (Kontaktangabe fehlt)
 
 ## Überblick
 | Unternehmen | Kurs | Umsatz TTM | Op. Marge | FCF-Marge | Eingepreistes Wachstum | Neue Ereignisse (hoch/mittel/niedrig) |
 |---|---|---|---|---|---|---|
-| [NVDA](../../research/db/companies/NVDA.md) | 166.19 USD | – | – | – | – | 0/2/61 |
-| [AMD](../../research/db/companies/AMD.md) | 585.30 USD | – | – | – | – | 0/0/35 |
-| [MSFT](../../research/db/companies/MSFT.md) | 523.00 USD | – | – | – | – | 0/0/48 |
+| [NVDA](../../research/db/companies/NVDA.md) | 162.85 USD | – | – | – | – | 0/2/75 |
+| [AMD](../../research/db/companies/AMD.md) | 534.06 USD | – | – | – | – | 0/1/41 |
+| [MSFT](../../research/db/companies/MSFT.md) | 523.88 USD | – | – | – | – | 0/0/46 |
 
 ## Neue wichtige Ereignisse
-- **mittel** NVDA 2026-11-13: [TSX futures muted as gold edges higher; investors assess Nvidia CEO's exit](https://news.google.com/rss/articles/CBMivAFBVV95cUxQUUtBRjRBRE95bmxqb2lFamE4czV4SXowbGlyc21HWlV1XzlmWl85cGJ6RzJGQm9HbmZtZjM3UTd0b25WaHZ5WlZYb3AxX0IzRk5LbUZzbkZoQjFvUWZpak9XNlVZUWQ2enpXemN6LUVicEljbEFnU2NRWUpXNnpPX2oyNVc3SXN6ZWRhV1RoRTQ5d3lzWXR4MjE1bzNCZF81S0FQdllKSXlBaUcyVXBsTmpJYjZmMjhYNlBNdw?oc=5) – Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium); Regel: Schlüsselwörter ['ceo'] in etabliertem Medium
-- **mittel** NVDA 2026-11-13: [European shares retreat from record highs after Nvidia CEO's exit](https://news.google.com/rss/articles/CBMirgFBVV95cUxNWm5qbFo0U2Q0eXFfdXJfMktJWjZsdnBnOHVmc1BBbWg3bjA0d0g1cGpsRnBaTlN0V2VCTkFsNjFWMmJJVnFuQnNwSFhuVE1mLU5YZWhlRXZ0b1hyczN3R3hQajFzREtZbGl2Yk5FYkNvVGMwc0ZiZUR4RXd3UE1mNEdwV1ZIajlrSGpLbXdpQWxwMUJzY0lxcEV3Vm1aaS1abEE3Q3dvUDhmdjdfSUE?oc=5) – Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium); Regel: Schlüsselwörter ['ceo'] in etabliertem Medium
+- **mittel** NVDA 2026-11-13: [Wall Street Loses a Powerful Dealmaker After Nvidia’s CEO Is Ousted](https://news.google.com/rss/articles/CBMihwFBVV95cUxNbXBvOHJYRmdHTG5FaUpvVVRoRFZaLUlWeXNHQ01ZZi1ReXBJRUVIUnNCN0g5blRzNjdCUE9VNGJPQnI2S29obU9SdmpLTU5mMEhJRDVsQTNKM093b3Z6NzhTTF92NDI1T3lIZmZCQzNHSHo1bHpYbExlM05WR0F0cmduSHpwTnc?oc=5) – Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium); Regel: Schlüsselwörter ['ceo', 'deal'] in etabliertem Medium
+- **mittel** NVDA 2026-11-13: [Arm boss Rene Haas approached in Nvidia CEO search](https://news.google.com/rss/articles/CBMihAFBVV95cUxQV2dGZ3JjRGJZdHNqSWRVak9nOFhBSnZCc1U3R1NVUVB5MmNyWFdvUlduZ1o5VFpzYkxMNmZXYnVFWXFJazQteUNZNGYzN2xXMGtXYU1ELVgwQjc4TUdEbDVfWTJJRVZqajllWS1RUkt6WkR1RDZ4WUlPWjBXTHc4cXZMaVo?oc=5) – Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium); Regel: Schlüsselwörter ['ceo'] in etabliertem Medium
+- **mittel** AMD 2026-11-13: [Kursbewegung -8.8 % am 2026-11-13](https://finance.yahoo.com/quote/AMD) – Marktdaten, inoffiziell, ohne Zweitquelle; Regel: Tagesbewegung ≥ 8 %
 
 ## Zur KI-Analyse vorgemerkt: 0
 
 ## Nachrichtenabruf (Google News RSS, Yahoo Finance RSS)
-- NVDA: 116 abgerufen, 62 neu, 6 Dubletten verworfen
-- AMD: 119 abgerufen, 35 neu, 31 Dubletten verworfen
-- MSFT: 117 abgerufen, 48 neu, 15 Dubletten verworfen
+- NVDA: 119 abgerufen, 77 neu, 8 Dubletten verworfen
+- AMD: 118 abgerufen, 41 neu, 32 Dubletten verworfen
+- MSFT: 115 abgerufen, 46 neu, 14 Dubletten verworfen
 
 ## Datenfehler (dieser Lauf)
-- `sec:alle|kontakt_fehlt`: SEC verlangt einen User-Agent mit echter Kontaktadresse: Repository-Variable SEC_USER_AGENT setzen (z. B. 'Vorname Nachname name@domain.de'). (seit 43 Läufen)
+- `sec:alle|kontakt_fehlt`: SEC verlangt einen User-Agent mit echter Kontaktadresse: Repository-Variable SEC_USER_AGENT setzen (z. B. 'Vorname Nachname name@domain.de'). (seit 44 Läufen)

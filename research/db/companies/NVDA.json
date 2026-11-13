@@ -2,7 +2,7 @@
   "ticker": "NVDA",
   "name": "NVIDIA Corporation",
   "cik": 1045810,
-  "stand_utc": "2026-11-13T13:26:00+00:00",
+  "stand_utc": "2026-11-13T22:21:10+00:00",
   "geschaeftsmodell": {
     "text": "Entwickelt GPUs, Beschleuniger-Systeme, Netzwerktechnik und Software (CUDA) vor allem für Rechenzentren/KI sowie für Gaming, professionelle Visualisierung und Automobil. Fertigung wird an Auftragsfertiger ausgelagert (fabless).",
     "quelle": "Kurzfassung (Claude); Abgleich mit 10-K Item 1 im Profil"
@@ -15,11 +15,11 @@
   },
   "sec_daten_status": "nicht aktualisiert (SEC nicht erreichbar)",
   "kurs": {
-    "kurs": 166.19000244140625,
-    "vortag": 173.72999572753906,
-    "datum": "2026-11-12",
+    "kurs": 162.85000610351562,
+    "vortag": 166.19000244140625,
+    "datum": "2026-11-13",
     "waehrung": "USD",
     "quelle": "Yahoo Finance (inoffiziell, verzögert, ohne Zweitquelle)"
   },
-  "ir_neu": 1
+  "ir_neu": 0
 }
