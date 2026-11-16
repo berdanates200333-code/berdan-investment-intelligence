@@ -120,6 +120,17 @@
     "Pflichtdaten (SPY/Benchmark/EUR-USD) fehlen – kein Handel, nur Protokoll"
    ],
    "zeit": "2026-11-13T08:49:22+00:00"
+  },
+  {
+   "probleme": [],
+   "tage": [
+    "2026-11-09",
+    "2026-11-10",
+    "2026-11-11",
+    "2026-11-12",
+    "2026-11-13"
+   ],
+   "zeit": "2026-11-16T10:12:02+00:00"
   }
  ],
  "equity": [
@@ -146,6 +157,46 @@
    "daten_ok": true,
    "datum": "2026-11-06",
    "positionen": 0
+  },
+  {
+   "aktiv_eur": 10000.0,
+   "bench_eur": 9984.49,
+   "cash_eur": 10000.0,
+   "daten_ok": true,
+   "datum": "2026-11-09",
+   "positionen": 0
+  },
+  {
+   "aktiv_eur": 10000.0,
+   "bench_eur": 10000.27,
+   "cash_eur": 10000.0,
+   "daten_ok": true,
+   "datum": "2026-11-10",
+   "positionen": 0
+  },
+  {
+   "aktiv_eur": 10000.0,
+   "bench_eur": 10177.76,
+   "cash_eur": 10000.0,
+   "daten_ok": true,
+   "datum": "2026-11-11",
+   "positionen": 0
+  },
+  {
+   "aktiv_eur": 10000.0,
+   "bench_eur": 10229.73,
+   "cash_eur": 10000.0,
+   "daten_ok": true,
+   "datum": "2026-11-12",
+   "positionen": 0
+  },
+  {
+   "aktiv_eur": 10000.0,
+   "bench_eur": 10138.1,
+   "cash_eur": 10000.0,
+   "daten_ok": true,
+   "datum": "2026-11-13",
+   "positionen": 0
   }
  ],
  "failed": [
@@ -157,7 +208,7 @@
   }
  ],
  "kapital_eur": 10000.0,
- "last_date": "2026-11-06",
+ "last_date": "2026-11-13",
  "pause_seit": null,
  "paused": false,
  "peak": 10000.0,
@@ -169,6 +220,14 @@
     "spy_sma100": 759.53
    },
    "datum": "2026-11-06",
+   "grund": "Marktfilter: SPY unter SMA100"
+  },
+  {
+   "daten": {
+    "spy_close": 754.37,
+    "spy_sma100": 760.28
+   },
+   "datum": "2026-11-13",
    "grund": "Marktfilter: SPY unter SMA100"
   }
  ],
