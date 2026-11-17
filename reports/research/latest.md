@@ -1,25 +1,27 @@
-# Research-Monitor – 17.11.2026 13:27 UTC
+# Research-Monitor – 17.11.2026 22:28 UTC
 Regelbasierte Erfassung (Python). Analysen durch Claude stehen in `research/analyses/`.
 Quellen: offizielle Newsrooms ✓ · Google News/Yahoo RSS ✓ · SEC EDGAR: inaktiv (Kontaktangabe fehlt)
 
 ## Überblick
 | Unternehmen | Kurs | Umsatz TTM | Op. Marge | FCF-Marge | Eingepreistes Wachstum | Neue Ereignisse (hoch/mittel/niedrig) |
 |---|---|---|---|---|---|---|
-| [NVDA](../../research/db/companies/NVDA.md) | 156.14 USD | – | – | – | – | 0/3/80 |
-| [AMD](../../research/db/companies/AMD.md) | 504.28 USD | – | – | – | – | 0/0/34 |
-| [MSFT](../../research/db/companies/MSFT.md) | 517.99 USD | – | – | – | – | 0/0/32 |
+| [NVDA](../../research/db/companies/NVDA.md) | 155.46 USD | – | – | – | – | 1/3/78 |
+| [AMD](../../research/db/companies/AMD.md) | 503.41 USD | – | – | – | – | 0/0/35 |
+| [MSFT](../../research/db/companies/MSFT.md) | 506.24 USD | – | – | – | – | 0/0/64 |
 
 ## Neue wichtige Ereignisse
-- **mittel** NVDA 2026-11-17: [NVIDIA Board of Directors Establishes National Security and Export Control Oversight Committee](https://nvidianews.nvidia.com/news/nvidia-board-of-directors-establishes-national-security-and-export-control-oversight-committee) – offiziell (Unternehmensmitteilung, Primärquelle); Regel: offizielle Mitteilung mit wesentlichem Schlüsselwort
-- **mittel** NVDA 2026-11-17: [European shares fall as Deutsche Bank slides, tech stocks tumble ahead of Nvidia earnings](https://news.google.com/rss/articles/CBMigwFBVV95cUxQbHY5U3ZMUmhWeEViMkJTbW9ObHlQYWRWbmdxWDhXMUdaWFRvLVdRY01oaTJJb3lmOFBiaWpQMEFlTFk5R2ttRnBaT18zaF9Jbk9od2Rza0cyMXJ6Z3JlalJDdG9neTVhQ3pJRG05SE9NQUYxZkFvQmQ5bnVfTi13amFNOA?oc=5) – Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium); Regel: Schlüsselwörter ['ban'] in etabliertem Medium
-- **mittel** NVDA 2026-11-17: [Nvidia Forms Export Control Board Committee After Chip Curbs](https://news.google.com/rss/articles/CBMisAFBVV95cUxNQWxyajYtdjVkUkVrcGYzOVFNc0wzclpPdXZvZHIyUnEwU2VzNkF6ZENhZ3Y2aWMwaW9BQUF2RG1uVng2Tk5JR2wwZUJXcTRjVlRFbS1FUzhOYWZENnczaUN1WEtBVVlRTUZuTGtSbzhaUHh1ZDBvbGgyZGN2Y0QxbUxzR2tYOFR5WlQ3bXNWVGpQYlFZNG1jaGcyMzNieG14Z0x3cVNtcFJJd21lcWVsMQ?oc=5) – Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium); Regel: Schlüsselwörter ['export'] in etabliertem Medium
+- **hoch** NVDA 2026-11-17: [NVIDIA Announces Financial Results for Third Quarter Fiscal 2027](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-third-quarter-fiscal-2027) – offiziell (Unternehmensmitteilung, Primärquelle); Regel: offizielle Mitteilung zu Geschäftszahlen
+- **mittel** NVDA 2026-11-17: [NVIDIA Expands Commitments With Supply Chain Partners to Support AI Infrastructure Buildout](https://nvidianews.nvidia.com/news/nvidia-expands-commitments-with-supply-chain-partners-to-support-ai-infrastructure-buildout) – offiziell (Unternehmensmitteilung, Primärquelle); Regel: offizielle Mitteilung mit wesentlichem Schlüsselwort
+- **mittel** NVDA 2026-11-17: [Nvidia Delivers Solid Outlook in First Post-Huang Earnings](https://news.google.com/rss/articles/CBMirgFBVV95cUxOQUp2Z1haU0NNQkJ2ekdiQnZFRjJ2cWN4ckVMdnNJY05BOFNCUlNqbzl2RkNoblhlRTFuU1djbWdoenZmdGZYZ1VjNlhnS0E2YXJLLUQ3c21UZGZCNzZrQWhaa3RGVnlBX2phdUVkTTlIc3U5VDBkenFQUXpmQnVqRDg0bFNOODZsdTJMeDgxQWE0Z1NZMEd2cVZPUVRyT2xPYWUyZnZQanRQQnhFZmc?oc=5) – Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium); Regel: Schlüsselwörter ['outlook'] in etabliertem Medium
+- **mittel** NVDA 2026-11-17: [Jensen Huang Open to Return as Nvidia CEO, But Board Not Considering It](https://news.google.com/rss/articles/CBMirwFBVV95cUxPUDhHWUU2NndLcmRrRWV3VnhTX1J6T0g0WFpXY2pZUkp5SWFIckpDclYxTXFxMEhPNXV3SEZZWmtkOVZlR1d2Tm9ycnBlb1Q4R2FkaXlieWMwakdqdFRQNTdxZ0VwSGI5aVl6NThXcENJb25wWWJRU0I3MTRJR214SVBBbUR5TkFTZnZWdDZWYWg2UlN2Rk9aREJ4WHB4SXQyVjVIYmR0bkhPNVpTS1lN?oc=5) – Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium); Regel: Schlüsselwörter ['ceo'] in etabliertem Medium
 
-## Zur KI-Analyse vorgemerkt: 0
+## Zur KI-Analyse vorgemerkt: 1
+- `ir:NVDA:4faa980a30277cf4`
 
 ## Nachrichtenabruf (Google News RSS, Yahoo Finance RSS)
-- NVDA: 118 abgerufen, 82 neu, 9 Dubletten verworfen
-- AMD: 106 abgerufen, 34 neu, 24 Dubletten verworfen
-- MSFT: 94 abgerufen, 32 neu, 13 Dubletten verworfen
+- NVDA: 116 abgerufen, 79 neu, 9 Dubletten verworfen
+- AMD: 119 abgerufen, 35 neu, 24 Dubletten verworfen
+- MSFT: 116 abgerufen, 64 neu, 18 Dubletten verworfen
 
 ## Datenfehler (dieser Lauf)
-- `sec:alle|kontakt_fehlt`: SEC verlangt einen User-Agent mit echter Kontaktadresse: Repository-Variable SEC_USER_AGENT setzen (z. B. 'Vorname Nachname name@domain.de'). (seit 55 Läufen)
+- `sec:alle|kontakt_fehlt`: SEC verlangt einen User-Agent mit echter Kontaktadresse: Repository-Variable SEC_USER_AGENT setzen (z. B. 'Vorname Nachname name@domain.de'). (seit 56 Läufen)

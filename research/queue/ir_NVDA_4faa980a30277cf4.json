@@ -1,0 +1,36 @@
+{
+  "ereignis_id": "ir:NVDA:4faa980a30277cf4",
+  "ticker": "NVDA",
+  "titel": "NVIDIA Announces Financial Results for Third Quarter Fiscal 2027",
+  "erstellt_utc": "2026-11-17T22:28:36+00:00",
+  "status": "offen",
+  "grund": "Regel: Wichtigkeit hoch",
+  "kontext": {
+    "ereignis": {
+      "seq": 5830,
+      "erstellt_utc": "2026-11-17T22:28:37+00:00",
+      "typ": "ereignis",
+      "id": "ir:NVDA:4faa980a30277cf4",
+      "art": "ir",
+      "ticker": "NVDA",
+      "titel": "NVIDIA Announces Financial Results for Third Quarter Fiscal 2027",
+      "veroeffentlicht": "2026-11-17T21:20:00+00:00",
+      "quelle": {
+        "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-third-quarter-fiscal-2027",
+        "herausgeber": "NVIDIA Corporation (offizieller Newsroom)",
+        "feed": "https://nvidianews.nvidia.com/releases.xml"
+      },
+      "zuverlaessigkeit": "offiziell (Unternehmensmitteilung, Primärquelle)",
+      "wichtigkeit": "hoch",
+      "regel": "Regel: offizielle Mitteilung zu Geschäftszahlen",
+      "quelltext": "research/sources/NVDA/ir_4faa980a30277cf4.txt",
+      "erfasst_utc": "2026-11-17T22:28:36+00:00",
+      "prev_hash": "a96ce7403ecb1b148019d5064a636f1dba516cf36ab69f6f1256f6dbd39d3ff9",
+      "hash": "1acccff9cb9e80d45278acb98edafe52410f416216f71989942556d5b6b28787"
+    },
+    "profil": "research/db/companies/NVDA.json",
+    "these": "research/theses/NVDA.json",
+    "quelltext": "research/sources/NVDA/ir_4faa980a30277cf4.txt"
+  },
+  "anleitung": ".claude/commands/research-analyse.md"
+}
