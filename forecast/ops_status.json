@@ -1,95 +1,95 @@
 {
- "lauf_utc": "2026-11-16T10:13:16+00:00",
+ "lauf_utc": "2026-11-17T08:52:47+00:00",
  "neue_bewertungen": 0,
  "instrumente": {
   "^GSPC": {
    "stufe": "B_einquellig",
-   "letzter_kurs": 7561.6699,
-   "datum": "2026-11-13",
+   "letzter_kurs": 7416.5898,
+   "datum": "2026-11-16",
    "zweitquelle": null,
    "gruende": []
   },
   "^IXIC": {
    "stufe": "B_einquellig",
-   "letzter_kurs": 25136.2695,
-   "datum": "2026-11-13",
+   "letzter_kurs": 24509.7598,
+   "datum": "2026-11-16",
    "zweitquelle": null,
    "gruende": []
   },
   "^DJI": {
    "stufe": "B_einquellig",
-   "letzter_kurs": 52347.5508,
-   "datum": "2026-11-13",
+   "letzter_kurs": 51608.1719,
+   "datum": "2026-11-16",
    "zweitquelle": null,
    "gruende": []
   },
   "^RUT": {
    "stufe": "B_einquellig",
-   "letzter_kurs": 2790.49,
-   "datum": "2026-11-13",
+   "letzter_kurs": 2742.9399,
+   "datum": "2026-11-16",
    "zweitquelle": null,
    "gruende": []
   },
   "V": {
    "stufe": "A_bestaetigt",
-   "letzter_kurs": 425.76,
-   "datum": "2026-11-13",
+   "letzter_kurs": 426.46,
+   "datum": "2026-11-16",
    "zweitquelle": "Nasdaq",
    "gruende": []
   },
   "LLY": {
    "stufe": "A_bestaetigt",
-   "letzter_kurs": 1443.5,
-   "datum": "2026-11-13",
+   "letzter_kurs": 1431.67,
+   "datum": "2026-11-16",
    "zweitquelle": "Nasdaq",
    "gruende": []
   },
   "WMT": {
    "stufe": "A_bestaetigt",
-   "letzter_kurs": 128.09,
-   "datum": "2026-11-13",
+   "letzter_kurs": 128.41,
+   "datum": "2026-11-16",
    "zweitquelle": "Nasdaq",
    "gruende": []
   },
   "MA": {
    "stufe": "A_bestaetigt",
-   "letzter_kurs": 661.19,
-   "datum": "2026-11-13",
+   "letzter_kurs": 661.71,
+   "datum": "2026-11-16",
    "zweitquelle": "Nasdaq",
    "gruende": []
   },
   "AMD": {
    "stufe": "A_bestaetigt",
-   "letzter_kurs": 534.06,
-   "datum": "2026-11-13",
+   "letzter_kurs": 504.28,
+   "datum": "2026-11-16",
    "zweitquelle": "Nasdaq",
    "gruende": []
   },
   "MSFT": {
    "stufe": "A_bestaetigt",
-   "letzter_kurs": 523.88,
-   "datum": "2026-11-13",
+   "letzter_kurs": 517.99,
+   "datum": "2026-11-16",
    "zweitquelle": "Nasdaq",
    "gruende": []
   },
   "NVDA": {
    "stufe": "A_bestaetigt",
-   "letzter_kurs": 162.85,
-   "datum": "2026-11-13",
+   "letzter_kurs": 156.14,
+   "datum": "2026-11-16",
    "zweitquelle": "Nasdaq",
    "gruende": []
   },
   "HD": {
    "stufe": "A_bestaetigt",
-   "letzter_kurs": 348.69,
-   "datum": "2026-11-13",
+   "letzter_kurs": 347.51,
+   "datum": "2026-11-16",
    "zweitquelle": "Nasdaq",
    "gruende": []
   },
   "COST": {
    "stufe": "A_bestaetigt",
-   "letzter_kurs": 1106.21,
-   "datum": "2026-11-13",
+   "letzter_kurs": 1113.74,
+   "datum": "2026-11-16",
    "zweitquelle": "Nasdaq",
    "gruende": []
   }
@@ -104,158 +104,158 @@
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/^GSPC",
    "status": 200,
-   "sha256": "a263f07eafafff1a871329c0e293887fedfecb75feee877a759ac954cf7e9cfe",
-   "abgerufen_utc": "2026-11-16T10:13:16+00:00"
+   "sha256": "fc9bef0d08c2fffa55e77017adbbb2c998837e7cd9c510018e5909b9f461ea65",
+   "abgerufen_utc": "2026-11-17T08:52:47+00:00"
   },
   {
    "url": "https://stooq.com/q/d/l/",
    "status": 200,
-   "sha256": "3cee4fe620e04d6714add787c22f1b09e0c049f1227f6f46a0c177dd8944cc8d",
-   "abgerufen_utc": "2026-11-16T10:13:17+00:00"
+   "sha256": "9fa1c332c7322c311353af7c1e2298d39a1cd8939e2ec086db60da4639ba0894",
+   "abgerufen_utc": "2026-11-17T08:52:47+00:00"
   },
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/^IXIC",
    "status": 200,
-   "sha256": "c7513e8fbffec9849ee84fc9f258f58b3ab9e0bcba85e42b2ce59454eab8311b",
-   "abgerufen_utc": "2026-11-16T10:13:17+00:00"
+   "sha256": "f77e662db9f6a48d356615be59312d949fdd9f3a003d901a2381e258d7e8396e",
+   "abgerufen_utc": "2026-11-17T08:52:48+00:00"
   },
   {
    "url": "https://stooq.com/q/d/l/",
    "status": 200,
-   "sha256": "2d32f5360dc65ff90aed10b3389084ff27c56edac7c1e858477140a6b6f53e2d",
-   "abgerufen_utc": "2026-11-16T10:13:18+00:00"
+   "sha256": "aa700a25536f497d45b352cdae0e8f79cd28cb6b17a3380fa06f263f5613495f",
+   "abgerufen_utc": "2026-11-17T08:52:48+00:00"
   },
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/^DJI",
    "status": 200,
-   "sha256": "b388702e9fa618080cc37b635bc3f88cc81bc92264ae82c094de464e7e3756a3",
-   "abgerufen_utc": "2026-11-16T10:13:18+00:00"
+   "sha256": "fdbc3510f66d0b301729fcb90c403ad9c938b35bcecc3e78abbd1b4b781923e7",
+   "abgerufen_utc": "2026-11-17T08:52:49+00:00"
   },
   {
    "url": "https://stooq.com/q/d/l/",
    "status": 200,
-   "sha256": "f793b68caaa764714152ed50bc5d581ad31afa7b0e9a535c860e3a7ed402386c",
-   "abgerufen_utc": "2026-11-16T10:13:18+00:00"
+   "sha256": "91544407047830dce04afbf28817c8582604576301bae5888df02c6140aea37a",
+   "abgerufen_utc": "2026-11-17T08:52:49+00:00"
   },
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/^RUT",
    "status": 200,
-   "sha256": "65709fe9f3dc3ea0269497afb561e1265c8a416fc8ca313b32f3b34cc4821222",
-   "abgerufen_utc": "2026-11-16T10:13:19+00:00"
+   "sha256": "7d76ef5a348e158958281e9948a76e0d5a63e5ddc3d7841e9932e658189c71c5",
+   "abgerufen_utc": "2026-11-17T08:52:50+00:00"
   },
   {
    "url": "https://stooq.com/q/d/l/",
    "status": 200,
-   "sha256": "1edfc91d7d1d7c3e781d390dba773a696ec640dc76c7f86c27c498af39e61512",
-   "abgerufen_utc": "2026-11-16T10:13:19+00:00"
+   "sha256": "bb0f791b9b3ed5c87d773837ea589abf09ea677fe2f9506e4b0d48f01ffde19d",
+   "abgerufen_utc": "2026-11-17T08:52:50+00:00"
   },
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/V",
    "status": 200,
-   "sha256": "4968a797ba574ae75a4f743ed3222e5276a2d055fe74547105160086d0df9a75",
-   "abgerufen_utc": "2026-11-16T10:13:19+00:00"
+   "sha256": "a0a2b5a3f925baa48adee2022f983748b63e34596fad6c3b8e37480832974e8d",
+   "abgerufen_utc": "2026-11-17T08:52:50+00:00"
   },
   {
    "url": "https://api.nasdaq.com/api/quote/V/historical",
    "status": 200,
-   "sha256": "9600b0e52d4c6685277a86edcea26af0bc07077263038ccbad6dd1786fcedc71",
-   "abgerufen_utc": "2026-11-16T10:13:22+00:00"
+   "sha256": "2aaa21299e6fdaee595a91339269c0f27e40209025f7a3d5ad7c9b0ec1d31d78",
+   "abgerufen_utc": "2026-11-17T08:52:53+00:00"
   },
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/LLY",
    "status": 200,
-   "sha256": "5d4dca5bbdcc318411c0af80b92328f6c7defd890d9407fee2dabe66be98509f",
-   "abgerufen_utc": "2026-11-16T10:13:22+00:00"
+   "sha256": "e42303305daafc42afc8d4adf78b42f2f2192aa7ad71e8b4a07f8176514ee7eb",
+   "abgerufen_utc": "2026-11-17T08:52:53+00:00"
   },
   {
    "url": "https://api.nasdaq.com/api/quote/LLY/historical",
    "status": 200,
-   "sha256": "0a1169b4cd45cb585d18f1072434025ef4f4da6286ee64986818e8627a2fdeca",
-   "abgerufen_utc": "2026-11-16T10:13:23+00:00"
+   "sha256": "717a7436bd6bd8f933a203f3cca21249aae19870d4e8b7facab80a8e99b72dba",
+   "abgerufen_utc": "2026-11-17T08:52:54+00:00"
   },
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/WMT",
    "status": 200,
-   "sha256": "881e149398e4e85a9cb45da7265cc0a5165e5501c2bd0d870018bbc347542f00",
-   "abgerufen_utc": "2026-11-16T10:13:23+00:00"
+   "sha256": "c12ab1a6a84cc38451f5571fa1d677d066995c06d0aa79e025b5baa1fa3ac407",
+   "abgerufen_utc": "2026-11-17T08:52:55+00:00"
   },
   {
    "url": "https://api.nasdaq.com/api/quote/WMT/historical",
    "status": 200,
-   "sha256": "c3dcc659170568357e65e40962c2088787254d49c5ba19837fb3f6b8e77370bc",
-   "abgerufen_utc": "2026-11-16T10:13:24+00:00"
+   "sha256": "9f990d988ede83b13469f4e586cdd629f434b96e49287bbe0233d804d68aed80",
+   "abgerufen_utc": "2026-11-17T08:52:58+00:00"
   },
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/MA",
    "status": 200,
-   "sha256": "e3d1663b734d97198e98c369b5e254d6c17d39a8c707060673415e058b62b3f5",
-   "abgerufen_utc": "2026-11-16T10:13:24+00:00"
+   "sha256": "f24aebebf3130722bda60dd4558a3bb916b767677b16f239e5d4ee2c20f6ce3c",
+   "abgerufen_utc": "2026-11-17T08:52:58+00:00"
   },
   {
    "url": "https://api.nasdaq.com/api/quote/MA/historical",
    "status": 200,
-   "sha256": "63b1db720f9f6e222648e9529a4fa5d27b72d78275150615931ebe0012735d67",
-   "abgerufen_utc": "2026-11-16T10:13:27+00:00"
+   "sha256": "bcf94b8570ca03ffbf16a5129bd42997cb5f7953032062dd1447450fbb605075",
+   "abgerufen_utc": "2026-11-17T08:53:01+00:00"
   },
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/AMD",
    "status": 200,
-   "sha256": "6b08da03a19e1d860f3fc81cc692d82aa0696dbec73c26fd38e4f8f9a50eb058",
-   "abgerufen_utc": "2026-11-16T10:13:28+00:00"
+   "sha256": "f3af57a04b8c8dcd6507b1e099ccb4ecec97015377457a9911160a2f3b33bf1f",
+   "abgerufen_utc": "2026-11-17T08:53:01+00:00"
   },
   {
    "url": "https://api.nasdaq.com/api/quote/AMD/historical",
    "status": 200,
-   "sha256": "1d8a0c8cce5415a89d8adbb1134be68377e82ed436aed023f37c2af762398353",
-   "abgerufen_utc": "2026-11-16T10:13:29+00:00"
+   "sha256": "83e6a6b98e181aa2c1e13a2668cf8be10a8126d372f4ad6b77234a3e738a15e2",
+   "abgerufen_utc": "2026-11-17T08:53:03+00:00"
   },
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/MSFT",
    "status": 200,
-   "sha256": "d6048531c88cc57f54f79f111f75f0c8743e3296e2e4f761648598c2f3025f5b",
-   "abgerufen_utc": "2026-11-16T10:13:29+00:00"
+   "sha256": "ab279da1b3a3c8ea209d755fca9ae15c27a06c51cb38b5747d092abfcdefb47e",
+   "abgerufen_utc": "2026-11-17T08:53:03+00:00"
   },
   {
    "url": "https://api.nasdaq.com/api/quote/MSFT/historical",
    "status": 200,
-   "sha256": "82ef01b024dd450b41e82bb19497511fc355af194636dfb983b0153ca75207da",
-   "abgerufen_utc": "2026-11-16T10:13:32+00:00"
+   "sha256": "9d176f915468ab94e76f158f931108881b2d62fdc94a367ff0a7b3e2b5a9cc9b",
+   "abgerufen_utc": "2026-11-17T08:53:05+00:00"
   },
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/NVDA",
    "status": 200,
-   "sha256": "f6c73b9503769975ed66d4cbc92dd6d8f5d78eec410c3449f3338b5874c51c32",
-   "abgerufen_utc": "2026-11-16T10:13:32+00:00"
+   "sha256": "59c4dceb0c081b4f332e9d6b1e495416ff45382c067ff7f1c8871dcbd80b3305",
+   "abgerufen_utc": "2026-11-17T08:53:05+00:00"
   },
   {
    "url": "https://api.nasdaq.com/api/quote/NVDA/historical",
    "status": 200,
-   "sha256": "7083a67c2c50306d87ed8bb13adfe167aa7f1c2dddef46ab9d05480825955b56",
-   "abgerufen_utc": "2026-11-16T10:13:34+00:00"
+   "sha256": "b9dc6e4e7aa63dbe7d6f8991e0301207cf850f83c031fef4090643166230a2d1",
+   "abgerufen_utc": "2026-11-17T08:53:07+00:00"
   },
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/HD",
    "status": 200,
-   "sha256": "eb5aac219128dd2407714b4d5486651ade1d4c26f659dcc714320f4be1daf5d1",
-   "abgerufen_utc": "2026-11-16T10:13:34+00:00"
+   "sha256": "b32db9df0a802cdb2e07d751ccb828190f07d338c3c5a4bb3c5a77fb10b2c389",
+   "abgerufen_utc": "2026-11-17T08:53:07+00:00"
   },
   {
    "url": "https://api.nasdaq.com/api/quote/HD/historical",
    "status": 200,
-   "sha256": "25405b207fface8dd48f8dc9aba5df9d26ab930e10b80c9d2c45b46d78f4c1ce",
-   "abgerufen_utc": "2026-11-16T10:13:37+00:00"
+   "sha256": "86fe7d0cceb3a4c32919b04161cfaaa466c017d649d417d595d6e851a8571b4c",
+   "abgerufen_utc": "2026-11-17T08:53:09+00:00"
   },
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/COST",
    "status": 200,
-   "sha256": "a7d17fc4bc67f144a20cec5c6a6134681dc18a351ec7c8a2419fb2fbe87c7533",
-   "abgerufen_utc": "2026-11-16T10:13:37+00:00"
+   "sha256": "cefd296a974e095f2206aded2ac43fa7f29de13a99f1a326eff4a11a7f847048",
+   "abgerufen_utc": "2026-11-17T08:53:10+00:00"
   },
   {
    "url": "https://api.nasdaq.com/api/quote/COST/historical",
    "status": 200,
-   "sha256": "4fbd6b5f733df2cbdabbd4c30abfdec4d8189c0d0b2cd62502874471d5016fcb",
-   "abgerufen_utc": "2026-11-16T10:13:40+00:00"
+   "sha256": "a53830675ac411d928b17e7400eb93597751e892c420498de6aefc1293ad99db",
+   "abgerufen_utc": "2026-11-17T08:53:12+00:00"
   }
  ]
 }
