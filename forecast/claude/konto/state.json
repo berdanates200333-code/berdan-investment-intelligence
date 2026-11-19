@@ -145,6 +145,13 @@
     "Pflichtdaten (SPY/Benchmark/EUR-USD) fehlen – kein Handel, nur Protokoll"
    ],
    "zeit": "2026-11-18T08:54:26+00:00"
+  },
+  {
+   "probleme": [
+    "EUNL.DE: Datenstufe C_unzulaessig unzulässig für Ausführung (veraltet: letzter Balken 2026-11-17, erwartet 2026-11-18)",
+    "Pflichtdaten (SPY/Benchmark/EUR-USD) fehlen – kein Handel, nur Protokoll"
+   ],
+   "zeit": "2026-11-19T08:54:40+00:00"
   }
  ],
  "equity": [
