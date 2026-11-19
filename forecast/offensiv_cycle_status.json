@@ -1,19 +1,12 @@
 {
- "lauf_utc": "2026-11-18T09:25:59+00:00",
+ "lauf_utc": "2026-11-19T09:28:12+00:00",
  "status": "gestartet",
  "probleme": [
-  "TSLA: Datenstufe B_einquellig unzulässig für Ausführung (keine Zweitquelle)",
-  "JPM: Datenstufe B_einquellig unzulässig für Ausführung (keine Zweitquelle)",
-  "KO: Datenstufe B_einquellig unzulässig für Ausführung (keine Zweitquelle)",
-  "EUNL.DE: Datenstufe C_unzulaessig unzulässig für Ausführung (veraltet: letzter Balken 2026-11-16, erwartet 2026-11-17)",
+  "EUNL.DE: Datenstufe C_unzulaessig unzulässig für Ausführung (veraltet: letzter Balken 2026-11-17, erwartet 2026-11-18)",
   "Pflichtdaten (SPY/Benchmark/EUR-USD) fehlen – kein Handel, nur Protokoll"
  ],
  "verarbeitet": [],
  "positionen": [],
  "pausiert": false,
- "ausgelassen_heute": [
-  "JPM",
-  "KO",
-  "TSLA"
- ]
+ "ausgelassen_heute": []
 }
