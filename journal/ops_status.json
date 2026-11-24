@@ -3,9 +3,11 @@
     "BENCH": false,
     "TREND": false
   },
-  "bewegung_gemeldet": {},
+  "bewegung_gemeldet": {
+    "GOLD": "2026-11-23"
+  },
   "letzter_wochenbericht": "2026-W47",
-  "letzter_lauf_utc": "2026-11-23T18:32:49+00:00",
-  "letzter_planlauf_datum": "2026-11-23",
+  "letzter_lauf_utc": "2026-11-24T18:32:54+00:00",
+  "letzter_planlauf_datum": "2026-11-24",
   "datenprobleme": {}
 }
