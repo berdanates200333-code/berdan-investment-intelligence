@@ -1,14 +1,11 @@
 {
- "lauf_utc": "2026-11-23T09:44:18+00:00",
+ "lauf_utc": "2026-11-24T09:34:26+00:00",
  "status": "gestartet",
- "probleme": [],
- "verarbeitet": [
-  "2026-11-16",
-  "2026-11-17",
-  "2026-11-18",
-  "2026-11-19",
-  "2026-11-20"
+ "probleme": [
+  "EUNL.DE: Datenstufe C_unzulaessig unzulässig für Ausführung (veraltet: letzter Balken 2026-11-20, erwartet 2026-11-23)",
+  "Pflichtdaten (SPY/Benchmark/EUR-USD) fehlen – kein Handel, nur Protokoll"
  ],
+ "verarbeitet": [],
  "positionen": [],
  "pausiert": false,
  "ausgelassen_heute": []
