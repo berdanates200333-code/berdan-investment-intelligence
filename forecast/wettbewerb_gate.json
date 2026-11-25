@@ -1,6 +1,6 @@
 {
  "status": "nicht_gestartet",
- "geprueft_utc": "2026-11-24T08:57:39+00:00",
+ "geprueft_utc": "2026-11-25T08:59:34+00:00",
  "alle_erfuellt": false,
  "bedingungen": {
   "universum_ausreichend": {
@@ -13,7 +13,7 @@
   },
   "ausfuehrungszyklus_claude": {
    "ok": false,
-   "detail": "0 simulierte Käufe, 1 dokumentierte Benchmark-Käufe, 16 verarbeitete Handelstage (Minimum 2)"
+   "detail": "0 simulierte Käufe, 1 dokumentierte Benchmark-Käufe, 17 verarbeitete Handelstage (Minimum 2)"
   },
   "automatik_claude": {
    "ok": false,
@@ -25,7 +25,7 @@
   },
   "ausfuehrungszyklus_chatgpt": {
    "ok": false,
-   "detail": "0 simulierte Käufe, 1 dokumentierte Benchmark-Käufe, 16 verarbeitete Handelstage (Minimum 2)"
+   "detail": "0 simulierte Käufe, 1 dokumentierte Benchmark-Käufe, 17 verarbeitete Handelstage (Minimum 2)"
   },
   "automatik_chatgpt": {
    "ok": false,
@@ -37,7 +37,7 @@
   },
   "identische_eingabedaten": {
    "ok": true,
-   "detail": "16 gemeinsame Tage; Daten-Prüfsummen identisch"
+   "detail": "17 gemeinsame Tage; Daten-Prüfsummen identisch"
   },
   "kein_echtgeld": {
    "ok": true,
