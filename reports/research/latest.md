@@ -1,24 +1,23 @@
-# Research-Monitor – 24.11.2026 22:31 UTC
+# Research-Monitor – 25.11.2026 06:13 UTC
 Regelbasierte Erfassung (Python). Analysen durch Claude stehen in `research/analyses/`.
 Quellen: offizielle Newsrooms ✓ · Google News/Yahoo RSS ✓ · SEC EDGAR: inaktiv (Kontaktangabe fehlt)
 
 ## Überblick
 | Unternehmen | Kurs | Umsatz TTM | Op. Marge | FCF-Marge | Eingepreistes Wachstum | Neue Ereignisse (hoch/mittel/niedrig) |
 |---|---|---|---|---|---|---|
-| [NVDA](../../research/db/companies/NVDA.md) | 155.38 USD | – | – | – | – | 0/1/63 |
-| [AMD](../../research/db/companies/AMD.md) | 413.27 USD | – | – | – | – | 0/1/41 |
-| [MSFT](../../research/db/companies/MSFT.md) | 496.13 USD | – | – | – | – | 0/0/42 |
+| [NVDA](../../research/db/companies/NVDA.md) | 155.38 USD | – | – | – | – | 0/1/53 |
+| [AMD](../../research/db/companies/AMD.md) | 413.27 USD | – | – | – | – | 0/0/10 |
+| [MSFT](../../research/db/companies/MSFT.md) | 496.13 USD | – | – | – | – | 0/0/23 |
 
 ## Neue wichtige Ereignisse
-- **mittel** NVDA 2026-11-24: [Nvidia CFO’s Quick Stint as CEO; State Street Focuses on New Initiatives](https://news.google.com/rss/articles/CBMisAFBVV95cUxPekw0ODMxem9Id1ZpTGpxNEc3akczZkFMa09hM2RzSDZpcEJLNzZEUmwxTlVvZWNIdElGQVJhZm15MDd2eXBtRGdWQlRQdXFFRDJEYUdrUVdIMDJBamxLQmR1ZklYbzBsYWxsVWF3aUdPR2FrQWFJLV95SGtGLTVQd2doSnk0MlAxTkpIVko4N1JLMGRzcEp1cDNQeFppc0piZ2xDcG1qVzh4eG9RcTRwdw?oc=5) – Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium); Regel: Schlüsselwörter ['ceo', 'cfo'] in etabliertem Medium
-- **mittel** AMD 2026-11-24: [Kursbewegung -8.9 % am 2026-11-24](https://finance.yahoo.com/quote/AMD) – Marktdaten, inoffiziell, ohne Zweitquelle; Regel: Tagesbewegung ≥ 8 %
+- **mittel** NVDA 2026-11-24: [Nvidia Option Trader Scores 1,984% Gain After CEO Huang’s Return](https://news.google.com/rss/articles/CBMitAFBVV95cUxNamtGS0VrR2RNa0lSdGhmLXVac3lxSTlBUHJEZWRralBBdkZQRXp0aXlNejZHRG4xZXRqMEJXNHJKUGZ3M2prODN2YjZWVGk4SmI4a3JpNFBWcU5UYUQtUE9YNUd0YVFVZVE3TVRyUUdtVDhSX1UtSDk4OVM1OXZVbVdJMDJoVTU0aWV0TFJzRmYwQlpjcmxCV2FyZTRnalhvcnJlT3ZHSU1ycktHd0gxOHNPRWY?oc=5) – Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium); Regel: Schlüsselwörter ['ceo'] in etabliertem Medium
 
 ## Zur KI-Analyse vorgemerkt: 0
 
 ## Nachrichtenabruf (Google News RSS, Yahoo Finance RSS)
-- NVDA: 115 abgerufen, 64 neu, 14 Dubletten verworfen
-- AMD: 120 abgerufen, 41 neu, 19 Dubletten verworfen
-- MSFT: 119 abgerufen, 42 neu, 20 Dubletten verworfen
+- NVDA: 115 abgerufen, 54 neu, 7 Dubletten verworfen
+- AMD: 120 abgerufen, 10 neu, 23 Dubletten verworfen
+- MSFT: 116 abgerufen, 23 neu, 20 Dubletten verworfen
 
 ## Datenfehler (dieser Lauf)
-- `sec:alle|kontakt_fehlt`: SEC verlangt einen User-Agent mit echter Kontaktadresse: Repository-Variable SEC_USER_AGENT setzen (z. B. 'Vorname Nachname name@domain.de'). (seit 77 Läufen)
+- `sec:alle|kontakt_fehlt`: SEC verlangt einen User-Agent mit echter Kontaktadresse: Repository-Variable SEC_USER_AGENT setzen (z. B. 'Vorname Nachname name@domain.de'). (seit 78 Läufen)
