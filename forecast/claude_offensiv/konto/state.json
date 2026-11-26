@@ -177,6 +177,15 @@
     "Pflichtdaten (SPY/Benchmark/EUR-USD) fehlen – kein Handel, nur Protokoll"
    ],
    "zeit": "2026-11-25T09:39:37+00:00"
+  },
+  {
+   "probleme": [],
+   "tage": [
+    "2026-11-23",
+    "2026-11-24",
+    "2026-11-25"
+   ],
+   "zeit": "2026-11-26T09:35:52+00:00"
   }
  ],
  "equity": [
@@ -283,6 +292,30 @@
    "daten_ok": true,
    "datum": "2026-11-20",
    "positionen": 0
+  },
+  {
+   "aktiv_eur": 10000.0,
+   "bench_eur": 9845.88,
+   "cash_eur": 10000.0,
+   "daten_ok": true,
+   "datum": "2026-11-23",
+   "positionen": 0
+  },
+  {
+   "aktiv_eur": 10000.0,
+   "bench_eur": 9685.73,
+   "cash_eur": 10000.0,
+   "daten_ok": true,
+   "datum": "2026-11-24",
+   "positionen": 0
+  },
+  {
+   "aktiv_eur": 10000.0,
+   "bench_eur": 9506.7,
+   "cash_eur": 10000.0,
+   "daten_ok": true,
+   "datum": "2026-11-25",
+   "positionen": 0
   }
  ],
  "failed": [
@@ -294,7 +327,7 @@
   }
  ],
  "kapital_eur": 10000.0,
- "last_date": "2026-11-20",
+ "last_date": "2026-11-25",
  "pause_seit": null,
  "paused": false,
  "peak": 10000.0,
@@ -322,6 +355,14 @@
     "spy_sma100": 759.4
    },
    "datum": "2026-11-20",
+   "grund": "Marktfilter: SPY unter SMA100"
+  },
+  {
+   "daten": {
+    "spy_close": 716.7,
+    "spy_sma100": 758.54
+   },
+   "datum": "2026-11-25",
    "grund": "Marktfilter: SPY unter SMA100"
   }
  ],
