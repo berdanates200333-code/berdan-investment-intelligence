@@ -7,7 +7,9 @@
     "GOLD": "2026-11-23"
   },
   "letzter_wochenbericht": "2026-W47",
-  "letzter_lauf_utc": "2026-11-25T18:28:08+00:00",
-  "letzter_planlauf_datum": "2026-11-25",
-  "datenprobleme": {}
+  "letzter_lauf_utc": "2026-11-26T18:29:48+00:00",
+  "letzter_planlauf_datum": "2026-11-26",
+  "datenprobleme": {
+    "GOLD|abweichung": 1
+  }
 }
