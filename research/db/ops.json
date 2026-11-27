@@ -1,16 +1,24 @@
 {
   "fehler": {
     "sec:alle|kontakt_fehlt": {
-      "folge": 83,
+      "folge": 84,
       "letzte_meldung": "SEC verlangt einen User-Agent mit echter Kontaktadresse: Repository-Variable SEC_USER_AGENT setzen (z. B. 'Vorname Nachname name@domain.de')."
     },
     "news_google:AMD": {
+      "folge": 2,
+      "letzte_meldung": "HTTPError: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=%22Advanced+Micro+Devices%22+OR+%22AMD+stock%22+OR+%22AMD+shares%22+when:2d&hl=en-US&gl=US&ceid=US:en"
+    },
+    "news_google:NVDA": {
       "folge": 1,
-      "letzte_meldung": "HTTPError: 429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=%22Advanced+Micro+Devices%22+OR+%22AMD+stock%22+OR+%22AMD+shares%22+when:2d&hl=en-US&gl=US&ceid=US:en"
+      "letzte_meldung": "HTTPError: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=NVIDIA+OR+NVDA+stock+when:2d&hl=en-US&gl=US&ceid=US:en"
+    },
+    "news_google:MSFT": {
+      "folge": 1,
+      "letzte_meldung": "HTTPError: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=Microsoft+stock+OR+MSFT+OR+%22Microsoft+earnings%22+OR+Azure+when:2d&hl=en-US&gl=US&ceid=US:en"
     }
   },
-  "letzter_lauf_utc": "2026-11-26T22:30:46+00:00",
-  "letzter_erfolg_utc": "2026-11-26T22:30:46+00:00",
+  "letzter_lauf_utc": "2026-11-27T06:17:18+00:00",
+  "letzter_erfolg_utc": "2026-11-27T06:17:18+00:00",
   "quellenstatus": {
     "sec": "inaktiv (Kontaktangabe fehlt)",
     "unternehmen_mit_daten": [

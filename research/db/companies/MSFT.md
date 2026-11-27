@@ -1,5 +1,5 @@
 # Microsoft Corporation (MSFT)
-Stand 2026-11-26T22:30:46+00:00 · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)
+Stand 2026-11-27T06:17:18+00:00 · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)
 
 **SEC-Finanzdaten:** nicht aktualisiert (SEC nicht erreichbar)
 
@@ -16,6 +16,10 @@ _Quelle: Kurzfassung (Claude); Abgleich mit 10-K Item 1 im Profil_
 ## Ereignisse (letzte 30 Tage, ohne Insider-Formulare)
 | Datum | Wichtigkeit | Ereignis | Zuverlässigkeit |
 |---|---|---|---|
+| 2026-11-27 | niedrig | [Microsoft’s Brad Smith Says ‘We Didn’t Know’ $10 Million Trump Ballroom Donation Would Inv](https://finance.yahoo.com/technology/articles/microsoft-brad-smith-says-didn-033007136.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |
+| 2026-11-27 | niedrig | [5 Best Quantum Computing Stocks To Buy for 2027](https://finance.yahoo.com/technology/articles/5-best-quantum-computing-stocks-032149616.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |
+| 2026-11-27 | niedrig | [5 Best Tech Stocks to Buy for 2027 According to Hedge Funds](https://finance.yahoo.com/markets/stocks/articles/5-best-tech-stocks-buy-030856400.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |
+| 2026-11-26 | niedrig | [LUNR Aerospace Appoints Draganfly CEO Cameron Chell to Board of Directors](https://finance.yahoo.com/technology/articles/lunr-aerospace-appoints-draganfly-ceo-230000859.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |
 | 2026-11-26 | niedrig | [Steve Cohen’s 5 Biggest Stock Bets for 2027](https://finance.yahoo.com/markets/stocks/articles/steve-cohen-5-biggest-stock-220614898.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |
 | 2026-11-26 | niedrig | [Tech Stock Sell-Off: Down 13%, Is Microsoft a Buy Now?](https://news.google.com/rss/articles/CBMimAFBVV95cUxPSm5hNmFZaVZaZUdpenlUNnV2bmtQTThONkpRdjIzZGFsM1dmd2hyVFVVVHVfSTBvbVJRWUpaNmxSSmFLQ2hUcHpOODN3ZU8tMmNtMm9LNlpRanVKRUl5YzgwWnlXZG1yUWktbFQzUXBlelN5ajh3Yk1HdzFvSWRSeUZBTzJOVlpkYlZoY3NVZXhUTlZmRlNtUw?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
 | 2026-11-26 | niedrig | [Jensen Huang’s Return Doesn’t Make Nvidia Stock (NVDA) a Buy](https://finance.yahoo.com/markets/stocks/articles/jensen-huang-return-doesn-t-212200380.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |
@@ -37,7 +41,3 @@ _Quelle: Kurzfassung (Claude); Abgleich mit 10-K Item 1 im Profil_
 | 2026-11-26 | niedrig | [3 Things to Watch After Microsoft’s Cerebras Deal](https://news.google.com/rss/articles/CBMilwFBVV95cUxPUjFYbEYzY2ZqLUt1NVg3TFJCT095dUgtZFpLZFJYVEVOM2I1T3cyT2RWaS1RbHl5RTZNczI4UnZLc0RqSDBKbW5MM0FPd1FTY3V4dm5UN19mdWNpMXJrcUw3TFhONW1La1NyX1R2dDIwQm5IVmpHX0ROek85bnFZdFl4aVRzNW5HSXdOM25jU2I2LV9OR2cw?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
 | 2026-11-26 | niedrig | [The Economy Grew Way Faster Than First Reported: Q3 GDP Revised Up to 4.3%](https://247wallst.com/investing/2026/11/26/the-economy-grew-way-faster-than-first-reported-q3-gdp-revised-up-to-4-3/?.tsrc=rss) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
 | 2026-11-26 | niedrig | [Europe Cloud Computing Market Surges to $ 550.42 billion at a CAGR 11.0% by 2030 | Report ](https://finance.yahoo.com/technology/articles/europe-cloud-computing-market-surges-150000346.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |
-| 2026-11-26 | niedrig | [Audi turns the car into a mobile office with Teams-ready AI agent](https://news.google.com/rss/articles/CBMikAFBVV95cUxQSThWdFpDbW1PWndFVThEeExhem1MSFNteVNnZmRDcTlPZ01XMFBFNWhGd0RDQnlJTXVyclU1VG81elIySGlEbk5NN1Z4b0ZWVFJRYTlUS2J5WUhoVUh3bGZtSURGNG55VWdmWkt3VGtOWFVWMV9qX0Vhd0xSTXhzWjQyaS1vQ25oSGlRX3hHZ1o?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
-| 2026-11-26 | niedrig | [Microsoft Corp Share Price - MSFT, RNS News, Articles, Quotes, & Charts (NASDAQ:MSFT)](https://news.google.com/rss/articles/CBMickFVX3lxTE03c0dfclBfem5nQU9DX1ItMDI0Q3NQdzJ4RmQtQkltazViVnF5QXpHS28xM3kzNVZWaS1SQTNtVnlNVkZQSnc3c3ZFRXRLUjh6cW9tM2lVUjlucTBaMmhwNkVPTnVuNW5GSDRkaUtRcDJWUQ?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
-| 2026-11-26 | niedrig | [Data Engineering Workflow Orchestration Market Global Report 2026 | Capture $14.43B AI and](https://finance.yahoo.com/technology/articles/data-engineering-workflow-orchestration-market-142400107.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |
-| 2026-11-26 | niedrig | [Netflix vs. Apple: Which Streaming Stock Has an Edge Right Now?](https://finance.yahoo.com/markets/stocks/articles/netflix-vs-apple-streaming-stock-142100099.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |

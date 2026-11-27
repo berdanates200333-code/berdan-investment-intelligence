@@ -1,5 +1,5 @@
 # Advanced Micro Devices, Inc. (AMD)
-Stand 2026-11-26T22:30:46+00:00 · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)
+Stand 2026-11-27T06:17:18+00:00 · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)
 
 **SEC-Finanzdaten:** nicht aktualisiert (SEC nicht erreichbar)
 
@@ -16,7 +16,9 @@ _Quelle: Kurzfassung (Claude); Abgleich mit 10-K Item 1 im Profil_
 ## Ereignisse (letzte 30 Tage, ohne Insider-Formulare)
 | Datum | Wichtigkeit | Ereignis | Zuverlässigkeit |
 |---|---|---|---|
+| 2026-11-27 | niedrig | [Eric Trump-Backed Robot Startup’s Employees Lose Health Insurance After Weeks Without Pay ](https://finance.yahoo.com/healthcare/articles/eric-trump-backed-robot-startup-023005325.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |
 | 2026-11-26 | niedrig | [5 Most Oversold Semiconductor Stocks to Buy for 2027](https://finance.yahoo.com/markets/stocks/articles/5-most-oversold-semiconductor-stocks-194738573.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |
+| 2026-11-26 | niedrig | [KHC, PINS, AMD: 3 Bets I’d Consider Waging From Thanksgiving Eve’s Top 25 Unusually Active](https://www.barchart.com/story/news/9022595/khc-pins-amd-3-bets-id-consider-waging-from-thanksgiving-eves-top-25-unusually-active-options?.tsrc=rss) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
 | 2026-11-26 | niedrig | [AMD Stocks Slip 1.75% After Filing Registers 337 Million Shares for Resale](https://finance.yahoo.com/markets/stocks/articles/amd-stocks-slip-1-75-182928246.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |
 | 2026-11-26 | niedrig | [nVent Electric (NVT) Brings AI Data Center Cooling And Power Systems To SC26](https://finance.yahoo.com/technology/ai/articles/nvent-electric-nvt-brings-ai-171331695.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |
 | 2026-11-26 | niedrig | [Cerebras Expands AI Inference Reach: Can It Challenge NVDA & AMD?](https://finance.yahoo.com/technology/ai/articles/cerebras-expands-ai-inference-reach-161400247.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |
@@ -39,5 +41,3 @@ _Quelle: Kurzfassung (Claude); Abgleich mit 10-K Item 1 im Profil_
 | 2026-11-26 | niedrig | [Advanced Micro Devices, Inc. $AMD Stake Lowered by Douglass Winthrop Advisors LLC](https://news.google.com/rss/articles/CBMi1gFBVV95cUxPTjgyYWt0X29CcndwdTJWRS0tSktfMjd3QzRfaG56NEtZNXI1RU51ZlZVN041M3lZYzRENU5xZXZZeUN2bmFmVl9QWWc2VXdoNXZKV1l4dlEwSHdUSzVNQnVvaW96d1V3OERyM0N1bngxYmF1emhCT2NVRGd3QmluUHViOGp4ajloYXhXTUExSWZvODZDVXJQTl96TVBncHpVTWNuQzdvNnZSd08tQy1UcFVTR3NHc1JrLUdObTlxdVBYUjFpdnFKUHdvcndfN3kwSnlLUmZn?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
 | 2026-11-26 | niedrig | [Advanced Micro Devices, Inc. $AMD Shares Sold by Elefante Mark B](https://news.google.com/rss/articles/CBMivwFBVV95cUxPaVl6UWtIc0lVMHdkcmlFNldSZ3VvSU9rOTVCZXB5MElUYzZReTZQWmpVOVVSaVg1dFlIZjYybm43YjFNbkpiRTFMVmNNaUxMbUJ6QVg2YUxMYldiZEd6WDRyYV85TTAyczBUVldReUxsajlORzBmSkwzYWE3Y0VwbVBMYXo1a0NtM0xyM0k0S2t1T3cyQXRYRnNENUNrdzdqRldJUjRHZWV0bHJLY0kwdktBMC1WV0kyT3VqaEhiVQ?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
 | 2026-11-26 | niedrig | [1,525 Advanced Micro Devices, Inc. $AMD Shares Purchased by Empirical Finance LLC](https://news.google.com/rss/articles/CBMi1AFBVV95cUxNYVhGZlRub2pMenc0aHdna2x5UTQwUmN1RTFTTjNTRmNrOC1HOTZMV3l5X2V2ZXdIVl8tOWlicGwzamswUThVcW1RdWQ0TGhyRHl5UHZtX01HSTNobHNyVlpySzg2Y0szcHpiUVRraF8tbEt3am8zTXpaalp6NV9NWlM5em5yR0RXc1ltUEl5Z0x1Ynl5aHowOGhkcHVYQUJBUDVndXJLTUVZMFBSR1NvdWJ2Rkk2d0F6OXNfcEI1MUVSaFdDRFUxNFJyb0NIUzFvMDhSTw?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
-| 2026-11-26 | niedrig | [24,936 Advanced Micro Devices, Inc. $AMD Shares Bought by Flputnam Investment Management C](https://news.google.com/rss/articles/CBMi4gFBVV95cUxNYzY5WHBLMlJkVlJRM0hyMXB3VWswM2lsTFl3RFI5WUpPNFdPT0djNmdUTU1IT1Voa0FqX0FwdlhnQjBSaHhlcmU0a2FTeXE3ZGVRcXNtQVJ4M3h6cjlFQ19jem1QYVR4OEozN3ducWFqeDNuTjRDd01laGl0Zlo5NVk0ZC1YT0F4N1M3Z0FkQnk0Z25VR0RwZno1b2wwT1V3Rlc0VkpkSjEyZGNBdy1vZmRSUlZXLTU0Q0tZRTlycU1tRTYxeUJSMTdVcDVDY3NZUWRCcmlpSGxoVXUweGNmUTBR?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
-| 2026-11-26 | niedrig | [Arm Drops 20% in a Week as AI Chips Slide. CEO Rene Haas Has “Never Been More Confident”](https://www.tikr.com/blog/arm-drops-20-in-a-week-as-ai-chips-slide-ceo-rene-haas-has-never-been-more-confident?ref=yahoofinance&tlnk=yf-261126-r223pw7j&.tsrc=rss) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
