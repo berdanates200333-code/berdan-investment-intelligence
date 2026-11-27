@@ -1,26 +1,23 @@
-# Research-Monitor – 27.11.2026 06:17 UTC
+# Research-Monitor – 27.11.2026 13:33 UTC
 Regelbasierte Erfassung (Python). Analysen durch Claude stehen in `research/analyses/`.
 Quellen: offizielle Newsrooms ✓ · Google News/Yahoo RSS ✓ · SEC EDGAR: inaktiv (Kontaktangabe fehlt)
 
 ## Überblick
 | Unternehmen | Kurs | Umsatz TTM | Op. Marge | FCF-Marge | Eingepreistes Wachstum | Neue Ereignisse (hoch/mittel/niedrig) |
 |---|---|---|---|---|---|---|
-| [NVDA](../../research/db/companies/NVDA.md) | 149.30 USD | – | – | – | – | 0/0/14 |
-| [AMD](../../research/db/companies/AMD.md) | 406.03 USD | – | – | – | – | 0/0/2 |
-| [MSFT](../../research/db/companies/MSFT.md) | 489.93 USD | – | – | – | – | 0/0/4 |
+| [NVDA](../../research/db/companies/NVDA.md) | 149.30 USD | – | – | – | – | 0/1/67 |
+| [AMD](../../research/db/companies/AMD.md) | 406.03 USD | – | – | – | – | 0/0/41 |
+| [MSFT](../../research/db/companies/MSFT.md) | 489.93 USD | – | – | – | – | 0/0/27 |
 
 ## Neue wichtige Ereignisse
-- keine
+- **mittel** NVDA 2026-11-27: [Trump: 'Market feels very good' about Huang's return as Nvidia CEO](https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9XbVFpb2oxYzkzN0xRaDhhYlVjbU0wTHhISkowOGhuMVYwQTF1WU9GTDZsanpnZmM2TXdvdkxMMTZyTHY1QmM1aG1uSThHUGZoOUhkWGRnTzZDRi1RMG5qNHBlbkUtMXM?oc=5) – Sekundärquelle, Stufe A (etabliertes Wirtschaftsmedium); Regel: Schlüsselwörter ['ceo'] in etabliertem Medium
 
 ## Zur KI-Analyse vorgemerkt: 0
 
 ## Nachrichtenabruf (Google News RSS, Yahoo Finance RSS)
-- NVDA: 14 abgerufen, 14 neu, 0 Dubletten verworfen
-- AMD: 20 abgerufen, 2 neu, 2 Dubletten verworfen
-- MSFT: 19 abgerufen, 4 neu, 1 Dubletten verworfen
+- NVDA: 119 abgerufen, 68 neu, 22 Dubletten verworfen
+- AMD: 104 abgerufen, 41 neu, 26 Dubletten verworfen
+- MSFT: 57 abgerufen, 27 neu, 11 Dubletten verworfen
 
 ## Datenfehler (dieser Lauf)
-- `sec:alle|kontakt_fehlt`: SEC verlangt einen User-Agent mit echter Kontaktadresse: Repository-Variable SEC_USER_AGENT setzen (z. B. 'Vorname Nachname name@domain.de'). (seit 84 Läufen)
-- `news_google:NVDA`: HTTPError: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=NVIDIA+OR+NVDA+stock+when:2d&hl=en-US&gl=US&ceid=US:en (seit 1 Läufen)
-- `news_google:AMD`: HTTPError: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=%22Advanced+Micro+Devices%22+OR+%22AMD+stock%22+OR+%22AMD+shares%22+when:2d&hl=en-US&gl=US&ceid=US:en (seit 2 Läufen)
-- `news_google:MSFT`: HTTPError: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=Microsoft+stock+OR+MSFT+OR+%22Microsoft+earnings%22+OR+Azure+when:2d&hl=en-US&gl=US&ceid=US:en (seit 1 Läufen)
+- `sec:alle|kontakt_fehlt`: SEC verlangt einen User-Agent mit echter Kontaktadresse: Repository-Variable SEC_USER_AGENT setzen (z. B. 'Vorname Nachname name@domain.de'). (seit 85 Läufen)
