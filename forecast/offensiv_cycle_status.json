@@ -1,12 +1,8 @@
 {
- "lauf_utc": "2026-11-26T09:35:52+00:00",
+ "lauf_utc": "2026-11-27T09:34:51+00:00",
  "status": "gestartet",
  "probleme": [],
- "verarbeitet": [
-  "2026-11-23",
-  "2026-11-24",
-  "2026-11-25"
- ],
+ "verarbeitet": [],
  "positionen": [],
  "pausiert": false,
  "ausgelassen_heute": []
