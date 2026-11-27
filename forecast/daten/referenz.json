@@ -1,5 +1,5 @@
 {
- "erstellt_utc": "2026-11-26T08:54:14+00:00",
+ "erstellt_utc": "2026-11-27T08:54:30+00:00",
  "hinweis": "Schlusskurse sind split-bereinigt, ohne Dividenden; Stufe A = Zweitquelle bestätigt.",
  "instrumente": {
   "SPY": {
@@ -19,7 +19,7 @@
    "rendite_20t_pct": -7.2,
    "rendite_60t_pct": -5.92,
    "volumen_faktor": 1.16,
-   "dollarvolumen_20t_mio": 47742.6
+   "dollarvolumen_20t_mio": 47749.6
   },
   "QQQ": {
    "name": "ETF",
@@ -38,7 +38,7 @@
    "rendite_20t_pct": -12.63,
    "rendite_60t_pct": -10.42,
    "volumen_faktor": 1.34,
-   "dollarvolumen_20t_mio": 41970.7
+   "dollarvolumen_20t_mio": 41983.3
   },
   "IWM": {
    "name": "ETF",
@@ -57,7 +57,7 @@
    "rendite_20t_pct": -4.42,
    "rendite_60t_pct": -7.47,
    "volumen_faktor": 1.21,
-   "dollarvolumen_20t_mio": 7719.3
+   "dollarvolumen_20t_mio": 7719.7
   },
   "GLD": {
    "name": "Gold-ETF (physisch hinterlegt)",
@@ -75,8 +75,8 @@
    "rendite_5t_pct": -4.03,
    "rendite_20t_pct": -12.33,
    "rendite_60t_pct": -17.47,
-   "volumen_faktor": 1.57,
-   "dollarvolumen_20t_mio": 3926.4
+   "volumen_faktor": 1.58,
+   "dollarvolumen_20t_mio": 3927.2
   },
   "AAPL": {
    "name": "Aktie",
@@ -95,7 +95,7 @@
    "rendite_20t_pct": 3.42,
    "rendite_60t_pct": 9.37,
    "volumen_faktor": 1.07,
-   "dollarvolumen_20t_mio": 17916.2
+   "dollarvolumen_20t_mio": 17917.0
   },
   "MSFT": {
    "name": "Aktie",
@@ -114,7 +114,7 @@
    "rendite_20t_pct": -7.74,
    "rendite_60t_pct": -2.21,
    "volumen_faktor": 0.87,
-   "dollarvolumen_20t_mio": 15884.4
+   "dollarvolumen_20t_mio": 15885.1
   },
   "NVDA": {
    "name": "Aktie",
@@ -132,8 +132,8 @@
    "rendite_5t_pct": -1.1,
    "rendite_20t_pct": -30.68,
    "rendite_60t_pct": -31.34,
-   "volumen_faktor": 1.08,
-   "dollarvolumen_20t_mio": 57470.5
+   "volumen_faktor": 1.09,
+   "dollarvolumen_20t_mio": 57494.4
   },
   "AMZN": {
    "name": "Aktie",
@@ -151,8 +151,8 @@
    "rendite_5t_pct": -8.71,
    "rendite_20t_pct": -3.99,
    "rendite_60t_pct": -4.12,
-   "volumen_faktor": 1.15,
-   "dollarvolumen_20t_mio": 14136.5
+   "volumen_faktor": 1.16,
+   "dollarvolumen_20t_mio": 14139.0
   },
   "GOOGL": {
    "name": "Aktie",
@@ -170,8 +170,8 @@
    "rendite_5t_pct": -3.31,
    "rendite_20t_pct": -15.94,
    "rendite_60t_pct": -18.48,
-   "volumen_faktor": 0.88,
-   "dollarvolumen_20t_mio": 12832.3
+   "volumen_faktor": 0.89,
+   "dollarvolumen_20t_mio": 12834.0
   },
   "META": {
    "name": "Aktie",
@@ -189,8 +189,8 @@
    "rendite_5t_pct": -1.05,
    "rendite_20t_pct": -0.42,
    "rendite_60t_pct": 5.42,
-   "volumen_faktor": 0.97,
-   "dollarvolumen_20t_mio": 11235.7
+   "volumen_faktor": 0.98,
+   "dollarvolumen_20t_mio": 11237.8
   },
   "AVGO": {
    "name": "Aktie",
@@ -209,7 +209,7 @@
    "rendite_20t_pct": -14.48,
    "rendite_60t_pct": -18.62,
    "volumen_faktor": 1.08,
-   "dollarvolumen_20t_mio": 10496.4
+   "dollarvolumen_20t_mio": 10497.7
   },
   "TSLA": {
    "name": "Aktie",
@@ -228,7 +228,7 @@
    "rendite_20t_pct": -5.96,
    "rendite_60t_pct": 6.75,
    "volumen_faktor": 0.98,
-   "dollarvolumen_20t_mio": 13477.5
+   "dollarvolumen_20t_mio": 13479.9
   },
   "LLY": {
    "name": "Aktie",
@@ -380,7 +380,7 @@
    "rendite_20t_pct": 11.09,
    "rendite_60t_pct": 24.57,
    "volumen_faktor": 0.96,
-   "dollarvolumen_20t_mio": 3180.3
+   "dollarvolumen_20t_mio": 3180.4
   },
   "HD": {
    "name": "Aktie",
@@ -437,7 +437,7 @@
    "rendite_20t_pct": -4.16,
    "rendite_60t_pct": -26.48,
    "volumen_faktor": 1.14,
-   "dollarvolumen_20t_mio": 2487.9
+   "dollarvolumen_20t_mio": 2488.0
   },
   "ORCL": {
    "name": "Aktie",
@@ -456,7 +456,7 @@
    "rendite_20t_pct": -28.13,
    "rendite_60t_pct": -26.49,
    "volumen_faktor": 0.9,
-   "dollarvolumen_20t_mio": 4855.8
+   "dollarvolumen_20t_mio": 4856.7
   },
   "AMD": {
    "name": "Aktie",
@@ -474,8 +474,8 @@
    "rendite_5t_pct": -23.41,
    "rendite_20t_pct": -29.81,
    "rendite_60t_pct": -11.66,
-   "volumen_faktor": 1.13,
-   "dollarvolumen_20t_mio": 22741.3
+   "volumen_faktor": 1.14,
+   "dollarvolumen_20t_mio": 22747.2
   },
   "CRM": {
    "name": "Aktie",
@@ -532,7 +532,7 @@
    "rendite_20t_pct": 6.39,
    "rendite_60t_pct": 10.9,
    "volumen_faktor": 1.25,
-   "dollarvolumen_20t_mio": 1983.8
+   "dollarvolumen_20t_mio": 1983.9
   },
   "PEP": {
    "name": "Aktie",
@@ -650,7 +650,7 @@
   }
  },
  "eur_usd": {
-  "datum": "2026-11-25",
-  "usd_je_eur": 1.0935
+  "datum": "2026-11-26",
+  "usd_je_eur": 1.0975
  }
 }
