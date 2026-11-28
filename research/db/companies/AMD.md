@@ -1,5 +1,5 @@
 # Advanced Micro Devices, Inc. (AMD)
-Stand 2026-11-27T22:30:37+00:00 · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)
+Stand 2026-11-28T06:13:13+00:00 · Daten: SEC EDGAR (offiziell), Kurs: Yahoo (inoffiziell)
 
 **SEC-Finanzdaten:** nicht aktualisiert (SEC nicht erreichbar)
 
@@ -16,6 +16,7 @@ _Quelle: Kurzfassung (Claude); Abgleich mit 10-K Item 1 im Profil_
 ## Ereignisse (letzte 30 Tage, ohne Insider-Formulare)
 | Datum | Wichtigkeit | Ereignis | Zuverlässigkeit |
 |---|---|---|---|
+| 2026-11-28 | niedrig | [AMD Stock Rises Even as Erste Group Downgrades to Hold; Here’s Why](https://news.google.com/rss/articles/CBMimgFBVV95cUxOcU5IZ2gyVFNlem51dl9lczhqaVFQSzdhS2wzZTBRNjRPWVRJNkxHTURzOFZNS1ctLU0tWHNxVl9qcUFPY3REOUJqb2lRVXpGVEtva2J3Z1NOd0pMTGRyV2FOZmtYUHhZNTlDU1Z4WmFqdTJIU3RnWXZydzN3NTd3bDdjQ2tvSjAxbUQ1RlRrQUFaZzdwNThUOTlR?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
 | 2026-11-27 | niedrig | [Advanced Micro Devices Inc (AMD) Stock Up 4.6% but GF Value Says Overvalued -- GF Score: 8](https://news.google.com/rss/articles/CBMiwwFBVV95cUxPc3JZNldKeFY0dnNVOHh3R2ZIMnJOeDR1VUs0bVlvRnk3SENrVzM0NmFCNnJIanJqQktnWm9ibVc5b3JrMWZnZVRILUxuOTJFcVpwaU9RSUZwQlhCVmZNV3NwNU9jTlpHcWpUaWpTamF0Wm5vNWpFc2dkTFQ2ek1iaXktaTByZXh2Um9sb1JUX3kzaFZWUHlsVnRWd1VSYWZtRUF6eGJ6a1lYNkF3cEVOOXpFRVFNczQyOUpkb2NqdE0tQWs?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
 | 2026-11-27 | niedrig | [AMD Shares Plunge 20% on Short Report Allegations, Yet Growth Opportunities Remain](https://news.google.com/rss/articles/CBMitAFBVV95cUxPa1ZNLXlYNmRmZktkbVFjM0hmQlVxTHNkVU1ZZ2Z2N2NRQ3NwMzMwcVEyc2NOLXh4Zm96TmZvd05pMG1NbDJvVGhTdUh2S05oWDk1WDkzUDU1QzdiVl9zdGxZSGtWS3BWa0E4TlJqeTA5NkxLMFlBZ2U2WThPM0hZd1NvU2tBS2xZRUxKQTlickx6VTJxN2daNHNGczhLQTF5bk4tb013bHRIdXJpM2VTeDJWdzc?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
 | 2026-11-27 | niedrig | [Jensen Huang Is Back. Nvidia’s (NVDA) Bull Case Remains](https://finance.yahoo.com/markets/stocks/articles/jensen-huang-back-nvidia-nvda-210600721.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |
@@ -40,4 +41,3 @@ _Quelle: Kurzfassung (Claude); Abgleich mit 10-K Item 1 im Profil_
 | 2026-11-27 | niedrig | [HPE vs. AMD: Which Stock Should Value Investors Buy Now?](https://finance.yahoo.com/markets/stocks/articles/hpe-vs-amd-stock-value-154003186.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |
 | 2026-11-27 | niedrig | [Anthropic Stock Jumps to Reveal Its True Place in the AI Trade](https://finance.yahoo.com/m/eac9c281-033c-3c73-8b9a-a27703a8cdc9/anthropic-stock-jumps-to.html?.tsrc=rss) | Sekundärquelle, Stufe B (Fach-/Finanzportal) |
 | 2026-11-27 | niedrig | [AMD stock hit with major Wall Street downgrade](https://news.google.com/rss/articles/CBMidkFVX3lxTE5UeFFfVUdLTWVNeGJiOC1SRTFuMnNNUGdYbkxiWk81djYxUFhacFhBc1BvSUMwZWZ3aGdSVlZuQ1dZOTZZX3FQaHMzMVVpNkZCTG9YTUw2OTFERVFMcE1PNWxySlhCNEp5bE5vblNXMmEwWlNJWGc?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
-| 2026-11-27 | niedrig | [How Advanced Micro Devices Stacks Up Against NVIDIA And Broadcom, And The Rest Of The Semi](https://news.google.com/rss/articles/CBMiiwJBVV95cUxNNDVRR0JOV0NYZmtwbXhVRmpMVlYwcVJ0Wm5MY0laTkJBZUc1c0o4aUpNWUE2bVY3OHVfbmV4cjFJek0tRVdNY3dkU1BUOEgxNmk5R1N3ajE1Uks0SmJNVjVKMEFPbGJtVXBHMnUwcXNBVGt4b3NHemwxZjZ4YW93ZXJLRXFHbFhNdkZLVlFpemdnemRWNVlJdXpjeHpBS3hSQ1hyUkJHWm9oOG5VLWdBRnFDbi12TkdacHdLUG5GUjNLbkFWdl9mMExHQkowa0ZYbC1rc0VIaDJiTGV5NzlGQ3lpYjJyc3VnN3VVeHROT293TWFwaW5fbUZYTHhrb0ZBMjFWN2hoUlhNbmM?oc=5) | Sekundärquelle, Stufe C (unbekannt/ungeprüft) |
